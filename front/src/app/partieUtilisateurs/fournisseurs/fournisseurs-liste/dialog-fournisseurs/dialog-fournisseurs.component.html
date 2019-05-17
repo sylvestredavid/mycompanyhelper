@@ -1,0 +1,14 @@
+<ng-container [formGroup]="form">
+  <ng-container formArrayName="categories">
+    <h3>produits</h3>
+    <table>
+      <ng-container *ngFor="let cat of getCategories().controls; let i = index">
+        <mat-checkbox (change)="checkboxToProduits()" [formControlName]="i">{{data.listeGenres[i].designation}}</mat-checkbox>
+      </ng-container>
+    </table>
+  </ng-container>
+</ng-container>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button [mat-dialog-close]="[data.cat, data.index]" cdkFocusInitial>Ok</button>
+</div>

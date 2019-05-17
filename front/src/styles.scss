@@ -1,0 +1,223 @@
+//@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+@import '~@angular/material/theming';
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+@import '~@fullcalendar/core/main.css';
+@import '~@fullcalendar/daygrid/main.css';
+
+@include mat-core();
+$primary: mat-palette($mat-deep-purple);
+$accent: mat-palette($mat-amber, A200, A100, A400);
+$warn: mat-palette($mat-red);
+$theme: mat-light-theme($primary, $accent, $warn); // Or mat-dark-theme
+
+@include angular-material-theme($theme);
+
+
+.hide_btn:hover{
+  cursor: pointer;
+}
+
+
+*{
+  font-family: 'Montserrat', sans-serif;
+  list-style: none;
+}
+
+.fil-ariane{
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 20px;
+  a{
+    color: #000;
+    font-size: 0.55rem;
+    text-decoration: underline;
+    padding: 0 0.3125rem;
+  }
+  li:not(:last-child):after{
+    content: '>';
+    padding-top: 0.3125rem;
+  }
+  .actif{
+    text-decoration: none;
+    &:hover{
+      color: #000;
+    }
+  }
+}
+
+mat-toolbar:not(.footer){
+  height: 56px;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 2;
+  .entreprise{
+    font-size: 14px;
+    margin: 0 5px;
+  }
+}
+
+.selectionable:hover{
+  cursor: pointer;
+}
+
+input:disabled{
+  background: #fff;
+}
+
+.acueil:hover{
+  cursor: pointer;
+}
+
+h1{
+  font-size: 1.5em;
+  margin: 20px 0;
+
+}
+
+.flex-spacer{
+  flex-grow: 1;
+}
+
+.mat-menu-content{
+  padding: 0 !important;
+}
+* {
+  margin: 0;
+  padding: 0;
+}
+main{
+  width: 97%;
+  margin: auto;
+  padding-top: 60px;
+  padding-bottom: 40px;
+  min-height: calc(100vh - 64px);
+}
+
+.form {
+  width: 70%;
+  margin: 20px auto;
+  justify-content: space-between !important;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+.form td {
+  padding: 10px;
+}
+
+.clear {
+  clear: both;
+}
+
+.readOnly {
+  border: none;
+}
+
+select, option {
+  background-color: white;
+}
+
+.selected {
+  background-color: rgba(103, 58, 183, 0.2);
+}
+
+.selected input, .selected select {
+  background-color: rgba(103, 58, 183, 0);
+}
+
+input {
+  width: 100%;
+  text-align: center;
+}
+
+.inputChiffre {
+  width: 20% !important;
+}
+
+@media screen and (min-width: 1024px) {
+
+  .fil-ariane{
+    a{
+      font-size: 0.75rem;
+    }
+  }
+
+  .customTable {
+    border-collapse: collapse;
+    font-family: 'Roboto', "Helvetica Neue", sans-serif;
+    text-align: center;
+
+  }
+
+  .customTable th {
+    color: rgba(0, 0, 0, .54);
+    padding: 22px 0;
+    font-weight: 500 !important;
+  }
+
+  .customTable td {
+    padding: 14px 0;
+  }
+
+  .customTable input, .customTable select, .customTable option {
+    text-align: center;
+    width: 100%;
+  }
+
+  .customTable th, .customTable td {
+    border-top: 1px solid rgb(224, 224, 224);
+    border-bottom: 1px solid rgb(224, 224, 224);
+  }
+
+  .tableau-paginator {
+    display: flex;
+    font-family: 'Roboto', "Helvetica Neue", sans-serif;
+    color: rgba(0, 0, 0, .54);
+    justify-content: flex-end;
+    padding: 20px;
+    font-size: 14px;
+  }
+
+  .tableau-paginator mat-icon {
+    margin: 0 30px;
+    height: 14px !important;
+    width: 14px !important;
+
+  }
+
+  .tableau-paginator mat-icon:hover {
+    cursor: pointer;
+  }
+
+  .tableau-paginator select {
+    background-color: white;
+    border: none;
+  }
+
+  main {
+    width: 80%;
+  }
+
+  .adresse-td {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .adresse-td div {
+    text-align: right;
+  }
+
+  .adresse-td .codePostal {
+    width: 10% !important;
+  }
+
+  .adresse-td .ville {
+    text-align: left;
+    width: 52%;
+  }
+}

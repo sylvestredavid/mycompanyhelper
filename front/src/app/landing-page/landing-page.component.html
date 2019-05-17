@@ -1,0 +1,91 @@
+<mat-toolbar color="primary" class="mat-elevation-z6">
+    <p routerLink="" class="acueil">mycompanyhelper</p>
+    <div class="flex-spacer"></div>
+    <ng-container *ngIf="screenWidth >= 768 else mobile">
+        <button mat-button routerLink="/annonces">Annonces fournisseurs</button>
+        <button mat-button routerLink="/connexion">Connexion</button>
+    </ng-container>
+    <ng-template #mobile>
+        <button mat-button [matMenuTriggerFor]="menu">Menu</button>
+
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item routerLink="/annonces">Annonces fournisseurs</button>
+            <button mat-menu-item routerLink="/connexion">Connexion</button>
+        </mat-menu>
+    </ng-template>
+</mat-toolbar>
+<main>
+        <h1>Bienvenue sur mycompanyhelper</h1>
+        <h2>Votre meilleur allié pour la gestion de votre entreprise</h2>
+
+        <div class="contenaire">
+            <h2>Suivez votre chiffre d'affaire</h2>
+            <div class="text float-left">
+                <p>
+                    Le chiffre d'affaire est enregistré chaque fin de mois, en calculant le total des
+                    factures créées sur mycompanyhelper.
+                    Suivez ainsi l'évolution de votre chiffre d'affaisre grâce au graphique du dashboard
+                </p>
+            </div>
+            <figure class="float-right">
+                <img src="/assets/dashboard.png" title="dashboard" alt="suivi du chiffre d'affaire">
+            </figure>
+            <div class="clear"></div>
+        </div>
+
+        <div class="contenaire">
+            <h2 class="right">Suivez vos stocks</h2>
+            <div class="text float-right">
+                <p>
+                    Lorsque vous créez une facture, le stock des produits selectionnés est mis a jour.
+                    Choisissez la limite pour laquelle le stock sera considéré comme bas et soyez tenu au courant
+                    par notification et pas email lorsque le stock atteint la limite
+                </p>
+            </div>
+            <figure class="float-left">
+                <img src="/assets/notification.png" title="notification" alt="suivi stock">
+            </figure>
+            <div class="clear"></div>
+        </div>
+
+        <div class="contenaire">
+            <h2>Gerez vos clients, produits, fournisseurs</h2>
+            <div class="text float-left">
+                <p>
+                    Création et modification intuitive.
+                    aucun formulaire, double-cliquez simplement sur le champ a modifier
+                </p>
+            </div>
+            <figure class="float-right">
+                <img src="/assets/tableau.png" title="tableau" alt="suivi clients, produits, fournisseur">
+            </figure>
+            <div class="clear"></div>
+        </div>
+
+        <div class="contenaire">
+            <h2 class="right">Vous etes fournisseur?</h2>
+            <div class="text float-right">
+                <p>
+                    Créez vos annonces et soyez contacter par les utilisateurs et les visiteurs du site
+                </p>
+            </div>
+            <figure class="float-left">
+                <img src="/assets/annonce.png" title="annonce" alt="création d'annonces fournisseurs">
+            </figure>
+            <div class="clear"></div>
+        </div>
+
+        <div class="contenaire">
+            <h2>Créez et envoyez vos factures</h2>
+            <div class="text float-left">
+                <p>
+                    Grâce a notre formulaire intuitif, créez facilement vos factures, envoyez les a
+                    vos clients et téléchargez les en pdf.
+                </p>
+            </div>
+            <figure class="float-right">
+                <img src="/assets/facture.png" title="facture" alt="création et envoi de factures">
+            </figure>
+            <div class="clear"></div>
+        </div>
+</main>

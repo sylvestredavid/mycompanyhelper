@@ -1,0 +1,34 @@
+<ul class="fil-ariane">
+    <li>
+        <a routerLink="/fournisseurs">Menu</a>
+    </li>
+    <li>
+        <a class="actif">Mes annonces</a>
+    </li>
+</ul>
+<h1>Mes Annonces</h1>
+<ng-template [ngIf]="listeAnnonces && listeAnnonces.length != 0" [ngIfElse]="empty">
+    <div class="container">
+    <ng-container *ngFor="let annonce of listeAnnonces">
+        <div class="annonce-container">
+            <button mat-icon-button class="delete" (click)="onDelete(annonce)" title="supprimer l'annonce">
+                <mat-icon svgIcon="delete"></mat-icon>
+            </button>
+            <figure class="annonce-img">
+                <img [src]="'https://back.mycompanyhelper.com/api/annuaireFournisseur/files/'+annonce.image" alt="{{annonce.titre}}">
+            </figure>
+            <div class="annonce-body">
+                <h2>{{annonce.titre}}</h2>
+                <p>nombre de réponses: {{annonce.nbContacts}}</p>
+            </div>
+            <div class="btn-container">
+                <button mat-raised-button routerLink="modif-annonce/{{annonce.id}}">Modifier</button>
+                <button mat-raised-button [disabled]="annonce.misEnAvant" (click)="openCheckoutDial(annonce.id, annonce.titre)">Mettre en avant</button>
+            </div>
+        </div>
+    </ng-container>
+    </div>
+</ng-template>
+<ng-template #empty>
+    <p>Vous n'avez aucune annonces.</p>
+</ng-template>

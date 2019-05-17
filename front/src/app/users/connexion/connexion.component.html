@@ -1,0 +1,50 @@
+<mat-toolbar color="primary" class="mat-elevation-z6">
+    <p routerLink="" class="acueil">mycompanyhelper</p>
+    <div class="flex-spacer"></div>
+    <ng-container *ngIf="screenWidth >= 768 else mobile">
+        <button mat-button routerLink="/annonces">Annonces fournisseurs</button>
+        <button mat-button routerLink="/connexion">Connexion</button>
+    </ng-container>
+    <ng-template #mobile>
+        <button mat-button [matMenuTriggerFor]="menu">Menu</button>
+
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item routerLink="/annonces">Annonces fournisseurs</button>
+            <button mat-menu-item routerLink="/connexion">Connexion</button>
+        </mat-menu>
+    </ng-template>
+</mat-toolbar>
+<main>
+<ul class="fil-ariane">
+    <li>
+        <a routerLink="">Accueil</a>
+    </li>
+    <li>
+        <a class="actif">Connexion / inscription</a>
+    </li>
+</ul>
+        <h1>Bienvenue sur mycompanyhelper</h1>
+        <h2>Votre meilleur allié pour gerer votre entreprise.</h2>
+        <div class="flex">
+            <div class="connexion">
+                <form [formGroup]="loginForm" class="loginForm" (ngSubmit)="onSubmit()">
+                    <h3>Se connecter.</h3>
+                    <mat-form-field class="example-full-width">
+                        <input matInput placeholder="Email" formControlName="username">
+                    </mat-form-field>
+                    <mat-form-field class="example-full-width mat-form-field-appearance-fill">
+                        <input matInput  [type]="hide ? 'password' : 'text'"  placeholder="mot de passe" formControlName="password">
+                        <p class="hide_btn" mat-icon-button matSuffix  (mousedown)="hide = false" (mouseup)="hide = true">
+                        <mat-icon [svgIcon]="hide ? 'hide' : 'nohide'"></mat-icon>
+                    </p>
+                    </mat-form-field>
+                    <mat-checkbox color="primary" class="remember_me" (change)="rememberMe()">Se souvenir de moi</mat-checkbox>
+                    <button mat-raised-button color="primary">Connexion</button>
+                    <a class="mdp_oubli" (click)="envoiMail()">Mot de passe oublié</a>
+                </form>
+            </div>
+            <div class="inscription">
+                <app-inscription></app-inscription>
+            </div>
+        </div>
+</main>

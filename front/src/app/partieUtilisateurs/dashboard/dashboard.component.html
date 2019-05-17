@@ -1,0 +1,19 @@
+<ul class="fil-ariane">
+  <li>
+    <a routerLink="/users">Menu</a>
+  </li>
+  <li>
+    <a class="actif">Dashboard</a>
+  </li>
+</ul>
+<ng-template [ngIf]="listeProduits && listeClients" [ngIfElse]="loading">
+  <h1>Tableau de bord</h1>
+<div class="grid-container">
+  <div class="grid-content grid-content-un"><app-graphique [listeProduits]="listeProduits"></app-graphique></div>
+  <div class="grid-content grid-content-deux"><app-tableau-produit [listeProduits]="listeProduits"></app-tableau-produit></div>
+  <div class="grid-content grid-content-cinq"><app-liste-calendrier></app-liste-calendrier></div>
+  <div class="grid-content grid-content-trois"><app-tableau-clients [listeClients]="listeClients"></app-tableau-clients></div>
+  <div class="grid-content grid-content-quatre"><app-top-fournisseurs></app-top-fournisseurs></div>
+</div>
+</ng-template>
+<ng-template #loading><p>Loading...</p></ng-template>

@@ -1,0 +1,87 @@
+<ul class="fil-ariane">
+    <li>
+        <a routerLink="/fournisseurs">Menu</a>
+    </li>
+    <li>
+        <a class="actif">Créer annonce</a>
+    </li>
+</ul>
+<h1>Créer une annonce</h1>
+<form [formGroup]="annonceForm" (ngSubmit)="onSubmit()" class="half-width">
+    <mat-form-field class="example-full-width">
+        <input matInput type="text" placeholder="Titre" formControlName="titre">
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+        <input matInput type="text" placeholder="Résumé" formControlName="resumer">
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+        <input matInput type="text" placeholder="produits" formControlName="categories">
+    </mat-form-field>
+            <mat-form-field>
+                <input matInput type="text" placeholder="Image" formControlName="image">
+            </mat-form-field>
+            <label for="file" class="img_btn">choisir une image</label>
+            <input type="file" id="file" (change)="handleFileInput($event.target.files)" class="img_input">
+    <ng-template [ngIf]="screenWidth >= 1024" [ngIfElse]="mobile">
+    <table class="example-full-width">
+        <td>
+            <mat-form-field class="trois-quart-width">
+                <input matInput class="text-right" type="number" placeholder="Prix minimum" formControlName="prixMin">
+                <span matSuffix>€</span>
+            </mat-form-field>
+        </td>
+        <td>
+            <mat-form-field class="trois-quart-width">
+                <input matInput class="text-right" type="number" placeholder="Prix maximum" formControlName="prixMax">
+                <span matSuffix>€</span>
+            </mat-form-field>
+        </td>
+        <td>
+            <mat-form-field class="example-full-width">
+                <input matInput class="text-right" type="text" placeholder="Email de contact" formControlName="email">
+            </mat-form-field>
+        </td>
+    </table>
+    </ng-template>
+    <ng-template #mobile>
+        <mat-form-field class="example-full-width">
+            <input matInput class="text-right" type="number" placeholder="Prix minimum" formControlName="prixMin">
+            <span matSuffix>€</span>
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+            <input matInput class="text-right" type="number" placeholder="Prix maximum" formControlName="prixMax">
+            <span matSuffix>€</span>
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+            <input matInput type="text" placeholder="Email de contact" formControlName="email">
+        </mat-form-field>
+    </ng-template>
+    <mat-error *ngIf="annonceForm.value.prixMax > 0 && annonceForm.controls.prixMax.invalid">
+        Le prix max doit etre supérieur ou égal au prix min
+    </mat-error>
+    <mat-form-field class="example-full-width">
+        <textarea matInput placeholder="corps de l'annonce" formControlName="corps" rows="20"></textarea>
+    </mat-form-field>
+    <button mat-raised-button type="submit">envoyer</button>
+</form>
+<div class="annonce-view mat-elevation-z6">
+    <h1>{{annonceForm.value.titre}}</h1>
+    <p>le {{date | date: 'dd/MM à HH:mm'}}</p>
+    <figure class="annonce_img">
+        <img src="https://back.mycompanyhelper.com/api/annuaireFournisseur/files/{{annonceForm.value.image}}"
+             alt="{{annonceForm.value.titre}}">
+    </figure>
+    <div class="description">
+        <div class="description-left">
+            <p>Produits :</p>
+            <p>Prix :</p>
+        </div>
+        <div class="description-right">
+            <p>{{annonceForm.value.categories}}</p>
+            <p><span>{{annonceForm.value.prixMin}}</span> à <span>{{annonceForm.value.prixMax}}</span>€</p>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="corps"><p>{{annonceForm.value.corps}}</p></div>
+</div>
+<div class="clear"></div>

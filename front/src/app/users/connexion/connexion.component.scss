@@ -1,0 +1,44 @@
+.mdp_oubli{
+  color: #000;
+
+  &:hover{
+    color: blue;
+  }
+}
+
+h1{
+  text-align: center;
+}
+
+h2 {
+  margin-bottom: 15px;
+  text-align: center;
+}
+.connexion, .inscription {
+  margin-bottom: 40px;
+}
+
+.remember_me {
+  margin-right: 20px;
+}
+
+  a {
+    margin-left: 10px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+@media screen and (min-width: 1000px) {
+
+  .connexion, .inscription {
+    width: 40%;
+  }
+
+  .flex {
+    margin-top: 40px;
+    display: flex;
+    justify-content: space-evenly;
+  }
+}

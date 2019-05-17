@@ -1,0 +1,12 @@
+<mat-dialog-content>
+  <h1>Ajouter categorie</h1>
+    <form [formGroup]="genreForm">
+          <mat-form-field>
+            <input matInput placeholder="nom" formControlName="designation">
+          </mat-form-field>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-raised-button [disabled]="genreForm.invalid" (click)="onSave()">Envoyer</button>
+  <button mat-raised-button (click)="onQuit()">Quitter</button>
+</mat-dialog-actions>

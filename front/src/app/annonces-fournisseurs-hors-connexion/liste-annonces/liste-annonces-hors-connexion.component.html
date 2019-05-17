@@ -1,0 +1,71 @@
+<mat-toolbar color="primary" class="mat-elevation-z6">
+    <p routerLink="" class="acueil">mycompanyhelper</p>
+    <div class="flex-spacer"></div>
+    <ng-container *ngIf="screenWidth >= 768 else mobile">
+        <button mat-button routerLink="/annonces">Annonces fournisseurs</button>
+        <button mat-button routerLink="/connexion">Connexion</button>
+    </ng-container>
+    <ng-template #mobile>
+        <button mat-button [matMenuTriggerFor]="menu">Menu</button>
+
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item routerLink="/annonces">Annonces fournisseurs</button>
+            <button mat-menu-item routerLink="/connexion">Connexion</button>
+        </mat-menu>
+    </ng-template>
+</mat-toolbar>
+<main>
+    <ul class="fil-ariane">
+        <li>
+            <a routerLink="">Accueil</a>
+        </li>
+        <li>
+            <a class="actif">Annonces fournisseurs</a>
+        </li>
+    </ul>
+    <h1 style="display: none">Annonces fournisseurs</h1>
+    <div class="container">
+        <table class="example-full-width">
+            <td>
+                <mat-form-field class="example-full-width">
+                    <input matInput type="text" placeholder="Produits"
+                           (keyup)="filtrerParProduits($event.target.value)">
+                </mat-form-field>
+            </td>
+            <td class="prixMax">
+                <p class="label">Prix max</p>
+                <mat-slider class="example-full-width"
+                            [max]="max"
+                            [min]="1"
+                            [thumbLabel]="true"
+                            [value]="max" (input)="filtrerParPrix($event.value)"
+                            color="primary">
+                </mat-slider>
+            </td>
+        </table>
+        <div style="text-align:center;" id="33883-31"><script src="//ads.themoneytizer.com/s/gen.js?type=31"></script><script src="//ads.themoneytizer.com/s/requestform.js?siteId=33883&formatId=31"></script></div>
+        <ng-container *ngFor="let annonce of annoncesAAfficher">
+            <a routerLink="detail/{{annonce.id}}">
+                <div class="annonce-container">
+                    <figure class="annonce-img">
+                        <img src="https://back.mycompanyhelper.com/api/annuaireFournisseur/files/{{annonce.image}}"
+                             alt="{{annonce.titre}}">
+                    </figure>
+                    <div class="annonce-body">
+                        <h2>{{annonce.titre}}</h2>
+                        <h3>{{annonce.categories}}</h3>
+                        <p class="prix">de <span>{{annonce.prixMin}}</span> à <span>{{annonce.prixMax}}</span>€</p>
+                        <p>{{annonce.resumer}}</p>
+                        <p>le {{annonce.datePoste | date: 'dd/MM à HH:mm'}}</p>
+                    </div>
+                </div>
+            </a>
+        </ng-container>
+    </div>
+    <ng-container *ngIf="screenWidth >= 1024">
+
+            <div id="33883-3"><script src="//ads.themoneytizer.com/s/gen.js?type=3"></script><script src="//ads.themoneytizer.com/s/requestform.js?siteId=33883&formatId=3"></script></div>
+
+        <div class="clear"></div>
+    </ng-container>
+</main>

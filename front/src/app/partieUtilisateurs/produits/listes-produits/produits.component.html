@@ -1,0 +1,151 @@
+<ul class="fil-ariane">
+    <li>
+        <a routerLink="/users">Menu</a>
+    </li>
+    <li>
+        <a class="actif">Produits</a>
+    </li>
+</ul>
+
+<ng-template [ngIf]="genre" [ngIfElse]="toutLesProduits" xmlns="http://www.w3.org/1999/html">
+    <h1>Produits de la catégorie {{genre.designation}}
+        <ng-container *ngIf="genre && role === 'ROLE_ADMIN'">
+            <mat-icon svgIcon="delete" (click)="onDeleteGenre(genre.idGenre)"
+                      [title]="'supprimer la catégorie ' + genre.designation"></mat-icon>
+        </ng-container>
+    </h1>
+</ng-template>
+<ng-template #toutLesProduits>
+    <h1>Tout les produits</h1>
+</ng-template>
+<div class="boutons-container">
+    <ng-container *ngIf="isDirty">
+        <button mat-raised-button (click)="envoiForm()">Envoyer</button>
+    </ng-container>
+    <button mat-raised-button color="accent" (click)="onAjouter()" [disabled]="isDirty">Ajouter</button>
+    <button mat-raised-button color="warn" (click)="onSupprimer()" [disabled]="isDirty">Supprimer</button>
+</div>
+<div class="boutons-genres-container">
+    <button class="genre_button" [ngClass]="{'actif': !genre}" routerLink="/users/produits">Tout les produits</button>
+    <button class="genre_button" routerLink="/users/produits/produits-supprimes">produits supprimés</button>
+    <ng-container *ngFor="let g of genres">
+        <button class="genre_button" [ngClass]="{'actif': genre && genre.designation === g.designation}"
+                routerLink="/users/produits/categorie/{{ g.designation }}">{{ g.designation }}</button>
+    </ng-container>
+    <ng-container *ngIf="role === 'ROLE_ADMIN'">
+        <button class="genre_button ajouterGenre" title="ajouter catégorie" (click)="ajoutCat()">+</button>
+    </ng-container>
+</div>
+<div class="separator"></div>
+<mat-form-field class="example-full-width">
+    <input matInput type="text" placeholder="Filter" (keyup)="rechercheTableau($event.target.value)">
+</mat-form-field>
+<ng-template [ngIf]="listeElementsAAfficher">
+    <ng-container *ngIf="screenWidth >= 1024 else mobile">
+        <div class="mat-elevation-z2">
+            <table class="customTable">
+                <thead>
+                <tr class="customTable-tr">
+                    <th>designation</th>
+                    <th>prix achat</th>
+                    <th>prix vente</th>
+                    <th>Quantitée</th>
+                    <th>Marge</th>
+                    <ng-container *ngIf="!genre">
+                        <th>Categorie</th>
+                    </ng-container>
+                </tr>
+                </thead>
+                <tbody [formGroup]="elementForm">
+                <ng-container formArrayName="elements" *ngFor="let control of elements.controls; let i = index;">
+                    <tr class="customTable-tr selectionable" [formGroupName]="i"
+                        (click)="changeElementSelectionne(control.value)"
+                        [ngClass]="{'selected': elementASupprimer && elementASupprimer === control.value}">
+                        <td><input id="input-des-{{i}}" class="readOnly" [inputReadOnly]="true"
+                                   formControlName="designation" placeholder="Désignation" (keyup)="changeIsDirty()">
+                        </td>
+                        <td><input class="inputChiffre" [inputReadOnly]="true" formControlName="prixAchat"
+                                   (keyup)="changeIsDirty()">€
+                        </td>
+                        <td><input class="inputChiffre" [inputReadOnly]="true" formControlName="prixVente"
+                                   (keyup)="changeIsDirty()">€
+                        </td>
+                        <td><input class="inputChiffre" [inputReadOnly]="true" formControlName="quantite"
+                                   (keyup)="changeIsDirty()"
+                                   [ngClass]="{'rupture': control.value.quantite <= limiteStock}">
+                            <mat-error *ngIf="control.controls.quantite.invalid">la quantitée doit etre supérieure a 0
+                            </mat-error>
+                        </td>
+                        <td [ngStyle]="{'color': getColor(control.value)}">{{produitService.marge(control.value.prixVente, control.value.prixAchat)}}
+                            %
+                        </td>
+                        <ng-container *ngIf="!genre">
+                            <td>
+                                <select [inputReadOnly]="true" formControlName="genre"
+                                        (change)="envoiForm()">
+                                    <ng-container *ngFor="let genre of listeGenres">
+                                        <option [value]="genre.idGenre">{{genre.designation}}</option>
+                                    </ng-container>
+                                </select>
+                                <mat-error *ngIf="control.controls.genre.invalid">champ obligatoire</mat-error>
+                            </td>
+                        </ng-container>
+                    </tr>
+                </ng-container>
+                </tbody>
+            </table>
+            <div class="tableau-paginator">
+                <select [(ngModel)]="nbElements" (change)="initTableau()">
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                </select>
+                <mat-icon svgIcon="left" (click)="pagination('left')"></mat-icon>
+                <p>page {{pageCourante}} / {{nbPage}}</p>
+                <mat-icon svgIcon="right" (click)="pagination('right')"></mat-icon>
+            </div>
+        </div>
+    </ng-container>
+    <!-- version mobile / tablette -->
+    <ng-template #mobile>
+        <div [formGroup]="elementForm" class="flex">
+            <ng-container formArrayName="elements" *ngFor="let control of elements.controls; let i = index;">
+                <div class="contenaire selectionable" [formGroupName]="i"
+                     (click)="changeElementSelectionne(control.value)"
+                     [ngClass]="{'selected': elementASupprimer && elementASupprimer === control.value}">
+                    <input [inputReadOnly]="true" class="h2-like" formControlName="designation"
+                           placeholder="Désignation" (keyup)="changeIsDirty()">
+                    <p>prix d'achat : <input [inputReadOnly]="true" class="inputChiffre"
+                                             formControlName="prixAchat" (keyup)="changeIsDirty()">€</p>
+                    <p>prix de vente : <input [inputReadOnly]="true" class="inputChiffre"
+                                              formControlName="prixVente" (keyup)="changeIsDirty()">€</p>
+                    <p>Marge : <span
+                            [ngStyle]="{'color': getColor(control.value)}">{{produitService.marge(control.value.prixVente, control.value.prixAchat)}}
+                        %</span>
+                    </p>
+                    en stock : <input [inputReadOnly]="true" class="inputChiffre" formControlName="quantite"
+                                      [ngClass]="{'rupture': control.value.quantite <= limiteStock}">
+                    <mat-error *ngIf="control.controls.quantite.invalid">la quantitée doit etre supérieure a 0
+                    </mat-error>
+                    <br>
+                    <ng-container *ngIf="!genre">
+                        <ng-template [ngIf]="role === 'ROLE_ADMIN'" [ngIfElse]="gest">
+                            <select [inputReadOnly]="true" formControlName="genre"
+                                    (change)="envoiForm()">
+                                <ng-container *ngFor="let genre of listeGenres">
+                                    <option [value]="genre.idGenre">{{genre.designation}}</option>
+                                </ng-container>
+                            </select>
+                            <mat-error *ngIf="control.controls.genre.invalid">champ obligatoire</mat-error>
+                        </ng-template>
+                        <ng-template #gest>
+                            <p>{{listeElementsAAfficher[i].genre.designation}}</p>
+                        </ng-template>
+                    </ng-container>
+                </div>
+            </ng-container>
+        </div>
+    </ng-template>
+</ng-template>

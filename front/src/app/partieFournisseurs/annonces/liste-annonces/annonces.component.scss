@@ -1,0 +1,53 @@
+.container{
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.annonce-container{
+  width: 290px;
+  position: relative;
+  border: 1px solid black;
+  box-shadow: 2px 2px 5px grey;
+  border-radius: 3px;
+  padding: 10px;
+  margin: 10px;
+
+  .delete{
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+
+  .annonce-img{
+    width: 80%;
+    margin: auto;
+    height: 214px;
+
+    img{
+      width: 100%;
+    }
+  }
+
+  h2{
+    margin-bottom: 10px;
+  }
+
+  p{
+    margin-bottom: 15px;
+  }
+
+  .btn-container {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+@media screen and (min-width: 768px) {
+}
+@media screen and (min-width: 1024px) {
+  .container{
+  justify-content: flex-start;
+}
+}
+

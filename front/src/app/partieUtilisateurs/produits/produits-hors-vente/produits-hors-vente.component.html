@@ -1,0 +1,92 @@
+<ul class="fil-ariane">
+    <li>
+        <a routerLink="/users">Menu</a>
+    </li>
+    <li>
+        <a class="actif">Produits</a>
+    </li>
+</ul>
+<h1>Produits supprimés</h1>
+<div class="boutons-container">
+    <button mat-raised-button color="primary" (click)="remettreEnVente()">Remmetre en vente</button>
+</div>
+<div class="boutons-genres-container">
+    <button class="genre_button" routerLink="/users/produits">Tout les produits</button>
+    <button class="genre_button actif" routerLink="/users/produits/produits-supprimes">produits supprimés</button>
+    <ng-container *ngFor="let genre of genres">
+        <button class="genre_button"
+                routerLink="/users/produits/categorie/{{ genre.designation }}">{{ genre.designation }}</button>
+    </ng-container>
+    <ng-container *ngIf="role === 'ROLE_ADMIN'">
+        <button class="genre_button ajouterGenre" title="ajouter catégorie" (click)="ajoutCat()">+</button>
+    </ng-container>
+</div>
+<div class="separator"></div>
+<mat-form-field class="example-full-width">
+    <input matInput type="text" placeholder="Filter" (keyup)="rechercheTableau($event.target.value)">
+</mat-form-field>
+<ng-template [ngIf]="listeElementsAAfficher">
+    <ng-container *ngIf="screenWidth >= 1024 else mobile">
+        <div class="mat-elevation-z2">
+            <table class="customTable">
+                <thead>
+                <tr class="customTable-tr">
+                    <th>designation</th>
+                    <th>prix achat</th>
+                    <th>prix vente</th>
+                    <th>Marge</th>
+                    <th>Categorie</th>
+                </tr>
+                </thead>
+                <tbody>
+                <ng-container *ngFor="let produit of listeElementsAAfficher">
+                    <tr class="selectionable" (click)="changeElementSelectionne(produit)"
+                        [ngClass]="{'selected': elementSelectionne && elementSelectionne === produit}">
+                        <td><p>{{produit.designation}}</p></td>
+                        <td><p>{{produit.prixAchat}}</p></td>
+                        <td><p>{{produit.prixVente}}</p></td>
+                        <td [ngStyle]="{'color': getColor(produit)}">{{produitService.marge(produit.prixVente, produit.prixAchat)}}
+                            %
+                        </td>
+                        <td>
+                            <ng-container *ngIf="produit.genre">
+                                {{produit.genre.designation}}
+                            </ng-container>
+                        </td>
+                    </tr>
+                </ng-container>
+                </tbody>
+            </table>
+            <div class="tableau-paginator">
+                <select [(ngModel)]="nbElements" (change)="initTableau()">
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                </select>
+                <mat-icon svgIcon="left" (click)="pagination('left')"></mat-icon>
+                <p>page {{pageCourante}} / {{nbPage}}</p>
+                <mat-icon svgIcon="right" (click)="pagination('right')"></mat-icon>
+            </div>
+        </div>
+    </ng-container>
+    <!-- version mobile / tablette -->
+    <ng-template #mobile>
+        <div class="flex">
+            <ng-container *ngFor="let produit of listeElementsAAfficher">
+                <div class="contenaire selectionable" (click)="changeElementSelectionne(produit)"
+                     [ngClass]="{'selected': elementASupprimer && elementASupprimer === control.value}">
+                    <h2>{{produit.designation}}</h2>
+                    <p>Prix d'achat : {{produit.prixAchat}}€</p>
+                    <p>Prix de vente : {{produit.prixVente}}€</p>
+                    <p>Marge : <span
+                            [ngStyle]="{'color': getColor(produit)}">{{produitService.marge(produit.prixVente, produit.prixAchat)}}
+                        %
+        </span></p>
+                    <p>{{produit.genre.designation}}</p>
+                </div>
+            </ng-container>
+        </div>
+    </ng-template>
+</ng-template>

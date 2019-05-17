@@ -1,0 +1,12 @@
+<mat-dialog-content>
+    <form [formGroup]="mailForm">
+          <mat-form-field>
+            <input matInput placeholder="email" formControlName="mail">
+          </mat-form-field>
+        <ng-container *ngIf="msg"><p>{{msg}}</p></ng-container>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-raised-button (click)="onSubmit()" [disabled]="enCour">ok</button>
+    <button mat-raised-button (click)="retour()">Retour</button>
+</mat-dialog-actions>

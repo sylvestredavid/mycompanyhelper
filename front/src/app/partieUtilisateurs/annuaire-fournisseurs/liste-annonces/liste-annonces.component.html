@@ -1,0 +1,55 @@
+<main>
+    <ul class="fil-ariane">
+        <li>
+            <a routerLink="">Accueil</a>
+        </li>
+        <li>
+            <a class="actif">Annonces fournisseurs</a>
+        </li>
+    </ul>
+    <h1 style="display: none">Annonces fournisseurs</h1>
+    <div class="container">
+        <table class="example-full-width">
+            <td>
+                <mat-form-field class="example-full-width">
+                    <input matInput type="text" placeholder="Produits" (keyup)="filtrerParProduits($event.target.value)">
+                </mat-form-field>
+            </td>
+            <td class="prixMax">
+                <p class="label">Prix max</p>
+                <mat-slider class="example-full-width"
+                            [max]="max"
+                            [min]="1"
+                            [thumbLabel]="true"
+                            [value]="max" (input)="filtrerParPrix($event.value)"
+                            color="primary">
+                </mat-slider>
+            </td>
+        </table>
+
+        <ng-container *ngFor="let annonce of annoncesAAfficher">
+            <a routerLink="detail/{{annonce.id}}">
+                <div class="annonce-container">
+                    <figure class="annonce-img">
+                        <img src="https://back.mycompanyhelper.com/api/annuaireFournisseur/files/{{annonce.image}}"
+                             alt="{{annonce.titre}}">
+                    </figure>
+                    <div class="annonce-body">
+                        <h2>{{annonce.titre}}</h2>
+                        <h3>{{annonce.categories}}</h3>
+                        <p class="prix">de <span>{{annonce.prixMin}}</span> à <span>{{annonce.prixMax}}</span>€</p>
+                        <p>{{annonce.resumer}}</p>
+                        <p>le {{annonce.datePoste | date: 'dd/MM à HH:mm'}}</p>
+                        <!--<div class="annonce-prix">-->
+                        <!--<a routerLink="contact-fournisseur/{{annonce.email}}"-->
+                        <!--[queryParams]="{titre: annonce.titre, id: annonce.id}">{{annonce.email}}</a>-->
+                        <!---->
+                        <!--</div>-->
+                    </div>
+                </div>
+            </a>
+        </ng-container>
+    </div>
+    <div class="pub"></div>
+    <div class="clear"></div>
+</main>

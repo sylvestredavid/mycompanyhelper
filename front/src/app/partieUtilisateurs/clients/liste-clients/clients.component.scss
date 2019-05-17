@@ -1,0 +1,93 @@
+.h2-like{
+  font-size: 1.2em;
+  margin: 0 auto 0.50em auto;
+  width: 48%;
+  &:first-of-type{
+    text-align: right;
+}
+  &:nth-of-type(2){
+    text-align: left;
+    margin-left: 5px;
+  }
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 80%;
+  display: block;
+  margin: 20px auto 0 auto;
+}
+
+.ajouterButton {
+  background: transparent;
+  border: none;
+  margin-left: 10px;
+}
+
+.ajouterButton:hover {
+  cursor: pointer;
+}
+
+.supprimerButton {
+  margin: 30px;
+  float: right;
+}
+
+.boutons-container {
+  text-align: right;
+  margin-top: 20px;
+}
+
+.boutons-container button {
+  margin-left: 10px;
+}
+
+.selected {
+  background-color: rgba(103, 58, 183, 0.2);
+}
+
+.contenaire {
+  text-align: center;
+  padding: 20px;
+  margin-top: 20px;
+  border: 1px solid black;
+
+  p{
+    margin: 10px 0;
+  }
+}
+
+.adresse{
+  width: 70%;
+  margin: auto;
+  input{
+    width: 50%;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .flex{
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+
+    .contenaire{
+      width: 40%;
+    }
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  table {
+    width: 100%;
+    text-align: center;
+  }
+
+  th {
+    text-align: center !important;
+  }
+}
+
+
+
+

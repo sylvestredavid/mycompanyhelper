@@ -1,0 +1,19 @@
+    <mat-toolbar color="primary" class="mat-elevation-z6">
+        <ng-template [ngIf]="screenWidth > 700" [ngIfElse]="mobile">
+            <p routerLink="/fournisseurs" class="acueil">mycompanyhelper</p>
+        </ng-template>
+        <ng-template #mobile>
+            <button mat-button routerLink="/users">Menu</button>
+        </ng-template>
+        <div class="flex-spacer"></div>
+        <button mat-icon-button (click)="openChatBot()" title="chatBot">
+            <mat-icon svgIcon="aide"></mat-icon>
+        </button>
+        <p class="entreprise">{{entreprise}}</p>
+        <button mat-icon-button title="sortie">
+            <mat-icon svgIcon="quit" (click)="sortie()"></mat-icon>
+        </button>
+    </mat-toolbar>
+    <main>
+        <router-outlet></router-outlet>
+    </main>

@@ -1,0 +1,25 @@
+.error {
+  color: red;
+  text-align: left;
+  font-size: 12px;
+  margin-top: -10px;
+}
+form {
+  .passwordBar {
+    margin: 0 auto 20px auto;
+    width: 50%;
+    border: 1px solid black;
+    border-top: none;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    text-align: center;
+
+    p {
+      margin: 10px 0;
+    }
+  }
+
+  mat-radio-button {
+    margin-right: 10px;
+  }
+}

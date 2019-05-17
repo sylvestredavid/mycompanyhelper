@@ -1,0 +1,119 @@
+.titre {
+  margin-bottom: 30px;
+  h1 {
+    font-size: calc(16rem / 16);
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  p{
+    font-size: 12px;
+  }
+}
+
+.flex{
+  margin-bottom: 20px;
+}
+
+.numeroCarte{
+  padding: 10px 0;
+  border-radius: 5px;
+  border: 1px solid  #A9A9A9;
+}
+
+.cvcDiv{
+  display: flex;
+  justify-content: flex-start;
+}
+
+.cvc{
+  width: 60%;
+  padding: 10px 0;
+  border-radius: 5px;
+  margin-right: 15px;
+  border: 1px solid #A9A9A9;
+}
+
+.imageCVC{
+  width: 20%;
+  img{
+    width: 100%;
+  }
+}
+
+.dateExpiration{
+  display: flex;
+  justify-content: space-between;
+}
+
+.moisExpiration, .anneeExpiration {
+  background-color: white;
+  width: 45%;
+  padding: 10px 0;
+  text-align: center;
+  border-radius: 5px;
+}
+
+button{
+  float: right;
+}
+
+.stripeImg{
+  width: 80%;
+  margin: 10px auto;
+  img{
+    width: 100%;
+  }
+}
+
+.secured_body{
+  font-size: 12px;
+  p{
+    margin-top: 10px;
+  }
+}
+
+.bold{
+  font-weight: bold;
+}
+
+.encours{
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(255, 255, 255,0.5);
+  .encours_body {
+    width: 100%;
+    position: absolute;
+    top: calc(50% - 50px);
+    text-align: center;
+
+    mat-spinner {
+      position: relative;
+      top: 0;
+      left: calc(50% - 50px);
+    }
+  }
+}
+
+@media screen and (min-width: 425px) {
+
+  .flex{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .cvcDiv {
+    width: 50%;
+  }
+
+  .dateExpiration {
+    width: 50%;
+  }
+
+  .numeroCarte {
+    width: 50%;
+  }
+}

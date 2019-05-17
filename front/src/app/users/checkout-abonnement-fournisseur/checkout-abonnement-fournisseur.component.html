@@ -1,0 +1,71 @@
+<button mat-icon-button class="sortie" (click)="close()">
+    <mat-icon svgIcon="sortie"></mat-icon>
+</button>
+<div class="titre">
+    <h1>S'abonner en tant que fournisseur</h1>
+    <p>En vous abbonnant en tant que fournisseur, <span class="bold">vous ne payez que si quelqu'un répond à votre annonce.</span></p>
+    <p>Vous pouvez arréter votre abonnement a tout moment dans l'onglet "options".</p>
+</div>
+<form [formGroup]="checkoutForm" (ngSubmit)="chargeCreditCard()">
+    <div class="flex">
+        <label for="numeroCarte">Numero de carte : </label>
+        <input id="numeroCarte" class="numeroCarte" type="text" placeholder="numero Carte" formControlName="numeroCarte"
+               maxlength="19" [value]="checkoutForm.get('numeroCarte').value | cardNumber">
+    </div>
+    <div class="flex">
+        <p>Date D'expiration : </p>
+        <div class="dateExpiration">
+            <select formControlName="moisExpiration" class="moisExpiration">
+                <option value="01">01</option>
+                <option value="02">02</option>
+                <option value="03">03</option>
+                <option value="04">04</option>
+                <option value="05">05</option>
+                <option value="06">06</option>
+                <option value="07">07</option>
+                <option value="08">08</option>
+                <option value="09">09</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+            </select>
+            <select formControlName="anneeExpiration" class="anneeExpiration">
+                <ng-container *ngFor="let a of anneeListe">
+                    <option value="{{a}}">{{a}}</option>
+                </ng-container>
+            </select>
+        </div>
+    </div>
+    <div class="flex">
+        <label for="cvc">Cryptogramme visuel :</label>
+        <div class="cvcDiv">
+            <input id="cvc" type="text" placeholder="CVC" formControlName="CVC" class="cvc" maxlength="3">
+            <figure class="imageCVC">
+                <img src="assets/cvc.png">
+            </figure>
+        </div>
+    </div>
+    <button mat-raised-button type="submit" [disabled]="checkoutForm.invalid">Submit</button>
+    <div class="clear"></div>
+</form>
+<div class="secured">
+    <figure class="stripeImg">
+        <img src="assets/stripe-paiement.jpg"/>
+    </figure>
+    <div class="secured_body">
+        <p>mycompanyhelper s'appui sur les dernieres normes de sécurité et <span class="bold">ne dispose à aucun moment de vos informations bancaires.</span>
+        </p>
+        <p>Le paiment est assuré par stripe.</p>
+        <p>Son certificat PCI DSS de nivrau 1 garantit <span class="bold">le plus haut degré de sécurité</span> en
+            matière de transactions bancaires</p>
+        <p>La technologie SSL <span class="bold">assure un paiement 100% sécurié.</span></p>
+    </div>
+</div>
+<ng-container *ngIf="enCours">
+    <div class="encours">
+        <div class="encours_body">
+            <mat-spinner></mat-spinner>
+            <p>Nous interrogeons votre banque, cela peut prendre quelques instants.</p>
+        </div>
+    </div>
+</ng-container>

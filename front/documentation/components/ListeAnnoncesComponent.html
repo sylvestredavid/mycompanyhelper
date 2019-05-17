@@ -1,0 +1,1137 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>front documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">front documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li>Components</li>
+  <li>ListeAnnoncesHorsConnexionComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li >
+            <a href="#templateData" role="tab" id="templateData-tab" data-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li >
+            <a href="#styleData" role="tab" id="styleData-tab" data-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li >
+            <a href="#tree" role="tab" id="tree-tab" data-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/partieUtilisateurs/annuaire-fournisseurs/liste-annonces/liste-annonces-hors-connexion.component.ts</code>
+</p>
+
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                    <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
+                    <code><a href="https://angular.io/api/core/OnDestroy" target="_blank" >OnDestroy</a></code>
+    </p>
+
+
+<section>
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-liste-annonces</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./liste-annonces.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./liste-annonces.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#annoncesAAfficher">annoncesAAfficher</a>
+                            </li>
+                            <li>
+                                <a href="#listeAnnonces">listeAnnonces</a>
+                            </li>
+                            <li>
+                                <a href="#max">max</a>
+                            </li>
+                            <li>
+                                <a href="#subscription">subscription</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#filtrerParPrix">filtrerParPrix</a>
+                            </li>
+                            <li>
+                                <a href="#filtrerParProduits">filtrerParProduits</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#formate">formate</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#getMax">getMax</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnDestroy">ngOnDestroy</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit">ngOnInit</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(annuaireService: <a href="../injectables/AnnuaireService.html">AnnuaireService</a>, fb: <a href="https://angular.io/api/forms/FormBuilder" target="_blank">FormBuilder</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/app/partieUtilisateurs/annuaire-fournisseurs/liste-annonces/liste-annonces-hors-connexion.component.ts:17</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>annuaireService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/AnnuaireService.html" target="_self" >AnnuaireService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>fb</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://angular.io/api/forms/FormBuilder" target="_blank" >FormBuilder</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="filtrerParPrix"></a>
+                    <span class="name">
+                        <b>
+                            filtrerParPrix
+                        </b>
+                        <a href="#filtrerParPrix"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>filtrerParPrix(value: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="74"
+                            class="link-to-prism">src/app/partieUtilisateurs/annuaire-fournisseurs/liste-annonces/liste-annonces-hors-connexion.component.ts:74</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>fonction qui parcoure la liste d&#39;annonces pour resortir les annonces dont le prix max est inferieur ou égal au prix cherché</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>value</td>
+                                    <td>
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>la valeur du slider</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="filtrerParProduits"></a>
+                    <span class="name">
+                        <b>
+                            filtrerParProduits
+                        </b>
+                        <a href="#filtrerParProduits"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>filtrerParProduits(filterValue: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="59"
+                            class="link-to-prism">src/app/partieUtilisateurs/annuaire-fournisseurs/liste-annonces/liste-annonces-hors-connexion.component.ts:59</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>fonction qui parcoure la liste d&#39;annonces pour resortir les annonces contenant le mot cherché</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>filterValue</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>la chaine de caractere de l&#39;input</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="formate"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            formate
+                        </b>
+                        <a href="#formate"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>formate(entree: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="40"
+                            class="link-to-prism">src/app/partieUtilisateurs/annuaire-fournisseurs/liste-annonces/liste-annonces-hors-connexion.component.ts:40</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>fonction qui supprime les espaces, accents et virgules</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>entree</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>la chaine de caractere de l&#39;input</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>string la chaine de caractere formatée</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getMax"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            getMax
+                        </b>
+                        <a href="#getMax"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getMax(annonces: <a href="../classes/AnnonceModel.html">AnnonceModel[]</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="90"
+                            class="link-to-prism">src/app/partieUtilisateurs/annuaire-fournisseurs/liste-annonces/liste-annonces-hors-connexion.component.ts:90</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>fonction qui calcule le prix max touts annonces confondues afin d&#39;alimenter le slider</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>annonces</td>
+                                    <td>
+                                                <code><a href="../classes/AnnonceModel.html" target="_self" >AnnonceModel[]</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>la liste d&#39;annonces a parcourir</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>number le prix maximum touts annonces</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnDestroy"></a>
+                    <span class="name">
+                        <b>
+                            ngOnDestroy
+                        </b>
+                        <a href="#ngOnDestroy"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnDestroy()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="104"
+                            class="link-to-prism">src/app/partieUtilisateurs/annuaire-fournisseurs/liste-annonces/liste-annonces-hors-connexion.component.ts:104</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <b>
+                            ngOnInit
+                        </b>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="22"
+                            class="link-to-prism">src/app/partieUtilisateurs/annuaire-fournisseurs/liste-annonces/liste-annonces-hors-connexion.component.ts:22</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section>
+    
+        <h3 id="inputs">
+            Properties
+        </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="annoncesAAfficher"></a>
+                        <span class="name">
+                            <b>
+                            annoncesAAfficher</b>
+                            <a href="#annoncesAAfficher"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="../classes/AnnonceModel.html" target="_self" >AnnonceModel[]</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/app/partieUtilisateurs/annuaire-fournisseurs/liste-annonces/liste-annonces-hors-connexion.component.ts:15</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="listeAnnonces"></a>
+                        <span class="name">
+                            <b>
+                            listeAnnonces</b>
+                            <a href="#listeAnnonces"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="../classes/AnnonceModel.html" target="_self" >AnnonceModel[]</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/app/partieUtilisateurs/annuaire-fournisseurs/liste-annonces/liste-annonces-hors-connexion.component.ts:14</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="max"></a>
+                        <span class="name">
+                            <b>
+                            max</b>
+                            <a href="#max"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/app/partieUtilisateurs/annuaire-fournisseurs/liste-annonces/liste-annonces-hors-connexion.component.ts:16</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="subscription"></a>
+                        <span class="name">
+                            <b>
+                            subscription</b>
+                            <a href="#subscription"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>Subscription</code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/app/partieUtilisateurs/annuaire-fournisseurs/liste-annonces/liste-annonces-hors-connexion.component.ts:17</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Component, OnDestroy, OnInit} from &#x27;@angular/core&#x27;;
+import {AnnonceModel} from &#x27;../../../models/annonce.model&#x27;;
+import {AnnuaireService} from &#x27;../annuaire.service&#x27;;
+import {FormBuilder, FormGroup} from &#x27;@angular/forms&#x27;;
+import {Subscription} from &#x27;rxjs&#x27;;
+
+@Component({
+    selector: &#x27;app-liste-annonces&#x27;,
+    templateUrl: &#x27;./liste-annonces.component.html&#x27;,
+    styleUrls: [&#x27;./liste-annonces.component.scss&#x27;]
+})
+export class ListeAnnoncesHorsConnexionComponent implements OnInit, OnDestroy {
+
+    listeAnnonces: AnnonceModel[];
+    annoncesAAfficher: AnnonceModel[];
+    max: number;
+    subscription: Subscription;
+
+    constructor(private annuaireService: AnnuaireService, private fb: FormBuilder) {
+    }
+
+    ngOnInit() {
+        this.annuaireService.publishAnnonces();
+        this.subscription &#x3D; this.annuaireService.listeAnnonces$.subscribe(
+            annonces &#x3D;&gt; {
+                this.listeAnnonces &#x3D; annonces;
+                this.annoncesAAfficher &#x3D; this.listeAnnonces;
+                this.max &#x3D; this.getMax(annonces);
+            }
+        );
+
+
+    }
+
+    /**
+     * fonction qui supprime les espaces, accents et virgules
+     * @param entree la chaine de caractere de l&#x27;input
+     * @return string la chaine de caractere formatée
+     */
+    private formate(entree: string): string {
+        let result &#x3D; entree.toLowerCase();
+        result &#x3D; result.replace(/[\s]/g, &#x27;&#x27;);
+        result &#x3D; result.replace(/[,]/g, &#x27;&#x27;);
+        result &#x3D; result.replace(/[éèëê]/g, &#x27;e&#x27;);
+        result &#x3D; result.replace(/[àầä]/g, &#x27;a&#x27;);
+        result &#x3D; result.replace(/[ôö]/g, &#x27;o&#x27;);
+        result &#x3D; result.replace(/[ùûü]/g, &#x27;u&#x27;);
+        result &#x3D; result.replace(/[îï]/g, &#x27;i&#x27;);
+        if(result.charAt(result.length - 1 ).toLowerCase() &#x3D;&#x3D;&#x3D; &#x27;s&#x27;){
+            result &#x3D; result.slice(0, result.length - 1);
+        }
+        return result;
+    }
+
+    /**
+     * fonction qui parcoure la liste d&#x27;annonces pour resortir les annonces contenant le mot cherché
+     * @param filterValue la chaine de caractere de l&#x27;input
+     */
+    filtrerParProduits(filterValue: string) {
+        this.annoncesAAfficher &#x3D; [];
+        this.listeAnnonces.forEach(
+            annonce &#x3D;&gt; {
+                if (this.formate(annonce.categories).includes(this.formate(filterValue))) {
+                    this.annoncesAAfficher.push(annonce);
+                }
+            }
+        );
+    }
+
+    /**
+     * fonction qui parcoure la liste d&#x27;annonces pour resortir les annonces dont le prix max est inferieur ou égal au prix cherché
+     * @param value la valeur du slider
+     */
+    filtrerParPrix(value: any) {
+        this.annoncesAAfficher &#x3D; [];
+        this.listeAnnonces.forEach(
+            annonce &#x3D;&gt; {
+                if (annonce.prixMax &lt;&#x3D; +value) {
+                    this.annoncesAAfficher.push(annonce);
+                }
+            }
+        );
+    }
+
+    /**
+     * fonction qui calcule le prix max touts annonces confondues afin d&#x27;alimenter le slider
+     * @param annonces la liste d&#x27;annonces a parcourir
+     * @return number le prix maximum touts annonces
+     */
+    private getMax(annonces: AnnonceModel[]): number {
+        let max &#x3D; 0;
+        if(annonces) {
+            annonces.forEach(
+                annonce &#x3D;&gt; {
+                    if (annonce.prixMax &gt; max) {
+                        max &#x3D; annonce.prixMax;
+                    }
+                }
+            );
+        }
+        return max;
+    }
+
+    ngOnDestroy(): void {
+        this.subscription.unsubscribe();
+    }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;h1&gt;Annonces fournisseurs&lt;/h1&gt;
+&lt;table class&#x3D;&quot;example-full-width&quot;&gt;
+    &lt;td&gt;
+        &lt;mat-form-field class&#x3D;&quot;example-full-width&quot;&gt;
+            &lt;input matInput type&#x3D;&quot;text&quot; placeholder&#x3D;&quot;Produits&quot; (keyup)&#x3D;&quot;filtrerParProduits($event.target.value)&quot;&gt;
+        &lt;/mat-form-field&gt;
+    &lt;/td&gt;
+    &lt;td class&#x3D;&quot;prixMax&quot;&gt;
+        &lt;p class&#x3D;&quot;label&quot;&gt;Prix max&lt;/p&gt;
+        &lt;mat-slider class&#x3D;&quot;example-full-width&quot;
+                    [max]&#x3D;&quot;max&quot;
+                    [min]&#x3D;&quot;1&quot;
+                    [thumbLabel]&#x3D;&quot;true&quot;
+                    [value]&#x3D;&quot;max&quot; (input)&#x3D;&quot;filtrerParPrix($event.value)&quot;
+                    color&#x3D;&quot;primary&quot;&gt;
+        &lt;/mat-slider&gt;
+    &lt;/td&gt;
+&lt;/table&gt;
+
+&lt;ng-container *ngFor&#x3D;&quot;let annonce of annoncesAAfficher&quot;&gt;
+    &lt;div class&#x3D;&quot;annonce-container&quot;&gt;
+        &lt;figure class&#x3D;&quot;annonce-img&quot;&gt;
+            &lt;img src&#x3D;&quot;http://powersell-back.eu-west-3.elasticbeanstalk.com/api/annuaireFournisseur/files/{{annonce.image}}&quot; alt&#x3D;&quot;{{annonce.titre}}&quot;&gt;
+        &lt;/figure&gt;
+        &lt;div class&#x3D;&quot;annonce-body&quot;&gt;
+            &lt;h2&gt;&lt;a routerLink&#x3D;&quot;detail/{{annonce.id}}&quot;&gt;{{annonce.titre}}&lt;/a&gt;&lt;/h2&gt;
+            &lt;p&gt;{{annonce.resumer}}&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;div class&#x3D;&quot;annonce-prix&quot;&gt;
+            &lt;h3&gt;{{annonce.categories}}&lt;/h3&gt;
+            &lt;p&gt;de {{annonce.prixMin}} à {{annonce.prixMax}}€&lt;/p&gt;
+            &lt;a routerLink&#x3D;&quot;contact-fournisseur/{{annonce.email}}&quot;
+               [queryParams]&#x3D;&quot;{annonce: annonce.titre}&quot;&gt;{{annonce.email}}&lt;/a&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/ng-container&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-styleData">
+                <p class="comment">
+                    <code>./liste-annonces.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">.annonce-container{
+  margin-top: 20px;
+  padding: 20px;
+  border-bottom: 1px solid black;
+
+  .annonce-img{
+    width: 50%;
+    margin: auto;
+    img{
+      width: 100%;
+    }
+  }
+
+  .annonce-body {
+    a {
+      text-decoration: none;
+    }
+
+    p {
+      margin-top: 10px;
+    }
+  }
+}
+
+.annonce-prix {
+
+  h3 {
+    margin-top: 20px;
+  }
+}
+
+td {
+  position: relative;
+}
+
+mat-slider {
+  margin-top: 28px;
+}
+
+.label {
+  position: absolute;
+  top: 24px;
+  left: 10px;
+  font-weight: 400;
+  font-family: &#x27;Roboto&#x27;, &quot;Helvetica Neue&quot;, sans-serif;
+  color: rgb(117, 117, 117);
+}
+
+@media screen and (min-width: 520px) {
+  .annonce-container {
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    padding: 20px 0;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    margin: 10px 0;
+
+    .annonce-img {
+      width: 10%;
+      margin: 0;
+
+      img {
+        width: 100%;
+      }
+    }
+
+    .annonce-body {
+      width: 40%;
+
+      a {
+        text-decoration: none;
+      }
+
+      p {
+        margin-top: 10px;
+      }
+    }
+
+    .annonce-prix {
+      width: 40%;
+
+      * {
+        margin-bottom: 10px;
+      }
+    }
+  }
+
+  td {
+    position: relative;
+  }
+
+  mat-slider {
+    margin-top: 28px;
+  }
+
+  .label {
+    position: absolute;
+    top: 24px;
+    left: 10px;
+    font-weight: 400;
+    font-family: &#x27;Roboto&#x27;, &quot;Helvetica Neue&quot;, sans-serif;
+    color: rgb(117, 117, 117);
+  }
+}
+@media screen and (min-width: 1024px) {
+  .annonce-container {
+    .annonce-body {
+      width: 40%;
+    }
+
+    .annonce-prix {
+      width: 20%;
+    }
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><h1>Annonces fournisseurs</h1><table class="example-full-width">    <td>        <mat-form-field class="example-full-width">            <input matInput type="text" placeholder="Produits" (keyup)="filtrerParProduits($event.target.value)">        </mat-form-field>    </td>    <td class="prixMax">        <p class="label">Prix max</p>        <mat-slider class="example-full-width"                    [max]="max"                    [min]="1"                    [thumbLabel]="true"                    [value]="max" (input)="filtrerParPrix($event.value)"                    color="primary">        </mat-slider>    </td></table><ng-container *ngFor="let annonce of annoncesAAfficher">    <div class="annonce-container">        <figure class="annonce-assets">            <assets src="http://powersell-back.eu-west-3.elasticbeanstalk.com/api/annuaireFournisseur/files/{{annonce.image}}" alt="{{annonce.titre}}">        </figure>        <div class="annonce-body">            <h2><a routerLink="detail/{{annonce.id}}">{{annonce.titre}}</a></h2>            <p>{{annonce.resumer}}</p>        </div>        <div class="annonce-prix">            <h3>{{annonce.categories}}</h3>            <p>de {{annonce.prixMin}} à {{annonce.prixMax}}€</p>            <a routerLink="contact-fournisseur/{{annonce.email}}"               [queryParams]="{annonce: annonce.titre}">{{annonce.email}}</a>        </div>    </div></ng-container></div>'
+    var COMPONENTS = [{'name': 'AjoutGenreComponent', 'selector': 'app-ajout-genre'},{'name': 'AnnoncesComponent', 'selector': 'app-annonces'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ChangePasswordComponent', 'selector': 'app-change-password'},{'name': 'ChangePasswordComponent', 'selector': 'app-change-password'},{'name': 'ClientDetailComponent', 'selector': 'app-client-detail'},{'name': 'ClientFacturesComponent', 'selector': 'app-client-factures'},{'name': 'ClientsComponent', 'selector': 'app-clients'},{'name': 'ConnexionComponent', 'selector': 'app-connexion'},{'name': 'ConnexionComponent', 'selector': 'app-connexion'},{'name': 'ContactFournisseurComponent', 'selector': 'app-contact-fournisseur'},{'name': 'CoreComponent', 'selector': 'app-core'},{'name': 'CoreFournisseursComponent', 'selector': 'app-core-fournisseurs'},{'name': 'CreateFactureComponent', 'selector': 'app-create-facture'},{'name': 'CreerAnnonceComponent', 'selector': 'app-creer-annonce'},{'name': 'DashboardComponent', 'selector': 'app-dashboard'},{'name': 'DetailAnnonceComponent', 'selector': 'app-detail-annonce'},{'name': 'DetailAnnonceComponent', 'selector': 'app-detail-annonce'},{'name': 'DialogFournisseursComponent', 'selector': 'app-dialog-fournisseurs'},{'name': 'DialogGuardComponent', 'selector': 'app-dialog-guard'},{'name': 'FournisseursListeComponent', 'selector': 'app-fournisseurs-liste'},{'name': 'GraphiqueComponent', 'selector': 'app-graphique'},{'name': 'InscriptionComponent', 'selector': 'app-inscription'},{'name': 'InscriptionComponent', 'selector': 'app-inscription'},{'name': 'LandingPageComponent', 'selector': 'app-landing-page'},{'name': 'LightboxMailComponent', 'selector': 'app-lightbox-mail'},{'name': 'LightboxMailComponent', 'selector': 'app-lightbox-mail'},{'name': 'ListeAnnoncesHorsConnexionComponent', 'selector': 'app-liste-annonces'},{'name': 'ModifAnnonceComponent', 'selector': 'app-modif-annonce'},{'name': 'NotificationComponent', 'selector': 'app-notification'},{'name': 'OptionsComponent', 'selector': 'app-options'},{'name': 'ProduitsComponent', 'selector': 'app-produits'},{'name': 'ProduitsHorsVenteComponent', 'selector': 'app-produits-hors-vente'},{'name': 'TableauClientsComponent', 'selector': 'app-tableau-clients'},{'name': 'TableauProduitComponent', 'selector': 'app-tableau-produit'},{'name': 'TopFournisseursComponent', 'selector': 'app-top-fournisseurs'}];
+    var DIRECTIVES = [{'name': 'InputReadOnlyDirective', 'selector': '[inputReadOnly]'}];
+    var ACTUAL_COMPONENT = {'name': 'ListeAnnoncesHorsConnexionComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'ListeAnnoncesHorsConnexionComponent.html';
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

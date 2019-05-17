@@ -1,0 +1,68 @@
+<form [formGroup]="calendrierForm">
+
+    <mat-form-field class="example-full-width">
+        <input matInput placeholder="titre" formControlName="title">
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+        <input [max]="calendrierForm.value.end" matInput [matDatepicker]="picker2" placeholder="date de debut"
+               formControlName="start">
+        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+        <mat-datepicker #picker2></mat-datepicker>
+    </mat-form-field>
+
+    <table class="example-full-width" cellspacing="0">
+        <tr>
+            <td>
+                <mat-form-field>
+                    <mat-select placeholder="heure" formControlName="heureStart">
+                        <mat-option *ngFor="let h of heures" [value]="h">
+                            {{h}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </td>
+            <td>
+                <mat-form-field>
+                    <mat-select placeholder="minutes" formControlName="minuteStart">
+                        <mat-option *ngFor="let m of minutes" [value]="m">
+                            {{m}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </td>
+        </tr>
+    </table>
+    <mat-form-field class="example-full-width">
+        <input matInput [min]="calendrierForm.value.start" [matDatepicker]="picker3" placeholder="date de fin"
+               formControlName="end" [value]="calendrierForm.value.start">
+        <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+        <mat-datepicker #picker3></mat-datepicker>
+    </mat-form-field>
+    <table class="example-full-width" cellspacing="0">
+        <tr>
+            <td>
+                <mat-form-field>
+                    <mat-select placeholder="heure" formControlName="heureEnd">
+                        <mat-option *ngFor="let h of heures" [value]="h">
+                            {{h}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </td>
+            <td>
+                <mat-form-field>
+                    <mat-select placeholder="minutes" formControlName="minuteEnd">
+                        <mat-option *ngFor="let m of minutes" [value]="m">
+                            {{m}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </td>
+        </tr>
+    </table>
+</form>
+<div class="button-container">
+<button mat-raised-button (click)="onSubmit()">envoyer</button>
+<button mat-raised-button color="warn" *ngIf="data.calendrier" (click)="onDelete()">supprimer l'event</button>
+</div>

@@ -1,0 +1,11 @@
+<mat-dialog-content>
+    <ng-container *ngFor="let notification of listeNotification">
+    <div [ngClass]="{'pas-vue':!notification.vue}">
+        <p>{{notification.notification}}</p>
+    </div>
+</ng-container>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-raised-button (click)="onQuit()">ok</button>
+</mat-dialog-actions>
+

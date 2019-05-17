@@ -1,0 +1,37 @@
+.divider{
+    border-bottom: 1px solid purple;
+}
+
+h1{
+    margin-bottom: 30px;
+}
+
+h2{
+    margin-bottom: 20px;
+}
+
+h3{
+    margin: 20px 0;
+}
+
+mat-radio-group{
+    display: flex;
+    margin: 10px auto 40px auto;
+    justify-content: space-evenly;
+}
+
+mat-slide-toggle{
+    float: right;
+}
+
+table{
+    width: 100% !important;
+    margin-bottom: 30px;
+    margin-top: 10px;
+}
+
+.dark-background{
+    .mat-dialog-container {
+        background-color: rgb(66, 66, 66);
+        padding-top: 8px;}
+}

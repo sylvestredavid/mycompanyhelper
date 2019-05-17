@@ -1,0 +1,118 @@
+.rupture{
+  color: red;
+  font-weight: bold;
+}
+
+h2{
+  font-size: 1.5em;
+  margin: 0 auto 0.25em auto;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 80%;
+  display: block;
+  margin: 20px auto 0 auto;
+}
+
+.ajouterButton {
+  background: transparent;
+  border: none;
+  margin-left: 10px;
+}
+
+.ajouterButton:hover {
+  cursor: pointer;
+}
+
+.supprimerButton {
+  margin: 30px;
+  float: right;
+}
+
+.boutons-container {
+  text-align: right;
+  margin-top: 20px;
+}
+
+.boutons-container button {
+  margin-left: 10px;
+}
+
+.separator{
+  border-top: 1px solid #EEE;
+}
+
+
+
+.boutons-genres-container {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: nowrap;
+  .genre_button {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom: none !important;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    width: 162px;
+    background-color: white;
+    font-weight: bold;
+    border: 1px solid #EEE;
+    box-shadow: -2px 0px 5px grey;
+
+    &:nth-of-type(1n+2) {
+      margin-left: -60px;
+    }
+
+    &:hover{
+      cursor: pointer;
+      margin-right: 60px;
+    }
+  }
+
+  .ajouterGenre{
+    width: 80px;
+  }
+
+  .actif{
+    margin-right: 60px;
+  }
+}
+
+.selected {
+  background-color: rgba(103, 58, 183, 0.2);
+}
+
+.contenaire {
+  text-align: center;
+  padding: 20px;
+  margin-top: 20px;
+  border: 1px solid black;
+}
+
+@media screen and (min-width: 768px) {
+  .flex{
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+
+    .contenaire{
+      width: 40%;
+    }
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  table {
+    width: 100%;
+    text-align: center;
+  }
+
+  th {
+    text-align: center !important;
+  }
+}
+
+
+

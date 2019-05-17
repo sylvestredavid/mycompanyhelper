@@ -1,0 +1,66 @@
+<div class="flex">
+    <ng-template [ngIf]="role === 'ROLE_ADMIN'" [ngIfElse]="gest">
+        <mat-icon class="pagination pagination_left" (click)="slider('left')" svgIcon="left"></mat-icon>
+        <div class="container">
+            <div class="content" [@slider]="position">
+                <div class="content-slide">
+                    <h2>Evolution du chiffre d'affaire</h2>
+                    <div class="chart-container">
+                        <ngx-charts-line-chart
+                                [results]="caDiag"
+                                [legend]="true"
+                                [legendPosition]="'below'"
+                                [xAxis]="true"
+                                [yAxis]="true"
+                                [xAxisLabel]="'mois'"
+                                [yAxisLabel]="'chiffre d\'affaire'">
+                        </ngx-charts-line-chart>
+                        <ng-container *ngIf="exemple">
+                            <div class="exempleCA">
+                                <p>Ceci est un exemple</p>
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+                <div class="content-slide">
+                    <h2>Nombre de ventes par produits</h2>
+                    <div class="chart-container">
+                        <ngx-charts-bar-vertical
+                                [scheme]="colorScheme"
+                                [results]="produitDiag"
+                                [gradient]="true"
+                                [xAxis]="true"
+                                [yAxis]="true"
+                                [xAxisLabel]="'produit'"
+                                [yAxisLabel]="'nb de vente'">
+                        </ngx-charts-bar-vertical>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <mat-icon class="pagination pagination_right" (click)="slider('right')" svgIcon="right"></mat-icon>
+    </ng-template>
+    <ng-template #gest>
+        <div class="container">
+            <div class="content" [@slider]="position">
+                <div class="content-slide">
+                    <h2>Nombre de ventes par produits</h2>
+                    <div class="chart-container">
+                        <ngx-charts-bar-vertical
+                                [scheme]="colorScheme"
+                                [results]="produitDiag"
+                                [gradient]="true"
+                                [xAxis]="true"
+                                [yAxis]="true"
+                                [showXAxisLabel]="true"
+                                [showYAxisLabel]="true"
+                                [xAxisLabel]="'produit'"
+                                [yAxisLabel]="'nb de vente'">
+                        </ngx-charts-bar-vertical>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</div>
+

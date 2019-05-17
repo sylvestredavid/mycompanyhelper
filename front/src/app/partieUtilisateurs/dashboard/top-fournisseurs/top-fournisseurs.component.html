@@ -1,0 +1,21 @@
+<h2>Ces annonces pourraient vous interresser.</h2>
+<div class="container">
+  <ng-container *ngFor="let annonce of topAnnonces">
+    <div class="annonce-container">
+      <figure class="annonce-img">
+        <img src="https://back.mycompanyhelper.com/api/annuaireFournisseur/files/{{annonce.image}}" alt="{{annonce.titre}}">
+      </figure>
+      <div class="annonce-body">
+        <h2><a routerLink="/users/annuaire-fournisseurs/detail/{{annonce.id}}">{{annonce.titre}}</a></h2>
+        <p>{{annonce.resumer}}</p>
+      </div>
+      <div class="annonce-prix">
+        <h3>{{annonce.categories}}</h3>
+        <p>de {{annonce.prixMin}} à {{annonce.prixMax}}€</p>
+        <a routerLink="/users/annuaire-fournisseurs/contact-fournisseur/{{annonce.email}}"
+           [queryParams]="{titre: annonce.titre, id: annonce.id}">{{annonce.email}}</a>
+      </div>
+    </div>
+  </ng-container>
+</div>
+

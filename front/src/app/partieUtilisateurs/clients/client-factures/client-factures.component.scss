@@ -1,0 +1,34 @@
+table {
+  width: 100%;
+  margin-top: 15px;
+  border-collapse: collapse;
+}
+
+tr.example-detail-row {
+  height: 0;
+}
+.facture{
+  margin: 10px;
+  border: 1px solid black;
+  padding: 20px;
+}
+
+.body table, .body tr, .body thead, .body th, .body tbody, .body td{
+  border: 1px solid black;
+}
+
+.body th, .body td{
+  padding: 15px;
+  text-align: center;
+}
+
+.body h3{
+  text-align: center;
+  margin: 20px 0;
+}
+
+.total{
+  text-align: right;
+  width: 80%;
+  margin: 10px auto;
+}

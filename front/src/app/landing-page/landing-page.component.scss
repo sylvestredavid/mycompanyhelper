@@ -1,0 +1,49 @@
+h1{
+  font-size: 2em;
+  line-height: 1;
+}
+
+.contenaire{
+  margin-top: 40px;
+
+  h2{
+    margin-bottom: 10px;
+  }
+}
+
+figure {
+  width: 100%;
+
+  img {
+    width: 100%;
+    border: 1px solid black;
+  }
+}
+
+@media screen and (min-width: 758px) {
+  .right {
+    text-align: right;
+  }
+
+  .text {
+    width: 20%;
+  }
+
+  figure {
+    width: 75%;
+
+    img {
+      width: 100%;
+    }
+  }
+
+  .float-left {
+    float: left;
+  }
+
+  .float-right {
+    float: right;
+  }
+}
+
+

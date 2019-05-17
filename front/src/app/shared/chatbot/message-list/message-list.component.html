@@ -1,0 +1,24 @@
+  <button mat-icon-button class="sortie" (click)="close()">
+    <mat-icon svgIcon="sortie"></mat-icon>
+  </button>
+<div class="chatBot">
+  <div class="clear"></div>
+<div class="chatlist">
+  <div class="list-group" #scrollMe>
+    <ng-container *ngFor="let msg of messages">
+      <div class="list-group-item list-group-item-{{msg.expediteur}}">
+        <img [src]="msg.avatar" class="avatar"/>
+        <div class="message message_{{msg.expediteur}}">
+          <p>{{msg.content}}</p>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>
+<form class="chatcontrol" [formGroup]="messageForm" (ngSubmit)="sendMessage()">
+  <mat-form-field class="example-full-width">
+    <input matInput placeholder="Message" formControlName="message">
+  </mat-form-field>
+  <button mat-raised-button type="submit">Envoyer</button>
+</form>
+</div>

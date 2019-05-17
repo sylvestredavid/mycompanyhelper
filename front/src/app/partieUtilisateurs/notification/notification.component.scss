@@ -1,0 +1,12 @@
+div{
+  border-bottom: 1px solid black;
+  padding: 20px 5px;
+
+  &:first-of-type{
+    border-top: 1px solid black;
+  }
+}
+
+.pas-vue{
+  background-color: rgba(103, 58, 183, 0.2);
+}

@@ -1,0 +1,52 @@
+<ng-container *ngIf="usernameList">
+<form [formGroup]="signUpForm" (ngSubmit)="onSubmit()" class="loginForm">
+    <h3>S'inscrire</h3>
+    <mat-radio-group aria-label="Voulez-vous vous inscrire en tant que commerçant ou fournisseur?" formControlName="typeInscription">
+        <mat-radio-button color="primary" value="user">Commerçant</mat-radio-button>
+        <mat-radio-button color="primary" value="fournisseur">Fournisseur</mat-radio-button>
+    </mat-radio-group>
+    <mat-form-field class="example-full-width">
+        <input matInput placeholder="Email" formControlName="username">
+    </mat-form-field>
+    <p class="error" *ngIf="signUpForm.controls['username'].hasError('username')">
+        Un compte existe déjà avec cet email.
+    </p>
+    <mat-form-field class="example-full-width">
+        <input matInput placeholder="nom complet" formControlName="name">
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+        <input matInput placeholder="Entreprise" formControlName="entreprise">
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+        <input matInput [type]="hideMdp1 ? 'password' : 'text'" placeholder="password" formControlName="password1">
+        <p class="hide_btn" mat-icon-button matSuffix (mousedown)="hideMdp1 = false" (mouseup)="hideMdp1 = true">
+            <mat-icon [svgIcon]="hideMdp1 ? 'hide' : 'nohide'"></mat-icon>
+        </p>
+    </mat-form-field>
+    <div class="passwordBar">
+        <password-strength-meter [colors]="['red', 'orange','yellowgreen', 'green']"
+                                 [password]="signUpForm.value.password1"></password-strength-meter>
+        <p [ngStyle]="{'color': mdpUtils.verifCapitale(signUpForm)}">Contient 1 lettre majuscule</p>
+        <p [ngStyle]="{'color': mdpUtils.verifMinuscule(signUpForm)}">Contient 1 lettre minuscule</p>
+        <p [ngStyle]="{'color': mdpUtils.verifChiffre(signUpForm)}">Contient 1 chiffre</p>
+        <p [ngStyle]="{'color': mdpUtils.verifCaractereSpecial(signUpForm)}">Contient 1 caractere spécial</p>
+        <p [ngStyle]="{'color': mdpUtils.verifLongueur(signUpForm)}">Contient au minimum 8 caractere</p>
+    </div>
+    <mat-form-field class="example-full-width">
+        <input matInput [type]="hideMdp2 ? 'password' : 'text'" placeholder="confirmez password" formControlName="password2">
+        <p class="hide_btn" mat-icon-button matSuffix (mousedown)="hideMdp2 = false" (mouseup)="hideMdp2 = true">
+            <mat-icon [svgIcon]="hideMdp2 ? 'hide' : 'nohide'"></mat-icon>
+        </p>
+    </mat-form-field>
+    <p class="error" *ngIf="signUpForm.value.password2 && signUpForm.controls.password2.invalid">
+        Les mots de passe ne sont pas identiques
+    </p>
+    <ng-container *ngIf="signUpForm.value.typeInscription === 'user'">
+        <mat-radio-group aria-label="Choisissez votre type d'abonnement" formControlName="typeAbo">
+            <mat-radio-button color="primary" value="fixe">Fixe 10€/mois</mat-radio-button>
+            <mat-radio-button color="primary" value="requete">A la requete</mat-radio-button>
+        </mat-radio-group>
+    </ng-container>
+    <button mat-raised-button type="submit" color="primary" [disabled]="signUpForm.invalid">Inscription</button>
+</form>
+</ng-container>

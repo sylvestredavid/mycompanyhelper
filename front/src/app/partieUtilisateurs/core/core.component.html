@@ -1,0 +1,27 @@
+<mat-toolbar color="primary" class="mat-elevation-z6">
+    <ng-template [ngIf]="screenWidth > 700" [ngIfElse]="mobile">
+        <p routerLink="/users" class="acueil">mycompanyhelper</p>
+    </ng-template>
+    <ng-template #mobile>
+        <button mat-button routerLink="/users">Menu</button>
+    </ng-template>
+    <div class="flex-spacer"></div>
+    <button mat-icon-button>
+        <mat-icon svgIcon="notification" (click)="openNotifications()"></mat-icon>
+        <span class="badge" *ngIf="nbNotifications && nbNotifications > 0">{{nbNotifications}}</span>
+    </button>
+    <ng-container *ngIf="role === 'ROLE_ADMIN'">
+        <button mat-icon-button (click)="openOptions()" title="options">
+            <mat-icon svgIcon="options"></mat-icon>
+        </button>
+    </ng-container>
+    <button mat-icon-button (click)="openChatBot()" title="chatBot">
+        <mat-icon svgIcon="aide"></mat-icon>
+    </button>
+    <button mat-icon-button title="sortie">
+        <mat-icon svgIcon="quit" (click)="sortie()"></mat-icon>
+    </button>
+</mat-toolbar>
+<main>
+    <router-outlet></router-outlet>
+</main>

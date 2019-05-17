@@ -1,0 +1,85 @@
+<mat-toolbar color="primary" class="mat-elevation-z6">
+    <p routerLink="" class="acueil">mycompanyhelper</p>
+    <div class="flex-spacer"></div>
+    <ng-container *ngIf="screenWidth >= 768 else mobile">
+        <button mat-button routerLink="/annonces">Annonces fournisseurs</button>
+        <button mat-button routerLink="/connexion">Connexion</button>
+    </ng-container>
+    <ng-template #mobile>
+        <button mat-button [matMenuTriggerFor]="menu">Menu</button>
+
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item routerLink="/annonces">Annonces fournisseurs</button>
+            <button mat-menu-item routerLink="/connexion">Connexion</button>
+        </mat-menu>
+    </ng-template>
+</mat-toolbar>
+<main>
+    <ng-container *ngIf="annonce">
+    <ul class="fil-ariane">
+        <li>
+            <a routerLink="">Accueil</a>
+        </li>
+        <li>
+            <a routerLink="/annonces">Annonces fournisseurs</a>
+        </li>
+        <li>
+            <a class="actif">{{annonce.titre}}</a>
+        </li>
+    </ul>
+        <div class="annonce-view mat-elevation-z6">
+            <h1>{{annonce.titre}}</h1>
+            <p>le {{annonce.datePoste | date: 'dd/MM à HH:mm'}}</p>
+            <figure class="annonce_img">
+                <img src="https://back.mycompanyhelper.com/api/annuaireFournisseur/files/{{annonce.image}}"
+                     alt="{{annonce.titre}}">
+            </figure>
+            <div class="description">
+                <div class="description-left">
+                    <p>Produits :</p>
+                    <p>Prix :</p>
+                </div>
+                <div class="description-right">
+                    <p>{{annonce.categories}}</p>
+                    <p><span>{{annonce.prixMin}}</span> à <span>{{annonce.prixMax}}</span>€</p>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="corps"><p>{{annonce.corps}}</p></div>
+                <div style="text-align:center;" id="33883-31"><script src="//ads.themoneytizer.com/s/gen.js?type=31"></script><script src="//ads.themoneytizer.com/s/requestform.js?siteId=33883&formatId=31"></script></div>
+
+            <div class="contacter">
+                <h2>Répondre à l'annonce</h2>
+                <form [formGroup]="mailForm" (ngSubmit)="onSubmit()">
+                    <mat-form-field class="example-full-width">
+                        <input matInput type="text" placeholder="Email de contact" formControlName="email">
+                    </mat-form-field>
+                    <mat-form-field class="example-full-width">
+                        <textarea matInput placeholder="corps de l'annonce" formControlName="corps"
+                                  rows="20"></textarea>
+                    </mat-form-field>
+                    <button mat-raised-button type="submit">envoyer</button>
+                </form>
+            </div>
+        </div>
+        <ng-container *ngIf="screenWidth >= 1024">
+            <aside>
+                <div class="contacter_aside">
+                    <h2>Répondre à l'annonce</h2>
+                    <form [formGroup]="mailForm" (ngSubmit)="onSubmit()">
+                        <mat-form-field class="example-full-width">
+                            <input matInput type="text" placeholder="Email de contact" formControlName="email">
+                        </mat-form-field>
+                        <mat-form-field class="example-full-width">
+                            <textarea matInput placeholder="corps de l'annonce" formControlName="corps"
+                                      rows="20"></textarea>
+                        </mat-form-field>
+                        <button mat-raised-button type="submit">envoyer</button>
+                    </form>
+                </div>
+                    <div id="33883-3"><script src="//ads.themoneytizer.com/s/gen.js?type=3"></script><script src="//ads.themoneytizer.com/s/requestform.js?siteId=33883&formatId=3"></script></div>
+                <div class="clear"></div>
+            </aside>
+        </ng-container>
+    </ng-container>
+</main>

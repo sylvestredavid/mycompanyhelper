@@ -1,0 +1,29 @@
+<h2>Sotcks bas</h2>
+<ng-container *ngIf="dataSourceProduit.data.length != 0 else aucun">
+  <div>
+    <table mat-table [dataSource]="dataSourceProduit" matSort>
+
+      <!-- Position Column -->
+      <ng-container matColumnDef="designation">
+        <th mat-header-cell *matHeaderCellDef > Désignation</th>
+        <td mat-cell *matCellDef="let element">{{element.designation}}</td>
+      </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="quantite">
+        <th mat-header-cell *matHeaderCellDef > Quantitée</th>
+        <td mat-cell *matCellDef="let element" class="rupture">{{element.quantite}}</ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumnsProduits"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumnsProduits;">
+    </table>
+    <mat-paginator [pageSize]="4"></mat-paginator>
+
+  </div>
+
+</ng-container>
+<ng-template #aucun>
+    <div>
+        <p>Aucun produit bientot en rupture de stock.</p>
+    </div>
+</ng-template>

@@ -1,0 +1,49 @@
+.grid-content{
+    margin-bottom: 10px;
+}
+@media screen and (min-width: 1000px) {
+    .grid-container {
+        margin-top: 20px;
+        display: grid;
+        grid-auto-columns: minmax(auto, auto);
+        grid-auto-rows: minmax(auto, auto);
+        grid-gap: 2rem;
+        grid-template-areas: "un un un deux deux"
+                             "un un un deux deux"
+                             "un un un cinq cinq"
+                             "un un un cinq cinq"
+                             "trois trois quatre quatre quatre"
+                             "trois trois quatre quatre quatre"
+                             "trois trois quatre quatre quatre"
+                             "trois trois quatre quatre quatre"
+    }
+
+    .grid-content {
+        text-align: center;
+        padding: 30px;
+        border: 1px solid black;
+        box-shadow: 5px 5px 5px dimgrey;
+    }
+
+    .grid-content-un {
+        grid-area: un;
+    }
+
+    .grid-content-deux {
+        grid-area: deux;
+        height: 400px;
+    }
+
+    .grid-content-trois {
+        grid-area: trois;
+    }
+
+    .grid-content-quatre {
+        grid-area: quatre;
+    }
+
+    .grid-content-cinq {
+        grid-area: cinq;
+        height: 400px;
+    }
+}
