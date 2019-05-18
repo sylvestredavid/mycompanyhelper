@@ -1,49 +1,108 @@
-h1{
-  font-size: 2em;
-  line-height: 1;
+main{
+  width: 98%;
 }
+.landing_left{
+  width: 70%;
+  float: left;
 
-.contenaire{
-  margin-top: 40px;
+  h1{
+    text-align: right;
+    margin-right: 20%;
+    font-size: 2.8rem;
+    line-height: 0.5;
+    font-weight: bold;
+  }
 
   h2{
-    margin-bottom: 10px;
-  }
-}
-
-figure {
-  width: 100%;
-
-  img {
-    width: 100%;
-    border: 1px solid black;
-  }
-}
-
-@media screen and (min-width: 758px) {
-  .right {
     text-align: right;
+    margin-right: 13%;
+    font-size: 2rem;
   }
 
-  .text {
-    width: 20%;
+  .landing_text{
+    font-size: 20px;
+    margin: 20px 10px 30px 50px;
+    line-height: 1.6;
   }
 
-  figure {
-    width: 75%;
+  .landing_body{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
 
-    img {
-      width: 100%;
+    .landing_img{
+      width: 60%;
+      position: relative;
+
+      .landing_img_back{
+        width: 100%;
+      }
+
+      .landing_img_front{
+        width: 93%;
+        height: 71%;
+        position: absolute;
+        top: 25px;
+        left: 25px;
+      }
+    }
+
+    ul{
+      width: 35%;
+    }
+
+    li{
+      display: flex;
+      justify-content: space-around;
+      margin-bottom: 30px;
+
+      .landing_puce{
+        width: 50px;
+        height: 50px;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        border-radius: 50%;
+        background-color: #673ab7;
+        position: relative;
+
+        img{
+          width: 70%;
+          position: absolute;
+          top: 8px;
+          left: 8px;
+        }
+      }
+
+      p{
+        width: 80%;
+        font-size: 18px;
+      }
     }
   }
-
-  .float-left {
-    float: left;
-  }
-
-  .float-right {
-    float: right;
-  }
 }
 
+.landing_right{
+  width: 29%;
+  float: right;
+  border: 1px solid black;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  -webkit-box-shadow: 5px 5px 6px grey;
+  -moz-box-shadow: 5px 5px 6px grey;
+  box-shadow: 5px 5px 6px grey;
+  padding: 20px;
+  margin-top: 40px;
+  
+  h3{
+    margin: 20px 0;
+    text-align: center;
+    font-size: 1.7rem;
+  }
 
+  p{
+    margin-bottom: 20px;
+    font-size: 1.3rem;
+    line-height: 1.5;
+  }
+}

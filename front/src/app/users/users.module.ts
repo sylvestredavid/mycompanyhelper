@@ -74,7 +74,8 @@ import {CheckoutAbonnementFournisseurComponent} from './checkout-abonnement-four
         ])
     ],
     exports: [
-        ConnexionComponent
+        ConnexionComponent,
+        InscriptionComponent
     ]
 })
 export class UsersModule {

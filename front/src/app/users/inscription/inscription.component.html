@@ -1,6 +1,5 @@
 <ng-container *ngIf="usernameList">
 <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()" class="loginForm">
-    <h3>S'inscrire</h3>
     <mat-radio-group aria-label="Voulez-vous vous inscrire en tant que commerçant ou fournisseur?" formControlName="typeInscription">
         <mat-radio-button color="primary" value="user">Commerçant</mat-radio-button>
         <mat-radio-button color="primary" value="fournisseur">Fournisseur</mat-radio-button>

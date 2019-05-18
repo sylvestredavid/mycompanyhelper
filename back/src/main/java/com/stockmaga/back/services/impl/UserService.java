@@ -151,7 +151,10 @@ public class UserService implements IUserService {
 			optionService.saveOptions(options);
 			emailService.sendInscriptionMail(signUpRequest);
 		}
-		return new ResponseEntity<>(newUser, HttpStatus.OK);
+		LoginForm login = new LoginForm();
+		login.setUsername(signUpRequest.getUsername());
+		login.setPassword(signUpRequest.getPassword());
+		return ResponseEntity.status(HttpStatus.OK).body(authenticateUser(login));
 	}
 
 	/**

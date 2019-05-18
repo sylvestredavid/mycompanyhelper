@@ -4,6 +4,7 @@ import {MAT_DIALOG_DATA, MatDialogRef, MatIconRegistry} from '@angular/material'
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {DomSanitizer} from '@angular/platform-browser';
 import {finalize} from 'rxjs/operators';
+import {BehaviorSubject} from "rxjs";
 
 interface DialogData {
     idAnnonce: number;
@@ -21,7 +22,7 @@ export class ChekoutDialComponent implements OnInit {
     annee: number;
     anneeListe: number[] = [];
     checkoutForm: FormGroup;
-    enCours: boolean;
+    enCours$ = new BehaviorSubject<boolean>(false);
 
     constructor(private annonceService: AnnonceService, public dialogRef: MatDialogRef<ChekoutDialComponent>,
                 @Inject(MAT_DIALOG_DATA) public data: DialogData, private fb: FormBuilder, iconRegistry: MatIconRegistry,
@@ -32,7 +33,6 @@ export class ChekoutDialComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.enCours = false;
         this.annee = new Date().getFullYear();
         for (let i = this.annee; i < this.annee + 50; i++) {
             this.anneeListe.push(i);
@@ -46,7 +46,7 @@ export class ChekoutDialComponent implements OnInit {
     }
 
     chargeCreditCard() {
-        this.enCours = true;
+        this.enCours$.next(true);
         const form = this.checkoutForm.value;
         (<any>window).Stripe.card.createToken({
             number: form.numeroCarte.replace(/( )/g, ''),
@@ -63,7 +63,7 @@ export class ChekoutDialComponent implements OnInit {
 
     chargeCard(token: string) {
         this.annonceService.miseEnAvant(token, this.data.idAnnonce).pipe(
-            finalize(() => this.enCours = false)
+            finalize(() => this.enCours$.next(false))
         ).subscribe(
             (ok: any) => {
                 this.annonceService.mettreAnnonceEnAvant(this.data.idAnnonce);

@@ -25,7 +25,6 @@
 </ul>
         <h1>Bienvenue sur mycompanyhelper</h1>
         <h2>Votre meilleur allié pour gerer votre entreprise.</h2>
-        <div class="flex">
             <div class="connexion">
                 <form [formGroup]="loginForm" class="loginForm" (ngSubmit)="onSubmit()">
                     <h3>Se connecter.</h3>
@@ -43,8 +42,4 @@
                     <a class="mdp_oubli" (click)="envoiMail()">Mot de passe oublié</a>
                 </form>
             </div>
-            <div class="inscription">
-                <app-inscription></app-inscription>
-            </div>
-        </div>
 </main>

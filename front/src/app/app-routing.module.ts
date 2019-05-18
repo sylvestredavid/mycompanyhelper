@@ -5,11 +5,13 @@ import {CoreFournisseursComponent} from './partieFournisseurs/core-fournisseurs/
 import {LandingPageComponent} from './landing-page/landing-page.component';
 import {MenuComponent} from './partieUtilisateurs/menu/menu.component';
 import {MenuFournisseurComponent} from './partieFournisseurs/menuFournisseur/menu-fournisseur.component';
+import {IsConnectedGuard} from './shared/guards/is-connected-guard.service';
 
 const routes: Routes = [
     {
         path: '',
         component: LandingPageComponent,
+        canActivate: [IsConnectedGuard]
     },
     {
         path: 'connexion',

@@ -5,6 +5,11 @@ import {MAT_DIALOG_DATA, MatDialogRef, MatIconRegistry, MatSnackBar} from '@angu
 import {DomSanitizer} from '@angular/platform-browser';
 import {SignUpModel} from '../../models/signUp.model';
 import {finalize} from 'rxjs/operators';
+import {AjoutUser} from "../../shared/stores/user.actions";
+import {UserState} from "../../shared/stores/user.reducer";
+import {Store} from "@ngrx/store";
+import {Router} from "@angular/router";
+import {BehaviorSubject} from "rxjs";
 
 interface DialogData {
     signupRequest: SignUpModel
@@ -21,18 +26,17 @@ export class CheckoutAbonnementFournisseurComponent implements OnInit {
     anneeListe: number[] = [];
     checkoutForm: FormGroup;
     msg: string;
-    enCours: boolean;
+    enCours$ = new BehaviorSubject<boolean>(false);
 
     constructor(private userService: UsersService, public dialogRef: MatDialogRef<CheckoutAbonnementFournisseurComponent>,
                 @Inject(MAT_DIALOG_DATA) public data: DialogData, private fb: FormBuilder, iconRegistry: MatIconRegistry,
-                sanitizer: DomSanitizer, private snackBar: MatSnackBar) {
+                sanitizer: DomSanitizer, private snackBar: MatSnackBar, private store: Store<UserState>, private router: Router) {
         iconRegistry.addSvgIcon(
             'sortie',
             sanitizer.bypassSecurityTrustResourceUrl('/assets/delete.svg'));
     }
 
     ngOnInit() {
-        this.enCours = false;
         this.annee = new Date().getFullYear();
         for (let i = this.annee; i < this.annee + 50; i++) {
             this.anneeListe.push(i);
@@ -46,7 +50,7 @@ export class CheckoutAbonnementFournisseurComponent implements OnInit {
     }
 
     chargeCreditCard() {
-        this.enCours = true;
+        this.enCours$.next(true);
         const form = this.checkoutForm.value;
         (<any>window).Stripe.card.createToken({
             number: form.numeroCarte.replace(/( )/g, ''),
@@ -63,16 +67,16 @@ export class CheckoutAbonnementFournisseurComponent implements OnInit {
 
     chargeCard(token: string) {
         this.userService.abonnementFournisseur(token, this.data.signupRequest.username).pipe(
-            finalize(() => this.enCours = false)
+            finalize(() => this.enCours$.next(false))
         ).subscribe(
             (reponse: any) => {
                 this.userService.signup(this.data.signupRequest).subscribe(
                     user => {
-                        if (user) {
-                            this.userService.addAbonnement(reponse.msg, user.username);
-                            this.msg = 'Votre inscription a été effectuée, vous pouvez vous connecter.';
-                            this.dialogRef.close(this.msg);
-                        }
+                        this.userService.addAbonnement(reponse.msg, user.username);
+                        this.userService.idUser = user.managementId !== null ? user.managementId : user.id;
+                        this.store.dispatch(new AjoutUser(user));
+                        sessionStorage.setItem('token', user.token);
+                        this.dialogRef.close('ok');
                     }
                 );
             },

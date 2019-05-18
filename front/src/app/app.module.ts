@@ -50,6 +50,7 @@ import { TransferHttpCacheModule } from '@nguniversal/common';
 import { NgtUniversalModule } from '@ng-toolkit/universal';
 import {CoreComponent} from './partieUtilisateurs/core/core.component';
 import {CoreFournisseursComponent} from './partieFournisseurs/core-fournisseurs/core-fournisseurs.component';
+import {UsersModule} from "./users/users.module";
 
 registerLocaleData(localeFr, 'fr-FR');
 
@@ -101,6 +102,7 @@ registerLocaleData(localeFr, 'fr-FR');
         CommonModule,
         TransferHttpCacheModule,
         NgtUniversalModule,
+        UsersModule,
     ],
     providers: [AuthGuard,
         DatePipe,

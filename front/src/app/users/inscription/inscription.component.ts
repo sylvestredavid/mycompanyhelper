@@ -64,25 +64,31 @@ export class InscriptionComponent implements OnInit {
         if (this.signUpForm.value.typeInscription === 'user') {
             const dialogRef = this.dialog.open(CheckoutAbonnementComponent, {
                 width: '500px',
-                data: {signupRequest: signUp, typeAbo: this.signUpForm.value.typeAbo},
-                panelClass: 'position_relative'
+                data: {signupRequest: signUp, typeAbo: this.signUpForm.value.typeAbo}
             });
             dialogRef.afterClosed().subscribe(result => {
                 if (result) {
-                    this.snackBar.open(result, 'ok', {verticalPosition: 'top', duration: 2500});
-                    this.signUpForm.reset()
+                    if (result === 'ok') {
+                        this.router.navigate(['users']);
+                    } else {
+                        this.snackBar.open(result, 'ok', {verticalPosition: 'top', duration: 2500});
+                        this.signUpForm.reset()
+                    }
                 }
             });
         } else if (this.signUpForm.value.typeInscription === 'fournisseur') {
             const dialogRef = this.dialog.open(CheckoutAbonnementFournisseurComponent, {
                 width: '500px',
-                data: {signupRequest: signUp},
-                panelClass: 'position_relative'
+                data: {signupRequest: signUp}
             });
             dialogRef.afterClosed().subscribe(result => {
                 if (result) {
+                    if (result === 'ok') {
+                    this.router.navigate(['fournisseurs']);
+                } else {
                     this.snackBar.open(result, 'ok', {verticalPosition: 'top', duration: 2500});
                     this.signUpForm.reset()
+                }
                 }
             });
         }

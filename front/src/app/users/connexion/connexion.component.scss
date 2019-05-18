@@ -33,12 +33,7 @@ h2 {
 @media screen and (min-width: 1000px) {
 
   .connexion, .inscription {
-    width: 40%;
-  }
-
-  .flex {
-    margin-top: 40px;
-    display: flex;
-    justify-content: space-around;
+    width: 50%;
+    margin: auto;
   }
 }

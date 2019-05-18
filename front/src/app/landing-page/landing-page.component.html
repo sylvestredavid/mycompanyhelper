@@ -1,4 +1,4 @@
-<mat-toolbar color="primary" class="mat-elevation-z6">
+<mat-toolbar color="primary" class="mat-elevation-z6" xmlns="http://www.w3.org/1999/html">
     <p routerLink="" class="acueil">mycompanyhelper</p>
     <div class="flex-spacer"></div>
     <ng-container *ngIf="screenWidth >= 768 else mobile">
@@ -15,77 +15,93 @@
     </ng-template>
 </mat-toolbar>
 <main>
-        <h1>Bienvenue sur mycompanyhelper</h1>
-        <h2>Votre meilleur allié pour la gestion de votre entreprise</h2>
-
-        <div class="contenaire">
-            <h2>Suivez votre chiffre d'affaire</h2>
-            <div class="text float-left">
-                <p>
-                    Le chiffre d'affaire est enregistré chaque fin de mois, en calculant le total des
-                    factures créées sur mycompanyhelper.
-                    Suivez ainsi l'évolution de votre chiffre d'affaisre grâce au graphique du dashboard
-                </p>
-            </div>
-            <figure class="float-right">
-                <img src="/assets/dashboard.png" title="dashboard" alt="suivi du chiffre d'affaire">
-            </figure>
-            <div class="clear"></div>
+    <div class="landing_left">
+        <h1>mycompanyhelper</h1>
+        <h2>Le meilleur allié pour votre entreprise</h2>
+        <p class="landing_text">
+            mycompanyhelper, le crm qui vous offre toutes les fonctionnalités pour développer votre entreprise.<br>
+            Avec mycompanyhelper, gérez vos stocks, vos clients, vos fournisseurs, créez et envoyez vos factures, soyez
+            informé en temps réel, gérez votre planning… et bien plus encore!<br>
+            Trouvez de nouveaux fournisseurs sur mycompanyhelper grâce à notre système d'annonces.
+        </p>
+        <div class="landing_body">
+        <figure class="landing_img">
+            <img src="assets/ordi.jpg" class="landing_img_back">
+            <img src="assets/landing1.png" class="landing_img_front">
+        </figure>
+            <ul class="landing_list">
+                <li>
+                    <div class="landing_puce">
+                        <img src="assets/produits.svg" alt="produits">
+                    </div>
+                    <p>
+                        Gérez vos stocks et soyez avertis
+                        en cas de stock bas
+                    </p>
+                </li>
+                <li>
+                    <div class="landing_puce">
+                        <img src="assets/clients.svg" alt="clients">
+                    </div>
+                    <p>
+                        Enregistrez vos clients et suivez
+                        leurs achats
+                    </p>
+                </li>
+                <li>
+                    <div class="landing_puce">
+                        <img src="assets/fournisseurs.svg" alt="fournisseurs">
+                    </div>
+                    <p>
+                        Enregistrez vos fournisseurs et
+                        contactez-les facilement
+                    </p>
+                </li>
+                <li>
+                    <div class="landing_puce">
+                        <img src="assets/calendrier.svg" alt="calendrier">
+                    </div>
+                    <p>
+                        Gérez votre planning et recevez un
+                        rappel de vos événements
+                    </p>
+                </li>
+                <li>
+                    <div class="landing_puce">
+                        <img src="assets/annonces.svg" alt="annonces">
+                    </div>
+                    <p>
+                        Contactez de nouveaux fournisseurs
+                        en répondant à leurs annonces
+                    </p>
+                </li>
+                <li>
+                    <div class="landing_puce">
+                        <img src="assets/factures.svg" alt="factures">
+                    </div>
+                    <p>
+                        Créez, téléchargez et envoyez
+                        vos factures
+                    </p>
+                </li>
+                <li>
+                    <div class="landing_puce">
+                        <img src="assets/dashboard.svg" alt="dashboard">
+                    </div>
+                    <p>
+                        toutes les données de votre
+                        entreprise en un coup d'œil
+                    </p>
+                </li>
+            </ul>
         </div>
-
-        <div class="contenaire">
-            <h2 class="right">Suivez vos stocks</h2>
-            <div class="text float-right">
-                <p>
-                    Lorsque vous créez une facture, le stock des produits selectionnés est mis a jour.
-                    Choisissez la limite pour laquelle le stock sera considéré comme bas et soyez tenu au courant
-                    par notification et pas email lorsque le stock atteint la limite
-                </p>
-            </div>
-            <figure class="float-left">
-                <img src="/assets/notification.png" title="notification" alt="suivi stock">
-            </figure>
-            <div class="clear"></div>
-        </div>
-
-        <div class="contenaire">
-            <h2>Gerez vos clients, produits, fournisseurs</h2>
-            <div class="text float-left">
-                <p>
-                    Création et modification intuitive.
-                    aucun formulaire, double-cliquez simplement sur le champ a modifier
-                </p>
-            </div>
-            <figure class="float-right">
-                <img src="/assets/tableau.png" title="tableau" alt="suivi clients, produits, fournisseur">
-            </figure>
-            <div class="clear"></div>
-        </div>
-
-        <div class="contenaire">
-            <h2 class="right">Vous etes fournisseur?</h2>
-            <div class="text float-right">
-                <p>
-                    Créez vos annonces et soyez contacter par les utilisateurs et les visiteurs du site
-                </p>
-            </div>
-            <figure class="float-left">
-                <img src="/assets/annonce.png" title="annonce" alt="création d'annonces fournisseurs">
-            </figure>
-            <div class="clear"></div>
-        </div>
-
-        <div class="contenaire">
-            <h2>Créez et envoyez vos factures</h2>
-            <div class="text float-left">
-                <p>
-                    Grâce a notre formulaire intuitif, créez facilement vos factures, envoyez les a
-                    vos clients et téléchargez les en pdf.
-                </p>
-            </div>
-            <figure class="float-right">
-                <img src="/assets/facture.png" title="facture" alt="création et envoi de factures">
-            </figure>
-            <div class="clear"></div>
-        </div>
+    </div>
+    <div class="landing_right">
+        <h3>Essais gratuit</h3>
+        <p>
+            Testez gratuitement mycompanyhelper
+            pendant 30 jours sans engagement.
+        </p>
+        <app-inscription></app-inscription>
+    </div>
 </main>
