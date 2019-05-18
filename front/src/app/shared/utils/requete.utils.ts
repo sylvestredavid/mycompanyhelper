@@ -4,7 +4,7 @@ import { LOCAL_STORAGE } from '@ng-toolkit/universal';
 
 export class RequeteUtils {
 
-    url = 'http://localhost:5000/api/';
+    url = 'https://back.mycompanyhelper.com/api/';
  constructor(@Inject(LOCAL_STORAGE) private localStorage: any, ) {}
 
 
