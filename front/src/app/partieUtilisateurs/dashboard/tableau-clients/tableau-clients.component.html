@@ -1,6 +1,5 @@
 
 <h2>Meilleurs clients</h2>
-<ng-container *ngIf="dataSourceClients.data.length != 0">
   <div>
     <table mat-table [dataSource]="dataSourceClients" matSort>
 
@@ -21,4 +20,3 @@
     </table>
     <mat-paginator [pageSize]="4"></mat-paginator>
   </div>
-</ng-container>

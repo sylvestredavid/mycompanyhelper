@@ -54,7 +54,7 @@ import {CoreFournisseursComponent} from './partieFournisseurs/core-fournisseurs/
 registerLocaleData(localeFr, 'fr-FR');
 
 @NgModule({
-    entryComponents: [OptionsComponent, NotificationComponent, DialogGuardComponent, MessageListComponent, CalendrierDialComponent],
+    entryComponents: [AjoutGenreComponent, OptionsComponent, NotificationComponent, DialogGuardComponent, MessageListComponent, CalendrierDialComponent],
     declarations: [
         AppComponent,
         OptionsComponent,
