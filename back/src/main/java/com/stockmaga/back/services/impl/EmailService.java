@@ -11,8 +11,10 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import org.springframework.core.env.Environment;
 import com.stockmaga.back.models.Annonce;
 import com.stockmaga.back.models.Calendrier;
 import com.stockmaga.back.models.Email;
@@ -27,18 +29,20 @@ public class EmailService implements IEmailService {
 
 	private static final String MAIL_FROM = "david.sylvestre.lp2@gmail.com";
 
+	@Autowired
+	private Environment env;
 	/**
 	 * Methode d'envoi d'un email
 	 * 
-	 * @param String to l'adresse mail du destinataire
-	 * @param String from l'adresse mail de l'expediteur
-	 * @param String title le sujet du mail
-	 * @param String mail Le corps du mail
+	 * @param  to l'adresse mail du destinataire
+	 * @param  from l'adresse mail de l'expediteur
+	 * @param  title le sujet du mail
+	 * @param  mail Le corps du mail
 	 */
 	public void send(String to, String from, String title, String mail) {
 
-		final String username = "david.sylvestre.lp2@gmail.com";// change accordingly
-		final String password = "Myriamelenajeremy24";// change accordingly
+		final String username = env.getProperty("email.username");// change accordingly
+		final String password = env.getProperty("email.mdp");// change accordingly
 		// Assuming you are sending email through relay.jangosmtp.net
 		String host = "smtp.gmail.com";
 

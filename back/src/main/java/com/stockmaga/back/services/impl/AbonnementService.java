@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -28,8 +29,6 @@ import com.stripe.model.UsageRecord;
 @Service
 public class AbonnementService implements IAbonnementService {
 
-	private static final String STRIPE_API_KEY = "sk_test_7rkSP1nq1oILBmkYxBnRIDeO";
-
 	@Autowired
 	AnnonceRepository annonceRepository;
 
@@ -38,6 +37,9 @@ public class AbonnementService implements IAbonnementService {
 
 	@Autowired
 	IEmailService emailService;
+
+	@Autowired
+	Environment env;
 
 	/**
 	 * augmente le nombre de contacts a chaque mail envoyé en réponse a une annonce
@@ -51,7 +53,7 @@ public class AbonnementService implements IAbonnementService {
 		Optional<Annonce> annonce = annonceRepository.findById(id);
 		Optional<User> user = userRepository.findById(annonce.get().getIdFournisseur());
 
-		Stripe.apiKey = STRIPE_API_KEY;
+		Stripe.apiKey = env.getProperty("stripe.apikey");
 		try {
 			Subscription sub = Subscription.retrieve(user.get().getAbonnement());
 
@@ -61,6 +63,8 @@ public class AbonnementService implements IAbonnementService {
 
 			Instant instant = Instant.now();
 			long timeStamp = instant.getEpochSecond();
+
+			System.out.println(timeStamp);
 
 			Map<String, Object> usagerecordParams = new HashMap<String, Object>();
 			usagerecordParams.put("quantity", 1);
@@ -77,7 +81,7 @@ public class AbonnementService implements IAbonnementService {
 
 	@Override
 	public ResponseEntity<?> miseEnAvant(String token, Integer idAnnonce) {
-		Stripe.apiKey = STRIPE_API_KEY;
+		Stripe.apiKey = env.getProperty("stripe.apikey");
 
 		Optional<Annonce> annonce = annonceRepository.findById(idAnnonce);
 		Map<String, Object> params = new HashMap<String, Object>();
@@ -98,7 +102,7 @@ public class AbonnementService implements IAbonnementService {
 
 	@Override
 	public ResponseEntity<?> abonement(String token, String email) {
-		Stripe.apiKey = STRIPE_API_KEY;
+		Stripe.apiKey = env.getProperty("stripe.apikey");
 		try {
 			// Create a Customer:
 			Map<String, Object> params = new HashMap<>();
@@ -127,7 +131,7 @@ public class AbonnementService implements IAbonnementService {
 
 	@Override
 	public ResponseEntity<?> abonementRequete(String token, String email) {
-		Stripe.apiKey = STRIPE_API_KEY;
+		Stripe.apiKey = env.getProperty("stripe.apikey");
 		try {
 			// Create a Customer:
 			Map<String, Object> params = new HashMap<>();
@@ -156,7 +160,7 @@ public class AbonnementService implements IAbonnementService {
 
 	@Override
 	public ResponseEntity<?> abonementFournisseur(String token, String email) {
-		Stripe.apiKey = STRIPE_API_KEY;
+		Stripe.apiKey = env.getProperty("stripe.apikey");
 		try {
 			// Create a Customer:
 			Map<String, Object> params = new HashMap<>();
@@ -185,7 +189,7 @@ public class AbonnementService implements IAbonnementService {
 
 	@Override
 	public ResponseEntity<?> stopAbonnement(Long idUser) {
-		Stripe.apiKey = STRIPE_API_KEY;
+		Stripe.apiKey = env.getProperty("stripe.apikey");
 		Optional<User> user = userRepository.findById(idUser);
 		Subscription sub;
 		try {
@@ -203,7 +207,7 @@ public class AbonnementService implements IAbonnementService {
 	public void augmenterNbRequete(Long idUser) throws StripeException {
 		Optional<User> user = userRepository.findById(idUser);
 
-		Stripe.apiKey = STRIPE_API_KEY;
+		Stripe.apiKey = env.getProperty("stripe.apikey");
 		if (user.get().getAbonnement() != null && user.get().getAbonnement() != "") {
 			Subscription sub = Subscription.retrieve(user.get().getAbonnement());
 			

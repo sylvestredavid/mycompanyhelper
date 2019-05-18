@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpStatus;
@@ -26,13 +28,15 @@ import com.stockmaga.back.services.IFileService;
 
 @Service
 public class FileService implements IFileService {
-	
+
+	@Autowired
+	private Environment env;
 	/**
 	 * authentification auprès d'aws
 	 * @return AmazonS3 l'user authentifié
 	 */
 	public AmazonS3 createUser() {
-		AWSCredentials credentials = new BasicAWSCredentials("AKIAJ34OYXJYLVRULOLA", "t6dIAHnTcV5WKgz+zvSygIrH9Mr0XzelZuq2AbHg");
+		AWSCredentials credentials = new BasicAWSCredentials(env.getProperty("aws.accesskey"), env.getProperty("aws.secretkey"));
 		return AmazonS3ClientBuilder
 				  .standard()
 				  .withCredentials(new AWSStaticCredentialsProvider(credentials))
