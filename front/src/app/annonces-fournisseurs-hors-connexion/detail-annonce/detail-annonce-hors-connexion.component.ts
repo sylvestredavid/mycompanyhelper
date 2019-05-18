@@ -61,7 +61,7 @@ export class DetailAnnonceHorsConnexionComponent implements OnInit, OnDestroy {
         const mail: EmailModel = {
             to: this.emailTo,
             from: this.mailForm.value.email,
-            titre: `Votre annonce "${this.titre}" sur mycompanyhelper.`,
+            titre: `Votre annonce "${this.annonce.titre}" sur mycompanyhelper.`,
             corps: this.mailForm.value.corps
         };
 
