@@ -1,5 +1,5 @@
 import {Component, HostListener, OnInit, Inject} from '@angular/core';
-import {WINDOW} from '@ng-toolkit/universal';
+
 import {Title} from '@angular/platform-browser';
 
 @Component({
@@ -10,7 +10,7 @@ import {Title} from '@angular/platform-browser';
 export class LandingPageComponent implements OnInit {
     screenWidth: number;
 
-    constructor(@Inject(WINDOW) private window: Window, private titleService: Title) {
+    constructor(private titleService: Title) {
     }
 
     ngOnInit() {
@@ -20,7 +20,7 @@ export class LandingPageComponent implements OnInit {
 
     @HostListener('window:resize', ['$event'])
     getScreenSize(event?) {
-        this.screenWidth = this.window.innerWidth;
+        this.screenWidth = window.innerWidth;
     }
 
 }

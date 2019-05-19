@@ -58,7 +58,6 @@ public class TachesPlanifiee {
 				caAEnvoyer.setChiffreDAffaire(ca.getTotal());
 				caAEnvoyer.setIdUser(ca.getUser());
 				CA newCA = caRepository.save(caAEnvoyer);
-				System.out.println(newCA);
 			}
 		}
 	}

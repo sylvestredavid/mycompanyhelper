@@ -9,7 +9,7 @@ import {AjoutUser} from '../../shared/stores/user.actions';
 import {MatDialog, MatIconRegistry, MatSnackBar} from '@angular/material';
 import {LightboxMailComponent} from './lightbox-mail/lightbox-mail.component';
 import {DomSanitizer} from '@angular/platform-browser';
-import {LOCAL_STORAGE, WINDOW} from '@ng-toolkit/universal';
+
 
 @Component({
     selector: 'app-connexion',
@@ -24,7 +24,7 @@ export class ConnexionComponent implements OnInit, OnDestroy {
     isRememberMe: boolean;
     hide: boolean;
 
-    constructor(@Inject(WINDOW) private window: Window, @Inject(LOCAL_STORAGE) private localStorage: any, private userService: UsersService, private fb: FormBuilder, private router: Router,
+    constructor(private userService: UsersService, private fb: FormBuilder, private router: Router,
                 public dialog: MatDialog, private store: Store<UserState>, private snackBar: MatSnackBar, iconRegistry: MatIconRegistry,
                 sanitizer: DomSanitizer) {
         iconRegistry.addSvgIcon(
@@ -44,7 +44,7 @@ export class ConnexionComponent implements OnInit, OnDestroy {
 
     @HostListener('window:resize', ['$event'])
     getScreenSize() {
-        this.screenWidth = this.window.innerWidth;
+        this.screenWidth = window.innerWidth;
     }
 
     /**
@@ -70,7 +70,7 @@ export class ConnexionComponent implements OnInit, OnDestroy {
                 this.userService.idUser = user.managementId !== null ? user.managementId : user.id;
                 this.store.dispatch(new AjoutUser(user));
                 if (this.isRememberMe) { // si l'user a coché se souvenir de moi on stock le token dans le
-                    this.localStorage.setItem('token', user.token);
+                    localStorage.setItem('token', user.token);
                 } else { // sinon on le stock dans le sessionStorage
                     sessionStorage.setItem('token', user.token);
                 }

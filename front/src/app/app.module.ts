@@ -47,7 +47,6 @@ import {MenuComponent} from './partieUtilisateurs/menu/menu.component';
 import localeFr from '@angular/common/locales/fr';
 import {MenuFournisseurComponent} from './partieFournisseurs/menuFournisseur/menu-fournisseur.component';
 import { TransferHttpCacheModule } from '@nguniversal/common';
-import { NgtUniversalModule } from '@ng-toolkit/universal';
 import {CoreComponent} from './partieUtilisateurs/core/core.component';
 import {CoreFournisseursComponent} from './partieFournisseurs/core-fournisseurs/core-fournisseurs.component';
 import {UsersModule} from "./users/users.module";
@@ -72,7 +71,7 @@ registerLocaleData(localeFr, 'fr-FR');
         CoreFournisseursComponent,
     ],
     imports: [
-        BrowserModule,
+        BrowserModule.withServerTransition({ appId: 'serverApp' }),
         MatBottomSheetModule,
         AppRoutingModule,
         BrowserAnimationsModule,
@@ -101,7 +100,6 @@ registerLocaleData(localeFr, 'fr-FR');
         }),
         CommonModule,
         TransferHttpCacheModule,
-        NgtUniversalModule,
         UsersModule,
     ],
     providers: [AuthGuard,

@@ -11,7 +11,7 @@ import {DomSanitizer} from '@angular/platform-browser';
 import {UserModel} from '../../models/user.modele';
 import {Observable} from 'rxjs';
 import {finalize, map} from 'rxjs/operators';
-import { WINDOW } from '@ng-toolkit/universal';
+
 
 @Component({
     selector: 'app-options',
@@ -27,7 +27,7 @@ export class OptionsComponent implements OnInit, OnDestroy {
     screenWidth: number;
     enCour: boolean;
 
-    constructor(@Inject(WINDOW) private window: Window, public dialogRef: MatDialogRef<OptionsComponent>,
+    constructor(public dialogRef: MatDialogRef<OptionsComponent>,
                 private fb: FormBuilder, private optionService: OptionsService,
                 private storeUser: Store<UserState>, private userService: UsersService, iconRegistry: MatIconRegistry,
                 sanitizer: DomSanitizer) {
@@ -174,7 +174,7 @@ export class OptionsComponent implements OnInit, OnDestroy {
      */
     @HostListener('window:resize', ['$event'])
     getScreenSize(event?) {
-        this.screenWidth = this.window.innerWidth;
+        this.screenWidth = window.innerWidth;
     }
 
 }

@@ -74,7 +74,6 @@ export class CustomValidators {
                 liste.forEach(
                     u => {
                         if (u == control.value) {
-                            console.log(u);
                             existe = true;
                         }
                     }

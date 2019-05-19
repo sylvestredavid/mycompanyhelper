@@ -9,14 +9,14 @@ import {GetOptions} from '../stores/options.actions';
 import {OptionsService} from '../../partieUtilisateurs/options/options.service';
 import {ProduitService} from '../../partieUtilisateurs/produits/produit.service';
 import {ClientsService} from '../../partieUtilisateurs/clients/clients.service';
-import { LOCAL_STORAGE } from '@ng-toolkit/universal';
+
 
 @Injectable()
 export class IsConnectedGuard implements CanActivate {
 
     role: string;
 
-    constructor(@Inject(LOCAL_STORAGE) private localStorage: any, private router: Router, private userService: UsersService, private store: Store<UserState>,
+    constructor(private router: Router, private userService: UsersService, private store: Store<UserState>,
                 private optionService: OptionsService, private produitService: ProduitService, private clientService: ClientsService) {
     }
 
@@ -29,8 +29,8 @@ export class IsConnectedGuard implements CanActivate {
      * @param state l'etat de la route
      */
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-        if (sessionStorage.getItem('token') !== null || this.localStorage.getItem('token') !== null) {
-            const token = sessionStorage.getItem('token') || this.localStorage.getItem('token');
+        if (sessionStorage.getItem('token') !== null || localStorage.getItem('token') !== null) {
+            const token = sessionStorage.getItem('token') || localStorage.getItem('token');
             this.userService.dejaConntecte(token).subscribe(
                 user => {
                     this.store.dispatch(new AjoutUser(user));

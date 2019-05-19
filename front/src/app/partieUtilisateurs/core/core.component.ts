@@ -18,7 +18,6 @@ import {MessageListComponent} from '../../shared/chatbot/message-list/message-li
 import {ProduitService} from '../produits/produit.service';
 import {ClientsService} from '../clients/clients.service';
 import {CalendrierService} from '../calendrier/calendrier.service';
-import { LOCAL_STORAGE, WINDOW } from '@ng-toolkit/universal';
 
 @Component({
     selector: 'app-core',
@@ -34,7 +33,7 @@ export class CoreComponent implements OnInit, OnDestroy {
     nbNotifications: number;
     screenWidth: number;
 
-    constructor(@Inject(WINDOW) private window: Window, @Inject(LOCAL_STORAGE) private localStorage: any, private fournisseurService: FournisseursService, private genreService: GenreService, private store: Store<UserState>
+    constructor(private fournisseurService: FournisseursService, private genreService: GenreService, private store: Store<UserState>
         , public dialog: MatDialog, iconRegistry: MatIconRegistry, sanitizer: DomSanitizer, private produitService: ProduitService,
                 private clientService: ClientsService, private optionService: OptionsService, private router: Router, private calendrierService: CalendrierService,
                 private notificationService: NotificationsService) {
@@ -112,9 +111,9 @@ export class CoreComponent implements OnInit, OnDestroy {
      */
     sortie() {
         sessionStorage.removeItem('token');
-        this.localStorage.removeItem('token');
+        localStorage.removeItem('token');
         this.store.dispatch(new DeleteUser());
-        this.window.location.replace('');
+        window.location.replace('');
     }
 
     /**
@@ -139,7 +138,7 @@ export class CoreComponent implements OnInit, OnDestroy {
 
     @HostListener('window:resize', ['$event'])
     getScreenSize(event?) {
-        this.screenWidth = this.window.innerWidth;
+        this.screenWidth = window.innerWidth;
     }
 
     openChatBot() {

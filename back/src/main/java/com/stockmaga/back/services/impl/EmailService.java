@@ -12,6 +12,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import org.springframework.core.env.Environment;
@@ -132,6 +133,7 @@ public class EmailService implements IEmailService {
 	 * envoi de la confirmation d'inscription a un gestionnaire
 	 */
 	@Override
+	@Async
 	public void sendGestMail(User user) {
 		final String Gest_Mail = "<h1>Bienvenue</h1>"
 				+ "<p>Vous avez été ajouté en tant que gestionnaire pour le compte de " + user.getEntreprise() + ".</p>"
@@ -176,6 +178,7 @@ public class EmailService implements IEmailService {
 	 * envoi d'un mail d'alerte de stock bas
 	 */
 	@Override
+	@Async
 	public void mailStockBas(String produit, String email) {
 
 		final String MAIL = "<p>Bonjour</p>" + "<p>Le produit " + produit + " est en stock insufisant.</p>"
@@ -190,6 +193,7 @@ public class EmailService implements IEmailService {
 	 * envoi de la confirmation d'inscription a un admin ou un fournisseur
 	 */
 	@Override
+	@Async
 	public void sendInscriptionMail(SignUpForm signUpRequest) {
 
 		final String MAIL = "<p>Bonjour</p>" + "<p>Vous venez de vous inscrire en tant que "
@@ -203,6 +207,7 @@ public class EmailService implements IEmailService {
 	}
 
 	@Override
+	@Async
 	public void sendMailMiseEnAvant(Annonce annonce) {
 		final String MAIL = "<p>Bonjour</p>" + "<p>L'annonce " + annonce.getTitre() + " à bien été mis en avant</p>"
 				+ "<p>Votre compte sera débité de 5€.</p>" + "<p>Cordialement.</p>"

@@ -16,7 +16,7 @@ import {NotificationsService} from '../../notification/notifications.service';
 import {SocketService} from '../../../shared/socket.service';
 import {OptionsService} from '../../options/options.service';
 import {AjoutGenreComponent} from '../../genres/ajout-genre/ajout-genre.component';
-import { WINDOW } from '@ng-toolkit/universal';
+
 
 @Component({
     selector: 'app-produits',
@@ -45,7 +45,7 @@ export class ProduitsComponent implements OnInit, OnDestroy {
     genres: any;
 
 
-    constructor(@Inject(WINDOW) private window: Window, private route: ActivatedRoute, private genreService: GenreService, private produitService: ProduitService,
+    constructor(private route: ActivatedRoute, private genreService: GenreService, private produitService: ProduitService,
                 private router: Router, iconRegistry: MatIconRegistry, sanitizer: DomSanitizer, private fb: FormBuilder,
                 private snackBar: MatSnackBar, private optionService: OptionsService, private storeUser: Store<UserState>,
                 private userService: UsersService, private notificationService: NotificationsService, private socket: SocketService,
@@ -390,7 +390,7 @@ export class ProduitsComponent implements OnInit, OnDestroy {
      */
     @HostListener('window:resize', ['$event'])
     getScreenSize(event?) {
-        this.screenWidth = this.window.innerWidth;
+        this.screenWidth = window.innerWidth;
     }
 
     changeIsDirty() {

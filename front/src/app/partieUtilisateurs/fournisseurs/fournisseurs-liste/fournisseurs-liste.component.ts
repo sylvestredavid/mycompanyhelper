@@ -13,7 +13,7 @@ import {Store} from '@ngrx/store';
 import {UserState} from '../../../shared/stores/user.reducer';
 import {UsersService} from '../../../users/users.service';
 import {SocketService} from '../../../shared/socket.service';
-import { WINDOW } from '@ng-toolkit/universal';
+
 
 @Component({
     selector: 'app-fournisseurs-liste',
@@ -39,7 +39,7 @@ export class FournisseursListeComponent implements OnInit, OnDestroy {
     isDirty: boolean;
 
 
-    constructor(@Inject(WINDOW) private window: Window, private route: ActivatedRoute, private fournisseurService: FournisseursService,
+    constructor(private route: ActivatedRoute, private fournisseurService: FournisseursService,
                 private router: Router, iconRegistry: MatIconRegistry, sanitizer: DomSanitizer, private fb: FormBuilder,
                 private snackBar: MatSnackBar, private genreService: GenreService, public dialog: MatDialog,
                 private storeUser: Store<UserState>, private  userService: UsersService,
@@ -390,7 +390,7 @@ export class FournisseursListeComponent implements OnInit, OnDestroy {
 
     @HostListener('window:resize', ['$event'])
     getScreenSize(event?) {
-        this.screenWidth = this.window.innerWidth;
+        this.screenWidth = window.innerWidth;
     }
 
     ngOnDestroy(): void {

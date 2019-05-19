@@ -1,11 +1,11 @@
 import {HttpHeaders} from '@angular/common/http';
 import { Inject } from '@angular/core';
-import { LOCAL_STORAGE } from '@ng-toolkit/universal';
+
 
 export class RequeteUtils {
 
     url = 'http://localhost:5000/api/';
- constructor(@Inject(LOCAL_STORAGE) private localStorage: any, ) {}
+ constructor() {}
 
 
 
@@ -15,7 +15,7 @@ export class RequeteUtils {
     getOptions() {
         const headerDict = {
             'Content-Type': 'application/json',
-            'Authorization': sessionStorage.getItem('token') || this.localStorage.getItem('token')
+            'Authorization': sessionStorage.getItem('token') || localStorage.getItem('token')
         };
 
         const requestOptions = {

@@ -9,7 +9,7 @@ import {AnnonceModel} from '../../../models/annonce.model';
 import {CustomValidators} from '../../../shared/validators/custom.validator';
 import {map} from 'rxjs/operators';
 import {MatSnackBar} from '@angular/material';
-import { WINDOW } from '@ng-toolkit/universal';
+
 
 @Component({
     selector: 'app-modif-annonce',
@@ -27,7 +27,7 @@ export class ModifAnnonceComponent implements OnInit {
     annonce: AnnonceModel;
     screenWidth: number;
 
-    constructor(@Inject(WINDOW) private window: Window, private fb: FormBuilder, private annonceService: AnnonceService, private userService: UsersService,
+    constructor(private fb: FormBuilder, private annonceService: AnnonceService, private userService: UsersService,
                 private router: Router, private store: Store<UserState>, private route: ActivatedRoute, private snackBar: MatSnackBar) {
         this.store.select('user').pipe(
             map(user => {
@@ -116,6 +116,6 @@ export class ModifAnnonceComponent implements OnInit {
 
     @HostListener('window:resize', ['$event'])
     getScreenSize(event?) {
-        this.screenWidth = this.window.innerWidth;
+        this.screenWidth = window.innerWidth;
     }
 }

@@ -8,7 +8,7 @@ import {DeleteUser} from '../../shared/stores/user.actions';
 import {Router} from '@angular/router';
 import {map} from 'rxjs/operators';
 import {MessageListComponent} from '../../shared/chatbot/message-list/message-list.component';
-import { LOCAL_STORAGE, WINDOW } from '@ng-toolkit/universal';
+
 
 @Component({
     selector: 'app-core-fournisseurs',
@@ -20,7 +20,7 @@ export class CoreFournisseursComponent implements OnInit {
     entreprise: string;
     screenWidth: number;
 
-    constructor(@Inject(WINDOW) private window: Window, @Inject(LOCAL_STORAGE) private localStorage: any, private userService: UsersService, iconRegistry: MatIconRegistry, sanitizer: DomSanitizer,
+    constructor(private userService: UsersService, iconRegistry: MatIconRegistry, sanitizer: DomSanitizer,
                 private store: Store<UserState>, public dialog: MatDialog, private router: Router) {
         iconRegistry.addSvgIcon(
             'quit',
@@ -40,7 +40,7 @@ export class CoreFournisseursComponent implements OnInit {
      */
     sortie() {
         sessionStorage.removeItem('token');
-        this.localStorage.removeItem('token');
+        localStorage.removeItem('token');
         this.store.dispatch(new DeleteUser());
         this.router.navigate(['']);
     }
@@ -61,7 +61,7 @@ export class CoreFournisseursComponent implements OnInit {
 
     @HostListener('window:resize', ['$event'])
     getScreenSize(event?) {
-        this.screenWidth = this.window.innerWidth;
+        this.screenWidth = window.innerWidth;
     }
 
     openChatBot() {

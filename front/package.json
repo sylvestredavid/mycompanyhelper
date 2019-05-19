@@ -8,7 +8,11 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "compodoc": "npx compodoc -p src/tsconfig.app.json"
+    "compodoc": "npx compodoc -p src/tsconfig.app.json",
+    "compile:server": "webpack --config webpack.server.config.js --progress --colors",
+    "serve:ssr": "node dist/server",
+    "build:ssr": "npm run build:client-and-server-bundles && npm run compile:server",
+    "build:client-and-server-bundles": "ng build --prod && ng run front:server:production"
   },
   "private": true,
   "dependencies": {
@@ -31,7 +35,6 @@
     "@fullcalendar/interaction": "^4.1.0",
     "@fullcalendar/list": "^4.1.0",
     "@fullcalendar/timegrid": "^4.1.0",
-    "@ng-toolkit/universal": "^7.1.2",
     "@ngrx/effects": "^7.4.0",
     "@ngrx/entity": "^7.4.0",
     "@ngrx/store": "^7.4.0",
@@ -44,6 +47,7 @@
     "classlist.js": "^1.1.20150312",
     "core-js": "^2.5.4",
     "domino": "^2.1.3",
+    "express": "^4.15.2",
     "hammerjs": "^2.0.8",
     "html2canvas": "^1.0.0-rc.1",
     "jspdf": "^1.5.3",
@@ -76,6 +80,7 @@
     "karma-jasmine": "~1.1.2",
     "karma-jasmine-html-reporter": "^0.2.2",
     "protractor": "~5.4.0",
+    "ts-loader": "^5.2.0",
     "ts-node": "~7.0.0",
     "tslint": "~5.11.0",
     "typescript": "~3.1.1",

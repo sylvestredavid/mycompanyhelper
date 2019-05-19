@@ -6,7 +6,7 @@ import {Subscription} from 'rxjs';
 import {EmailModel} from '../../models/email.model';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MatSnackBar} from '@angular/material';
-import { WINDOW } from '@ng-toolkit/universal';
+
 import {SocketService} from '../../shared/socket.service';
 import {Title} from '@angular/platform-browser';
 
@@ -26,7 +26,7 @@ export class DetailAnnonceHorsConnexionComponent implements OnInit, OnDestroy {
     subscription: Subscription;
     screenWidth: number;
 
-    constructor(@Inject(WINDOW) private window: Window, private annuaireService: AnnuaireService, private route: ActivatedRoute,
+    constructor(private annuaireService: AnnuaireService, private route: ActivatedRoute,
                 private fb: FormBuilder, private snackBar: MatSnackBar, private titleService: Title) {
     }
 
@@ -37,7 +37,7 @@ export class DetailAnnonceHorsConnexionComponent implements OnInit, OnDestroy {
 
     @HostListener('window:resize', ['$event'])
     getScreenSize(event?) {
-        this.screenWidth = this.window.innerWidth;
+        this.screenWidth = window.innerWidth;
     }
 
     /**

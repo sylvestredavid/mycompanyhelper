@@ -10,7 +10,7 @@ import {CustomValidators} from '../../../shared/validators/custom.validator';
 import {map} from 'rxjs/operators';
 import {MatSnackBar} from '@angular/material';
 import {SocketService} from '../../../shared/socket.service';
-import { WINDOW } from '@ng-toolkit/universal';
+
 
 @Component({
     selector: 'app-creer-annonce',
@@ -27,7 +27,7 @@ export class CreerAnnonceComponent implements OnInit {
     screenWidth: number;
     date;
 
-    constructor(@Inject(WINDOW) private window: Window, private fb: FormBuilder, private annonceService: AnnonceService, private userService: UsersService,
+    constructor(private fb: FormBuilder, private annonceService: AnnonceService, private userService: UsersService,
                 private router: Router, private store: Store<UserState>, private snackBar: MatSnackBar, private socket: SocketService) {
         this.store.select('user').pipe(
             map(user => {
@@ -109,6 +109,6 @@ export class CreerAnnonceComponent implements OnInit {
 
     @HostListener('window:resize', ['$event'])
     getScreenSize(event?) {
-        this.screenWidth = this.window.innerWidth;
+        this.screenWidth = window.innerWidth;
     }
 }

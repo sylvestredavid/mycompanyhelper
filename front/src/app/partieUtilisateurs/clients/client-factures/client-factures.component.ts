@@ -2,7 +2,7 @@ import {Component, HostListener, Input, OnInit, Inject} from '@angular/core';
 import {FactureModel} from '../../../models/facture.model';
 import {ClientModel} from '../../../models/client.model';
 import {animate, state, style, transition, trigger} from '@angular/animations';
-import { WINDOW } from '@ng-toolkit/universal';
+
 
 @Component({
   selector: 'app-client-factures',
@@ -24,7 +24,7 @@ export class ClientFacturesComponent implements OnInit {
   expandedElement: FactureModel | null;
   screenWidth: number;
 
-  constructor(@Inject(WINDOW) private window: Window, ) {
+  constructor() {
   }
 
   ngOnInit() {
@@ -34,7 +34,7 @@ export class ClientFacturesComponent implements OnInit {
 
   @HostListener('window:resize', ['$event'])
   getScreenSize(event?) {
-    this.screenWidth = this.window.innerWidth;
+    this.screenWidth = window.innerWidth;
   }
 
 }

@@ -8,7 +8,7 @@ import {MatSnackBar} from '@angular/material';
 import {EmailModel} from '../../../models/email.model';
 import {Store} from '@ngrx/store';
 import {UserState} from '../../../shared/stores/user.reducer';
-import { WINDOW } from '@ng-toolkit/universal';
+
 
 @Component({
     selector: 'app-detail-annonce',
@@ -26,7 +26,7 @@ export class DetailAnnonceComponent implements OnInit, OnDestroy {
     subscription: Subscription;
     screenWidth: number;
 
-    constructor(@Inject(WINDOW) private window: Window, private annuaireService: AnnuaireService, private route: ActivatedRoute,
+    constructor(private annuaireService: AnnuaireService, private route: ActivatedRoute,
                 private fb: FormBuilder, private snackBar: MatSnackBar, private  store: Store<UserState>) {
     }
 
@@ -44,7 +44,7 @@ export class DetailAnnonceComponent implements OnInit, OnDestroy {
 
     @HostListener('window:resize', ['$event'])
     getScreenSize(event?) {
-        this.screenWidth = this.window.innerWidth;
+        this.screenWidth = window.innerWidth;
     }
 
     /**

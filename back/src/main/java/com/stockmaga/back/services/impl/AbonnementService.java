@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import com.stockmaga.back.models.Annonce;
@@ -63,8 +64,6 @@ public class AbonnementService implements IAbonnementService {
 
 			Instant instant = Instant.now();
 			long timeStamp = instant.getEpochSecond();
-
-			System.out.println(timeStamp);
 
 			Map<String, Object> usagerecordParams = new HashMap<String, Object>();
 			usagerecordParams.put("quantity", 1);
@@ -204,6 +203,7 @@ public class AbonnementService implements IAbonnementService {
 	}
 
 	@Override
+	@Async
 	public void augmenterNbRequete(Long idUser) throws StripeException {
 		Optional<User> user = userRepository.findById(idUser);
 
@@ -212,7 +212,6 @@ public class AbonnementService implements IAbonnementService {
 			Subscription sub = Subscription.retrieve(user.get().getAbonnement());
 			
 			if ("plan_F3SX3mQa0vS0Ri".equals(sub.getPlan().getId())) {
-				System.out.println("coucou");
 				Map<String, Object> subscriptionitemParams = new HashMap<String, Object>();
 				subscriptionitemParams.put("subscription", sub.getId());
 				SubscriptionItem item = SubscriptionItem.list(subscriptionitemParams).getData().get(0);

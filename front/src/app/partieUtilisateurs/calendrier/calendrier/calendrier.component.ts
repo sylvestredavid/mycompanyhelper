@@ -45,7 +45,6 @@ export class CalendrierComponent implements OnInit {
                 right: 'dayGridMonth,timeGridWeek,timeGridDay, listMonth'
             },
             dateClick: (e) => {
-                console.log(e)
                 const dialogRef = this.dialog.open(CalendrierDialComponent, {
                     width: '500px', data: {start: e.dateStr}
                 });

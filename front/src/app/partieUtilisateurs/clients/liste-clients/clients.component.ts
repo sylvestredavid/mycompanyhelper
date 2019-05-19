@@ -11,7 +11,7 @@ import {Store} from '@ngrx/store';
 import {UserState} from '../../../shared/stores/user.reducer';
 import {UsersService} from '../../../users/users.service';
 import {SocketService} from '../../../shared/socket.service';
-import { WINDOW } from '@ng-toolkit/universal';
+
 
 @Component({
     selector: 'app-clients',
@@ -36,7 +36,7 @@ export class ClientsComponent implements OnInit, OnDestroy {
     isDirty: boolean;
 
 
-    constructor(@Inject(WINDOW) private window: Window, private route: ActivatedRoute, private genreService: GenreService, private clientService: ClientsService,
+    constructor(private route: ActivatedRoute, private genreService: GenreService, private clientService: ClientsService,
                 private router: Router, iconRegistry: MatIconRegistry, sanitizer: DomSanitizer, private fb: FormBuilder,
                 private snackBar: MatSnackBar, private storeUser: Store<UserState>, private userService: UsersService,
                 private socket: SocketService) {
@@ -335,7 +335,7 @@ export class ClientsComponent implements OnInit, OnDestroy {
 
     @HostListener('window:resize', ['$event'])
     getScreenSize(event?) {
-        this.screenWidth = this.window.innerWidth;
+        this.screenWidth = window.innerWidth;
     }
 
     ngOnDestroy(): void {

@@ -14,7 +14,7 @@ import {UserState} from '../../../shared/stores/user.reducer';
 import {UsersService} from '../../../users/users.service';
 import {SocketService} from '../../../shared/socket.service';
 import {OptionsService} from '../../options/options.service';
-import { WINDOW } from '@ng-toolkit/universal';
+
 
 @Component({
     selector: 'app-produits-hors-vente',
@@ -41,7 +41,7 @@ export class ProduitsHorsVenteComponent implements OnInit, OnDestroy {
     role: string;
 
 
-    constructor(@Inject(WINDOW) private window: Window, private route: ActivatedRoute, private genreService: GenreService, private produitService: ProduitService,
+    constructor(private route: ActivatedRoute, private genreService: GenreService, private produitService: ProduitService,
                 private router: Router, iconRegistry: MatIconRegistry, sanitizer: DomSanitizer, private fb: FormBuilder,
                 private snackBar: MatSnackBar, private storeUser: Store<UserState>, private optionService: OptionsService,
                 private socket: SocketService, private userService: UsersService) {
@@ -224,7 +224,7 @@ export class ProduitsHorsVenteComponent implements OnInit, OnDestroy {
 
     @HostListener('window:resize', ['$event'])
     getScreenSize(event?) {
-        this.screenWidth = this.window.innerWidth;
+        this.screenWidth = window.innerWidth;
     }
 
     initSocket() {

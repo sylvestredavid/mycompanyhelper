@@ -5,7 +5,7 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 import {Subscription} from 'rxjs';
 import {SocketService} from '../../../shared/socket.service';
 import {UsersService} from '../../../users/users.service';
-import { WINDOW } from '@ng-toolkit/universal';
+
 import { Title }  from '@angular/platform-browser';
 
 @Component({
@@ -21,7 +21,7 @@ export class ListeAnnoncesComponent implements OnInit, OnDestroy {
     subscription: Subscription;
     screenWidth: number;
 
-    constructor(@Inject(WINDOW) private window: Window, private annuaireService: AnnuaireService, private fb: FormBuilder,
+    constructor(private annuaireService: AnnuaireService, private fb: FormBuilder,
                 private titleService: Title, private socket: SocketService, private userService: UsersService) {
     }
 
@@ -46,7 +46,7 @@ export class ListeAnnoncesComponent implements OnInit, OnDestroy {
 
     @HostListener('window:resize', ['$event'])
     getScreenSize(event?) {
-        this.screenWidth = this.window.innerWidth;
+        this.screenWidth = window.innerWidth;
     }
 
     /**

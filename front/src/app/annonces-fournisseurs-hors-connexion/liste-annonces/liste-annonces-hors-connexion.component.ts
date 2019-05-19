@@ -4,7 +4,6 @@ import {AnnuaireService} from '../annuaire.service';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {Subscription} from 'rxjs';
 import {SocketService} from '../../shared/socket.service';
-import { WINDOW } from '@ng-toolkit/universal';
 import { Title }  from '@angular/platform-browser';
 
 @Component({
@@ -20,7 +19,7 @@ export class ListeAnnoncesHorsConnexionComponent implements OnInit, OnDestroy {
     subscription: Subscription;
     screenWidth: number;
 
-    constructor(@Inject(WINDOW) private window: Window, private annuaireService: AnnuaireService, private fb: FormBuilder,
+    constructor(private annuaireService: AnnuaireService, private fb: FormBuilder,
                 private socket: SocketService, private titleService: Title ) {
     }
 
@@ -34,18 +33,18 @@ export class ListeAnnoncesHorsConnexionComponent implements OnInit, OnDestroy {
                 this.max = this.getMax(annonces);
             }
         );
-        this.socket.getAjoutAnnonce().subscribe(
-            annonce => this.annuaireService.pushAnnonce(annonce)
-        );
-        this.socket.getDeleteAnnonce().subscribe(
-            annonce => this.annuaireService.removeAnnonce(annonce.id)
-        );
+        // this.socket.getAjoutAnnonce().subscribe(
+        //     annonce => this.annuaireService.pushAnnonce(annonce)
+        // );
+        // this.socket.getDeleteAnnonce().subscribe(
+        //     annonce => this.annuaireService.removeAnnonce(annonce.id)
+        // );
         this.getScreenSize()
     }
 
     @HostListener('window:resize', ['$event'])
     getScreenSize(event?) {
-        this.screenWidth = this.window.innerWidth;
+        this.screenWidth = window.innerWidth;
     }
 
     /**

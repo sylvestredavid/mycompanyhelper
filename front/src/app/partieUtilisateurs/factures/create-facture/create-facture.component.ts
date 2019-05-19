@@ -21,7 +21,7 @@ import html2canvas from 'html2canvas';
 import {Store} from '@ngrx/store';
 import {UserState} from '../../../shared/stores/user.reducer';
 import {OptionsService} from '../../options/options.service';
-import { WINDOW } from '@ng-toolkit/universal';
+
 
 @Component({
     selector: 'app-create-facture',
@@ -46,7 +46,7 @@ export class CreateFactureComponent implements OnInit, OnDestroy {
 
     @ViewChild('facture') facture: ElementRef;
 
-    constructor(@Inject(WINDOW) private window: Window, private _formBuilder: FormBuilder, iconRegistry: MatIconRegistry, sanitizer: DomSanitizer,
+    constructor(private _formBuilder: FormBuilder, iconRegistry: MatIconRegistry, sanitizer: DomSanitizer,
                 private clientService: ClientsService, private produitService: ProduitService, private factureService: FactureService,
                 private router: Router, private snackBar: MatSnackBar, private userService: UsersService,
                 private notificationService: NotificationsService, private datePipe: DatePipe, private store: Store<UserState>,
@@ -256,7 +256,7 @@ export class CreateFactureComponent implements OnInit, OnDestroy {
 
     @HostListener('window:resize', ['$event'])
     getScreenSize(event?) {
-        this.screenWidth = this.window.innerWidth;
+        this.screenWidth = window.innerWidth;
     }
 
 

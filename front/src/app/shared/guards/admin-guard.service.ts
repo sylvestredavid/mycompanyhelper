@@ -9,14 +9,14 @@ import {GetOptions} from '../stores/options.actions';
 import {OptionsService} from '../../partieUtilisateurs/options/options.service';
 import {ProduitService} from '../../partieUtilisateurs/produits/produit.service';
 import {ClientsService} from '../../partieUtilisateurs/clients/clients.service';
-import { LOCAL_STORAGE } from '@ng-toolkit/universal';
+
 
 @Injectable()
 export class AdminGuard implements CanActivate {
 
     role: string;
 
-    constructor(@Inject(LOCAL_STORAGE) private localStorage: any, private router: Router, private store: Store<UserState>, private userService: UsersService,
+    constructor(private router: Router, private store: Store<UserState>, private userService: UsersService,
                 private optionService: OptionsService, private produitService: ProduitService, private clientService: ClientsService) {
         this.store.select('user').subscribe(
             users => {
@@ -35,7 +35,7 @@ export class AdminGuard implements CanActivate {
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
         if (sessionStorage.getItem('token') !== null) { // si token dans sessionStorage
             return this.marcheASuivre('sessionStorage');
-        } else if (this.localStorage.getItem('token') !== null) { // si token dans sessionStorage
+        } else if (localStorage.getItem('token') !== null) { // si token dans sessionStorage
             return this.marcheASuivre('localStorage');
         } else { // sinon on envoi vers la page de connexion
             this.router.navigate(['connexion']);
@@ -52,7 +52,7 @@ export class AdminGuard implements CanActivate {
                 this.router.navigate(['users']);
             }
         } else { // si aucun user dans le store on le recupere dans la bdd a l'aide du token et on le met dans le store et on le redirige vers le dashboard
-            const token = storage === 'sessionStorage' ? sessionStorage.getItem('token') : this.localStorage.getItem('token');
+            const token = storage === 'sessionStorage' ? sessionStorage.getItem('token') : localStorage.getItem('token');
             this.userService.dejaConntecte(token).subscribe(
                 user => {
                     this.store.dispatch(new AjoutUser(user));

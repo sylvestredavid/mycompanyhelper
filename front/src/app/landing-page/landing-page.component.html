@@ -25,10 +25,10 @@
             Trouvez de nouveaux fournisseurs sur mycompanyhelper grâce à notre système d'annonces.
         </p>
         <div class="landing_body">
-        <figure class="landing_img">
-            <img src="assets/ordi.jpg" class="landing_img_back">
-            <img src="assets/landing1.png" class="landing_img_front">
-        </figure>
+            <figure class="landing_img">
+                <img src="assets/ordi.jpg" class="landing_img_back">
+                <img src="assets/landing1.png" class="landing_img_front">
+            </figure>
             <ul class="landing_list">
                 <li>
                     <div class="landing_puce">
@@ -94,14 +94,27 @@
                     </p>
                 </li>
             </ul>
+            <ng-container *ngIf="screenWidth >= 1024 && screenWidth < 1440">
+                <div class="body_right">
+                    <h3>Essais gratuit</h3>
+                    <p>
+                        Testez gratuitement mycompanyhelper
+                        pendant 30 jours sans engagement.
+                    </p>
+                    <app-inscription></app-inscription>
+                </div>
+                <div class="clear"></div>
+            </ng-container>
         </div>
     </div>
-    <div class="landing_right">
-        <h3>Essais gratuit</h3>
-        <p>
-            Testez gratuitement mycompanyhelper
-            pendant 30 jours sans engagement.
-        </p>
-        <app-inscription></app-inscription>
-    </div>
+    <ng-container *ngIf="screenWidth < 1024 || screenWidth >= 1440">
+        <div class="landing_right">
+            <h3>Essais gratuit</h3>
+            <p>
+                Testez gratuitement mycompanyhelper
+                pendant 30 jours sans engagement.
+            </p>
+            <app-inscription></app-inscription>
+        </div>
+    </ng-container>
 </main>
