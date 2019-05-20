@@ -50,11 +50,12 @@ import { TransferHttpCacheModule } from '@nguniversal/common';
 import {CoreComponent} from './partieUtilisateurs/core/core.component';
 import {CoreFournisseursComponent} from './partieFournisseurs/core-fournisseurs/core-fournisseurs.component';
 import {UsersModule} from "./users/users.module";
+import {InscriptionComponent} from "./users/inscription/inscription.component";
 
 registerLocaleData(localeFr, 'fr-FR');
 
 @NgModule({
-    entryComponents: [AjoutGenreComponent, OptionsComponent, NotificationComponent, DialogGuardComponent, MessageListComponent, CalendrierDialComponent],
+    entryComponents: [AjoutGenreComponent, OptionsComponent, NotificationComponent, DialogGuardComponent, MessageListComponent],
     declarations: [
         AppComponent,
         OptionsComponent,
@@ -64,29 +65,21 @@ registerLocaleData(localeFr, 'fr-FR');
         LandingPageComponent,
         MessageListComponent,
         MessageItemComponent,
-        CalendrierDialComponent,
         MenuComponent,
         MenuFournisseurComponent,
         CoreComponent,
-        CoreFournisseursComponent,
+        CoreFournisseursComponent
     ],
     imports: [
-        BrowserModule.withServerTransition({ appId: 'serverApp' }),
-        MatBottomSheetModule,
+        BrowserModule,
         AppRoutingModule,
         BrowserAnimationsModule,
-        MatSlideToggleModule,
-        MatProgressSpinnerModule,
-        MatDatepickerModule,
-        MatButtonModule,
-        MatFormFieldModule,
-        MatInputModule,
         MatSelectModule,
-        MatAutocompleteModule,
-        MatSnackBarModule,
-        MatBottomSheetModule,
+        MatButtonModule,
         MatRadioModule,
         MatNativeDateModule,
+        MatFormFieldModule,
+        MatInputModule,
         MatIconModule,
         MatMenuModule,
         MatDialogModule,
@@ -94,15 +87,14 @@ registerLocaleData(localeFr, 'fr-FR');
         MatToolbarModule,
         ReactiveFormsModule,
         FormsModule,
+        UsersModule,
         StoreModule.forRoot({
             user: userReducer,
             options: optionsReducer
         }),
-        CommonModule,
-        TransferHttpCacheModule,
-        UsersModule,
     ],
-    providers: [AuthGuard,
+    providers: [
+        AuthGuard,
         DatePipe,
         AdminGuard,
         FournisseurGuard,
@@ -112,7 +104,6 @@ registerLocaleData(localeFr, 'fr-FR');
         IsConnectedGuard,
         MdpUtils,
         RequeteUtils,
-        MatDatepickerModule,
 
     ],
     bootstrap: [AppComponent]

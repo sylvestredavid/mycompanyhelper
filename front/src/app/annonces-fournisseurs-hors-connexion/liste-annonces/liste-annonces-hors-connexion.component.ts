@@ -20,7 +20,7 @@ export class ListeAnnoncesHorsConnexionComponent implements OnInit, OnDestroy {
     screenWidth: number;
 
     constructor(private annuaireService: AnnuaireService, private fb: FormBuilder,
-                private socket: SocketService, private titleService: Title ) {
+                private titleService: Title ) {
     }
 
     ngOnInit() {

@@ -16,6 +16,7 @@ import {Subscription} from 'rxjs';
 export class DashboardComponent implements OnInit, OnDestroy {
 
     listeProduits: ProduitModel[];
+    listeProduitsStockBas: ProduitModel[];
     listeClients: ClientModel[];
     listeGenres: GenreModel[];
     limiteClient: number;
@@ -36,11 +37,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
                     this. subscriptions.push(this.produitService.listeProduits$.subscribe(
                         produits => {
                             if (produits) {
-                                this.listeProduits = [];
+                                this.listeProduits = produits;
+                                this.listeProduitsStockBas = [];
                                 produits.forEach(
                                     produit => {
                                         if (produit.enVente === true && produit.quantite <= this.limiteStock) {
-                                            this.listeProduits.push(produit);
+                                            this.listeProduitsStockBas.push(produit);
                                         }
                                     }
                                 );

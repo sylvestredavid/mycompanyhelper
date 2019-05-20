@@ -3,30 +3,20 @@ import {CommonModule} from '@angular/common';
 import {ProduitsComponent} from './listes-produits/produits.component';
 import {RouterModule} from '@angular/router';
 import {
-  MatAutocompleteModule,
   MatButtonModule,
-  MatCheckboxModule,
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
-  MatPaginatorModule,
-  MatProgressSpinnerModule,
-  MatRadioModule,
   MatSelectModule,
-  MatSnackBarModule,
-  MatSortModule,
-  MatStepperModule,
-  MatTableModule
+  MatSnackBarModule
 } from '@angular/material';
 import {HttpClientModule} from '@angular/common/http';
 import {ScrollingModule} from '@angular/cdk/scrolling';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AuthGuard} from '../../shared/guards/auth-guard.service';
 import {SharedModule} from '../../shared/shared.module';
-import { ProduitsHorsVenteComponent } from './produits-hors-vente/produits-hors-vente.component';
+import {ProduitsHorsVenteComponent} from './produits-hors-vente/produits-hors-vente.component';
 import {ProduitsFormGuard} from '../../shared/guards/produits-form-guard.service';
-import {FournisseurGuard} from '../../shared/guards/fournisseur-guard.service';
-import {IsConnectedGuard} from '../../shared/guards/is-connected-guard.service';
 
 @NgModule({
   declarations: [
@@ -38,21 +28,13 @@ import {IsConnectedGuard} from '../../shared/guards/is-connected-guard.service';
     SharedModule,
     MatButtonModule,
     HttpClientModule,
-    MatProgressSpinnerModule,
-    MatTableModule,
-    MatSortModule,
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    MatAutocompleteModule,
     MatIconModule,
-    MatStepperModule,
     ScrollingModule,
     MatSnackBarModule,
-    MatPaginatorModule,
-    MatRadioModule,
     ReactiveFormsModule,
-    MatCheckboxModule,
     FormsModule,
     RouterModule.forChild([
       {path: '', canActivate: [AuthGuard], component: ProduitsComponent, canDeactivate: [ProduitsFormGuard]},

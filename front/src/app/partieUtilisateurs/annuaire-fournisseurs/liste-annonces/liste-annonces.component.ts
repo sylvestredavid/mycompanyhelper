@@ -22,7 +22,7 @@ export class ListeAnnoncesComponent implements OnInit, OnDestroy {
     screenWidth: number;
 
     constructor(private annuaireService: AnnuaireService, private fb: FormBuilder,
-                private titleService: Title, private socket: SocketService, private userService: UsersService) {
+                private titleService: Title) {
     }
 
     ngOnInit() {
@@ -35,12 +35,12 @@ export class ListeAnnoncesComponent implements OnInit, OnDestroy {
                 this.max = this.getMax(annonces);
             }
         );
-        this.socket.getAjoutAnnonce().subscribe(
-            annonce => this.annuaireService.pushAnnonce(annonce)
-        );
-        this.socket.getDeleteAnnonce().subscribe(
-            annonce => this.annuaireService.removeAnnonce(annonce.id)
-        );
+        // this.socket.getAjoutAnnonce().subscribe(
+        //     annonce => this.annuaireService.pushAnnonce(annonce)
+        // );
+        // this.socket.getDeleteAnnonce().subscribe(
+        //     annonce => this.annuaireService.removeAnnonce(annonce.id)
+        // );
         this.getScreenSize()
     }
 

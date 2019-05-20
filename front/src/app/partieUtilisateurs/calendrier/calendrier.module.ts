@@ -5,22 +5,42 @@ import {RouterModule} from '@angular/router';
 import {AuthGuard} from '../../shared/guards/auth-guard.service';
 import {FullCalendarModule} from 'primeng/fullcalendar';
 import {CalendarModule} from 'primeng/primeng';
-import { CalendrierDialComponent } from './calendrier/calendrier-dial/calendrier-dial.component';
+import {CalendrierDialComponent} from './calendrier/calendrier-dial/calendrier-dial.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {MatDatepickerModule} from '@angular/material';
+import {
+    MatButtonModule,
+    MatDatepickerModule,
+    MatFormFieldModule, MatIconModule,
+    MatInputModule,
+    MatOptionModule,
+    MatSelectModule
+} from '@angular/material';
 
 @NgModule({
-  entryComponents: [],
-  declarations: [CalendrierComponent],
-  imports: [
-    FullCalendarModule,
-      CalendarModule,
-    ReactiveFormsModule,
-    FormsModule,
-    CommonModule,
-    RouterModule.forChild([
-      {path: '', canActivate: [AuthGuard], component: CalendrierComponent},
-    ])
-  ]
+    entryComponents: [CalendrierDialComponent],
+    declarations: [
+        CalendrierComponent,
+        CalendrierDialComponent
+    ],
+    imports: [
+        FullCalendarModule,
+        CalendarModule,
+        MatFormFieldModule,
+        MatOptionModule,
+        MatSelectModule,
+        MatInputModule,
+        MatButtonModule,
+        ReactiveFormsModule,
+        FormsModule,
+        MatDatepickerModule,
+        CommonModule,
+        RouterModule.forChild([
+            {path: '', canActivate: [AuthGuard], component: CalendrierComponent},
+        ])
+    ],
+    providers: [
+        MatDatepickerModule,
+    ]
 })
-export class CalendrierModule { }
+export class CalendrierModule {
+}

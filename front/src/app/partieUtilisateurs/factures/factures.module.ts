@@ -32,9 +32,6 @@ import {IsConnectedGuard} from '../../shared/guards/is-connected-guard.service';
     CommonModule,
     MatButtonModule,
     HttpClientModule,
-    MatProgressSpinnerModule,
-    MatTableModule,
-    MatSortModule,
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
@@ -43,8 +40,6 @@ import {IsConnectedGuard} from '../../shared/guards/is-connected-guard.service';
     MatStepperModule,
     ScrollingModule,
     MatSnackBarModule,
-    MatPaginatorModule,
-    MatRadioModule,
     ReactiveFormsModule,
     FormsModule,
     RouterModule.forChild([
