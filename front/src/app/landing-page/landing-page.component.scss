@@ -25,6 +25,7 @@ h2 {
 
   .landing_img_back {
     width: 100%;
+    height: 219px;
   }
 
   .landing_img_front {
@@ -91,12 +92,34 @@ ul {
   }
 }
 
+@media screen and (min-width: 375px) {
+  .landing_img_back {
+    height: 260px !important;
+  }
+}
+
+@media screen and (min-width: 425px) {
+  .landing_img_back {
+    height: 300px !important;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .landing_img_back {
+    height: 540px !important;
+  }
+}
+
 @media screen and (min-width: 1024px) and (max-width: 1440px) {
 
   .landing_list{
     width: 48%;
     float: left;
     margin-top: 40px;
+  }
+
+  .landing_img_back {
+    height: 710px !important;
   }
 
   .body_right {
@@ -171,7 +194,7 @@ ul {
 
         .landing_img_front {
           width: 93%;
-          height: 53%;
+          height: 48%;
           position: absolute;
           top: 3%;
           left: 3.5%;
@@ -239,10 +262,29 @@ ul {
   }
 }
 
+@media screen and (min-width: 1440px) and (max-width: 1920px){
+  .landing_img_back {
+    height: 440px !important;
+  }
+}
+
 @media screen and (min-width: 1920px) {
 
+  .landing_img_back {
+    height: 575px !important;
+  }
+  .landing_img_front {
+    height: 68% !important;
+    top: 4% !important;
+  }
+}
+
+@media screen and (min-width: 2560px) {
+
+  .landing_img_back {
+    height: 760px !important;
+  }
   .landing_img_front {
     height: 71% !important;
-    top: 4% !important;
   }
 }

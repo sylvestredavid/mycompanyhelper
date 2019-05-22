@@ -27,7 +27,10 @@
         <div class="landing_body">
             <figure class="landing_img">
                 <img src="assets/ordi.jpg" class="landing_img_back">
-                <img src="assets/landing1.png" class="landing_img_front">
+                <iframe src="https://www.youtube.com/embed/mTSkCMvV1oo?autoplay=1&mute=1&loop=1&playlist=mTSkCMvV1oo" frameborder="0" class="landing_img_front" allowfullscreen></iframe>
+<!--                <video autoplay class="landing_img_front">-->
+<!--                    <source type="video/mp4" src="assets/mycompanyhelper.mp4">-->
+<!--                </video>-->
             </figure>
             <ul class="landing_list">
                 <li>
@@ -96,7 +99,7 @@
             </ul>
             <ng-container *ngIf="screenWidth >= 1024 && screenWidth < 1440">
                 <div class="body_right">
-                    <h3>Essais gratuit</h3>
+                    <h3>Essai gratuit</h3>
                     <p>
                         Testez gratuitement mycompanyhelper
                         pendant 30 jours sans engagement.
@@ -109,7 +112,7 @@
     </div>
     <ng-container *ngIf="screenWidth < 1024 || screenWidth >= 1440">
         <div class="landing_right">
-            <h3>Essais gratuit</h3>
+            <h3>Essai gratuit</h3>
             <p>
                 Testez gratuitement mycompanyhelper
                 pendant 30 jours sans engagement.
