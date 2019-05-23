@@ -6,6 +6,7 @@
         <button mat-button routerLink="/users">Menu</button>
     </ng-template>
     <div class="flex-spacer"></div>
+    <p class="entreprise">{{entreprise}}</p>
     <button mat-icon-button>
         <mat-icon svgIcon="notification" (click)="openNotifications()"></mat-icon>
         <span class="badge" *ngIf="nbNotifications && nbNotifications > 0">{{nbNotifications}}</span>

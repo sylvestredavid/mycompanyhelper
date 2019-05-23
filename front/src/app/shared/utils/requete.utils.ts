@@ -4,7 +4,8 @@ import { Inject } from '@angular/core';
 
 export class RequeteUtils {
 
-    url = 'https://back.mycompanyhelper.com/api/';
+    //url = 'https://back.mycompanyhelper.com/api/';
+    url = 'http://localhost:5000/api/'
  constructor() {}
 
 

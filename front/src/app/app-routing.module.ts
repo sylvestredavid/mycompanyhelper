@@ -6,6 +6,7 @@ import {LandingPageComponent} from './landing-page/landing-page.component';
 import {MenuComponent} from './partieUtilisateurs/menu/menu.component';
 import {MenuFournisseurComponent} from './partieFournisseurs/menuFournisseur/menu-fournisseur.component';
 import {IsConnectedGuard} from './shared/guards/is-connected-guard.service';
+import {SupportComponent} from "./support/support.component";
 
 const routes: Routes = [
     {
@@ -28,6 +29,10 @@ const routes: Routes = [
             {
                 path: '',
                 component: MenuComponent,
+            },
+            {
+                path: 'support',
+                component: SupportComponent,
             },
             {
                 path: 'dashboard',
@@ -66,6 +71,10 @@ const routes: Routes = [
             {
                 path: '',
                 component: MenuFournisseurComponent,
+            },
+            {
+                path: 'support',
+                component: SupportComponent,
             },
             {
                 path: 'annonces',

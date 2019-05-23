@@ -11,7 +11,7 @@ import com.stockmaga.back.request.SignUpForm;
 
 public interface IEmailService {
 
-	public void sendFacture(Facture facture);
+	public void sendFacture(Facture facture, String entreprise);
 	
 	public void sendGestMail(User user);
 	

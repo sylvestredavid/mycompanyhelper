@@ -3,6 +3,7 @@ package com.stockmaga.back.services.impl;
 import java.util.List;
 import java.util.Optional;
 
+import com.stockmaga.back.services.IFactureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,9 @@ public class ClientService implements IClientService {
 
 	@Autowired
 	private IAbonnementService abonnementService;
+
+	@Autowired
+	private IFactureService factureService;
 
 	/**
 	 * récuperer tout les clients d'un utilisateur par son id
@@ -66,6 +70,9 @@ public class ClientService implements IClientService {
 		Optional<Client> client = clientRepository.findById(id);
 		try {
 			abonnementService.augmenterNbRequete(client.get().getIdUser());
+			client.get().getFactures().forEach(
+					facture -> {factureService.deletefactures(facture.getIdFacture());}
+			);
 			clientRepository.deleteById(id);
 			return ResponseEntity.status(HttpStatus.OK).body(new Reponse("Client supprimé"));
 		} catch (StripeException e) {

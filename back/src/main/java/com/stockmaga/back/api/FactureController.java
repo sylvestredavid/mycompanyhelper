@@ -1,7 +1,11 @@
 package com.stockmaga.back.api;
 
 import java.util.List;
+import java.util.Optional;
 
+import com.stockmaga.back.models.User;
+import com.stockmaga.back.repositories.UserRepository;
+import com.stockmaga.back.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +35,9 @@ public class FactureController {
 
 	@Autowired
 	private IEmailService emailService;
+
+	@Autowired
+	private UserRepository userRepository;
 	
 	@GetMapping("/factures")
 	@PreAuthorize("hasRole('ADMIN') OR hasRole('GESTIONNAIRE')")
@@ -65,7 +72,9 @@ public class FactureController {
 	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> sendFacture(@RequestParam(name="idFacture", required=true) Integer idFacture){
 		Facture facture = factureService.findOnefactures(idFacture);
-		emailService.sendFacture(facture);
+		Optional<User> user = userRepository.findById(facture.getIdUser());
+		String entreprise = user.get().getEntreprise() != null ? user.get().getEntreprise() : "mycompanyhelper";
+		emailService.sendFacture(facture, entreprise);
 		return ResponseEntity.status(HttpStatus.OK).body(new Reponse("mail envoyé."));
 	}  
 	

@@ -51,6 +51,7 @@ import {CoreComponent} from './partieUtilisateurs/core/core.component';
 import {CoreFournisseursComponent} from './partieFournisseurs/core-fournisseurs/core-fournisseurs.component';
 import {UsersModule} from "./users/users.module";
 import {InscriptionComponent} from "./users/inscription/inscription.component";
+import { SupportComponent } from './support/support.component';
 
 registerLocaleData(localeFr, 'fr-FR');
 
@@ -68,7 +69,8 @@ registerLocaleData(localeFr, 'fr-FR');
         MenuComponent,
         MenuFournisseurComponent,
         CoreComponent,
-        CoreFournisseursComponent
+        CoreFournisseursComponent,
+        SupportComponent
     ],
     imports: [
         BrowserModule,

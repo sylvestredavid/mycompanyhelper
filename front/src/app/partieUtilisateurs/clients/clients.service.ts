@@ -79,12 +79,6 @@ export class ClientsService {
                 return true;
             }
         });
-        this.listeClients[index].factures.forEach( // suppression des factures du client
-            facture => {
-                this.http.delete
-                (this.requeteUtils.url + 'factures/delete?id=' + facture.idFacture, this.requeteUtils.getOptions()).subscribe();
-            }
-        );
         this.listeClients.splice(index, 1);
         this.listeClients$.next(this.listeClients);
     }

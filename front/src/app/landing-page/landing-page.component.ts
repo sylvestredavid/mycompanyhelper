@@ -14,7 +14,6 @@ export class LandingPageComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.titleService.setTitle('mycompanyhelper le meilleur allié pour votre entreprise');
         this.getScreenSize();
     }
 

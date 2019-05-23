@@ -1,5 +1,6 @@
 package com.stockmaga.back.services.impl;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Properties;
 
@@ -40,7 +41,7 @@ public class EmailService implements IEmailService {
 	 * @param  title le sujet du mail
 	 * @param  mail Le corps du mail
 	 */
-	public void send(String to, String from, String title, String mail) {
+	public void send(String to, String from, String name, String title, String mail) {
 
 		final String username = env.getProperty("email.username");// change accordingly
 		final String password = env.getProperty("email.mdp");// change accordingly
@@ -65,7 +66,7 @@ public class EmailService implements IEmailService {
 			Message message = new MimeMessage(session);
 
 			// Set From: header field of the header.
-			message.setFrom(new InternetAddress(from));
+			message.setFrom(new InternetAddress(from, name));
 
 			message.setReplyTo(new javax.mail.Address[] { new javax.mail.internet.InternetAddress(from) });
 
@@ -86,6 +87,8 @@ public class EmailService implements IEmailService {
 		} catch (MessagingException e) {
 			e.printStackTrace();
 			throw new RuntimeException(e);
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -93,7 +96,7 @@ public class EmailService implements IEmailService {
 	 * envoi de la facture a un client
 	 */
 	@Override
-	public void sendFacture(Facture facture) {
+	public void sendFacture(Facture facture, String entreprise) {
 
 		final String FACTURE_DEBUT = "<h1>Bonjour</h1>"
 				+ "<p style='margin-top: 10px;'>Vous venez d'effectuer l'achat suivant:</p>"
@@ -126,7 +129,7 @@ public class EmailService implements IEmailService {
 
 		final String MAIL = FACTURE_DEBUT + facture_millieu + FACTURE_FIN;
 
-		send(facture.getClient().getEmail(), MAIL_FROM, "Merci pour votre achat", MAIL);
+		send(facture.getClient().getEmail(), MAIL_FROM, entreprise,  "Merci pour votre achat", MAIL);
 	}
 
 	/**
@@ -143,7 +146,7 @@ public class EmailService implements IEmailService {
 				+ "<p>Cordialement.</p>" + "<p>L'équipe de mycompanyhelper</p>"
 				+ "<p>Ce message vous a été envoyé depuis <a href=\"https://www.mycompanyhelper.com\">mycompanyhelper.com</a></p>";
 
-		send(user.getUsername(), MAIL_FROM, "Vous avez été ajouté en tant que gestionnaire.", Gest_Mail);
+		send(user.getUsername(), MAIL_FROM, "mycompanyhelper", "Vous avez été ajouté en tant que gestionnaire.", Gest_Mail);
 	}
 
 	/**
@@ -157,7 +160,7 @@ public class EmailService implements IEmailService {
 				+ "<p>Si vous n'etes pas à l'origine de cette demande, merci de nous en informer"
 				+ "<p>Ce message vous a été envoyé depuis <a href=\"https://www.mycompanyhelper.com\">mycompanyhelper.com</a></p>";
 
-		send(mail, MAIL_FROM, "Votre demande de changement de mot de passe.", MAIL);
+		send(mail, MAIL_FROM, "mycompanyhelper", "Votre demande de changement de mot de passe.", MAIL);
 
 	}
 
@@ -170,7 +173,7 @@ public class EmailService implements IEmailService {
 		final String MAIL = "<div style='white-space: pre;'>" + email.getCorps() + "</div>"
 				+ "<p>Ce message vous a été envoyé depuis <a href=\"https://www.mycompanyhelper.com\">mycompanyhelper.com</a></p>";
 
-		send(email.getTo(), email.getFrom(), email.getTitre(), MAIL);
+		send(email.getTo(), email.getFrom(), "mycompanyhelper", email.getTitre(), MAIL);
 
 	}
 
@@ -185,7 +188,7 @@ public class EmailService implements IEmailService {
 				+ "<p>Cordialement.</p>" + "<p>L'équipe de mycompanyhelper</p>"
 				+ "<p>Ce message vous a été envoyé depuis <a href=\"https://www.mycompanyhelper.com\">mycompanyhelper.com</a></p>";
 
-		send(email, MAIL_FROM, "mycompanyhelper alerte stock bas", MAIL);
+		send(email, MAIL_FROM, "mycompanyhelper", "mycompanyhelper alerte stock bas", MAIL);
 
 	}
 
@@ -202,7 +205,7 @@ public class EmailService implements IEmailService {
 				+ "<p>Cordialement.</p>" + "<p>L'équipe de mycompanyhelper</p>"
 				+ "<p>Ce message vous a été envoyé depuis <a href=\"https://www.mycompanyhelper.com\">mycompanyhelper.com</a></p>";
 
-		send(signUpRequest.getUsername(), MAIL_FROM, "Merci pour votre inscription", MAIL);
+		send(signUpRequest.getUsername(), MAIL_FROM, "mycompanyhelper", "Merci pour votre inscription", MAIL);
 
 	}
 
@@ -214,7 +217,7 @@ public class EmailService implements IEmailService {
 				+ "<p>L'équipe de mycompanyhelper</p>"
 				+ "<p>Ce message vous a été envoyé depuis <a href=\"https://www.mycompanyhelper.com\">mycompanyhelper.com</a></p>";
 
-		send(annonce.getEmail(), MAIL_FROM, "Merci pour votre achat", MAIL);
+		send(annonce.getEmail(), MAIL_FROM, "mycompanyhelper", "Merci pour votre achat", MAIL);
 	}
 
 	@Override
@@ -232,7 +235,7 @@ public class EmailService implements IEmailService {
 				+ "<p>L'équipe de mycompanyhelper</p>"
 				+"<p>Ce message vous a été envoyé depuis <a href=\"https://www.mycompanyhelper.com\">mycompanyhelper.com</a></p>";
 
-		send(email, MAIL_FROM, "Votre planning de la journée", MAIL_DEBUT+mailMillieu+MAIL_FIN);
+		send(email, MAIL_FROM, "mycompanyhelper", "Votre planning de la journée", MAIL_DEBUT+mailMillieu+MAIL_FIN);
 		
 	}
 }
