@@ -67,7 +67,6 @@ export class GraphiqueComponent implements OnInit {
     }
 
     ngOnInit() {
-        console.log(this.listeProduits)
         this.initCA();
         this.initproduitData();
     }

@@ -2,6 +2,7 @@ package com.stockmaga.back.services;
 
 import java.util.List;
 
+import com.stockmaga.back.models.Email;
 import org.springframework.http.ResponseEntity;
 
 import com.stockmaga.back.models.User;
@@ -28,4 +29,8 @@ public interface IUserService {
 	public JwtResponse userDejaAuthentifie(String token);
 
 	ResponseEntity<?> addAbonnement(String idSubscription, String email);
+
+    ResponseEntity<?> sendMailSupport(Email email);
+
+	void deleteUser(Long idUser);
 }

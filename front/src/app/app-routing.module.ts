@@ -6,7 +6,7 @@ import {LandingPageComponent} from './landing-page/landing-page.component';
 import {MenuComponent} from './partieUtilisateurs/menu/menu.component';
 import {MenuFournisseurComponent} from './partieFournisseurs/menuFournisseur/menu-fournisseur.component';
 import {IsConnectedGuard} from './shared/guards/is-connected-guard.service';
-import {SupportComponent} from "./support/support.component";
+import {SupportComponent} from "./shared/support/support.component";
 
 const routes: Routes = [
     {

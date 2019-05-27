@@ -11,19 +11,25 @@ import com.stockmaga.back.request.SignUpForm;
 
 public interface IEmailService {
 
-	public void sendFacture(Facture facture, String entreprise);
+	void sendFacture(Facture facture, String entreprise);
 	
-	public void sendGestMail(User user);
+	void sendGestMail(User user);
 	
-	public void sendMailToFournisseur(Email email);
+	void sendMailToFournisseur(Email email);
 	
-	public void sendPasswordMail(String mail, String lien);
+	void sendPasswordMail(String mail, String lien);
 
-	public void mailStockBas(String produit, String email);
+	void mailStockBas(String produit, String email);
 
-	public void sendInscriptionMail(SignUpForm signUpRequest);
+	void sendInscriptionMail(SignUpForm signUpRequest);
 
-	public void sendMailMiseEnAvant(Annonce annonce);
+	void sendMailMiseEnAvant(Annonce annonce);
 
-	public void sendMailCalendrier(String email, List<Calendrier> calendrier);
+	void sendMailCalendrier(String email, List<Calendrier> calendrier);
+
+	void sendMailSupport(Email email);
+
+	void mailSuppressionCompte(String email);
+
+
 }

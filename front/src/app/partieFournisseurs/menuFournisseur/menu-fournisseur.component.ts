@@ -11,7 +11,6 @@ export class MenuFournisseurComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-
     }
 
     ngOnDestroy(): void {

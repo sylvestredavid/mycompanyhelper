@@ -18,6 +18,9 @@ import {MessageListComponent} from '../../shared/chatbot/message-list/message-li
 import {ProduitService} from '../produits/produit.service';
 import {ClientsService} from '../clients/clients.service';
 import {CalendrierService} from '../calendrier/calendrier.service';
+import {SuiviDialComponent} from "../../shared/dialogues/suivi-dial/suivi-dial.component";
+import {UsersService} from "../../users/users.service";
+import {SuiviConsommationModel} from "../../models/suivi-consommation.model";
 
 @Component({
     selector: 'app-core',
@@ -32,11 +35,12 @@ export class CoreComponent implements OnInit, OnDestroy {
     subscriptions: Subscription[] = [];
     nbNotifications: number;
     screenWidth: number;
+    suivi: SuiviConsommationModel;
 
     constructor(private fournisseurService: FournisseursService, private genreService: GenreService, private store: Store<UserState>
         , public dialog: MatDialog, iconRegistry: MatIconRegistry, sanitizer: DomSanitizer, private produitService: ProduitService,
                 private clientService: ClientsService, private optionService: OptionsService, private router: Router, private calendrierService: CalendrierService,
-                private notificationService: NotificationsService) {
+                private notificationService: NotificationsService, private userService: UsersService) {
         iconRegistry.addSvgIcon(
             'options',
             sanitizer.bypassSecurityTrustResourceUrl('/assets/settings.svg'));
@@ -46,6 +50,9 @@ export class CoreComponent implements OnInit, OnDestroy {
         iconRegistry.addSvgIcon(
             'notification',
             sanitizer.bypassSecurityTrustResourceUrl('/assets/notification.svg'));
+        iconRegistry.addSvgIcon(
+            'suivi',
+            sanitizer.bypassSecurityTrustResourceUrl('/assets/suivi.svg'));
         iconRegistry.addSvgIcon(
             'aide',
             sanitizer.bypassSecurityTrustResourceUrl('/assets/aide.svg'));
@@ -65,6 +72,11 @@ export class CoreComponent implements OnInit, OnDestroy {
                     this.role = user[0].authorities;
                     this.entreprise = user[0].entreprise;
                 }
+            }
+        );
+        this.userService.suiviUtilisation().subscribe(
+            s => {
+                this.suivi = s;
             }
         );
         this.initGenres();
@@ -143,5 +155,8 @@ export class CoreComponent implements OnInit, OnDestroy {
 
     openChatBot() {
         this.dialog.open(MessageListComponent);
+    }
+    openSuivi() {
+        this.dialog.open(SuiviDialComponent, {data: {suivi: this.suivi}});
     }
 }

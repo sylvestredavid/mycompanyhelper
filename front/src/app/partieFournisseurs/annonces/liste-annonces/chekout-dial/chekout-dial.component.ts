@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {AnnonceService} from '../../annonce.service';
-import {MAT_DIALOG_DATA, MatDialogRef, MatIconRegistry} from '@angular/material';
+import {MAT_DIALOG_DATA, MatDialogRef, MatIconRegistry, MatSnackBar} from '@angular/material';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {DomSanitizer} from '@angular/platform-browser';
 import {finalize} from 'rxjs/operators';
@@ -23,10 +23,11 @@ export class ChekoutDialComponent implements OnInit {
     anneeListe: number[] = [];
     checkoutForm: FormGroup;
     enCours$ = new BehaviorSubject<boolean>(false);
+    msg: string
 
     constructor(private annonceService: AnnonceService, public dialogRef: MatDialogRef<ChekoutDialComponent>,
                 @Inject(MAT_DIALOG_DATA) public data: DialogData, private fb: FormBuilder, iconRegistry: MatIconRegistry,
-                sanitizer: DomSanitizer) {
+                sanitizer: DomSanitizer, private snackBar: MatSnackBar) {
         iconRegistry.addSvgIcon(
             'sortie',
             sanitizer.bypassSecurityTrustResourceUrl('/assets/delete.svg'));
@@ -58,6 +59,12 @@ export class ChekoutDialComponent implements OnInit {
                 let token = response.id;
                 this.chargeCard(token);
             }
+            if (status === 402) {
+                this.enCours$.next(false)
+                this.msg = 'Numero de carte incorrect';
+                this.snackBar.open(this.msg, 'ok', {verticalPosition: 'top', duration: 2500});
+                document.getElementById('encours').click();
+            }
         });
     }
 
@@ -68,6 +75,12 @@ export class ChekoutDialComponent implements OnInit {
             (ok: any) => {
                 this.annonceService.mettreAnnonceEnAvant(this.data.idAnnonce);
                 this.dialogRef.close(`L'annonce ${this.data.titre} est mise en avant.`);
+                document.getElementById('encours').click();
+            },
+            err => {
+                this.msg = 'Le paiement n\'a pas été accepté';
+                this.snackBar.open(this.msg, 'ok', {verticalPosition: 'top', duration: 2500});
+                document.getElementById('encours').click();
             }
         );
     }

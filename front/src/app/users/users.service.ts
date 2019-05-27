@@ -5,6 +5,8 @@ import {UserModel} from '../models/user.modele';
 import {LoginModel} from '../models/Login.model';
 import {SignUpModel} from '../models/signUp.model';
 import {RequeteUtils} from '../shared/utils/requete.utils';
+import {EmailModel} from "../models/email.model";
+import {SuiviConsommationModel} from "../models/suivi-consommation.model";
 
 @Injectable({
     providedIn: 'root'
@@ -65,7 +67,23 @@ export class UsersService {
         return this.http.post(`${this.requeteUtils.url}users/mailPassword?mail=${mail}&lien=${lien}`, '');
     }
 
+    mailSupport(email: EmailModel) {
+        return this.http.post(`${this.requeteUtils.url}users/sendMailSupport`, email);
+    }
+
     abonnementFournisseur(token: string, email: string) {
         return this.http.post(`${this.requeteUtils.url}users/abonnementFournisseur?token=${token}&email=${email}`, '');
+    }
+
+    suiviUtilisation() {
+        return this.http.get<SuiviConsommationModel>(`${this.requeteUtils.url}users/suiviUtilisation?idUser=${this.idUser}`, this.requeteUtils.getOptions());
+    }
+
+    stop() {
+        return this.http.delete(`${this.requeteUtils.url}users/${this.idUser}/delete`, this.requeteUtils.getOptions());
+    }
+
+    changeAbonnement() {
+        return this.http.put(`${this.requeteUtils.url}users/changeAbonnement?idUser=${this.idUser}`, '');
     }
 }

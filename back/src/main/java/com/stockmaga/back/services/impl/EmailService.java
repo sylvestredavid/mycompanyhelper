@@ -153,6 +153,7 @@ public class EmailService implements IEmailService {
 	 * envoi du lien de changement de mot de passe
 	 */
 	@Override
+	@Async
 	public void sendPasswordMail(String mail, String lien) {
 		final String MAIL = "<p>Vous venez de faire une demande de changement de mot de passe.</p>"
 				+ "<p>Merci de <a href='https://www.mycompanyhelper.com/connexion/changePassword/" + lien
@@ -168,6 +169,7 @@ public class EmailService implements IEmailService {
 	 * envoi d'une reponse a une annonce d'un fournisseur
 	 */
 	@Override
+	@Async
 	public void sendMailToFournisseur(Email email) {
 
 		final String MAIL = "<div style='white-space: pre;'>" + email.getCorps() + "</div>"
@@ -237,5 +239,23 @@ public class EmailService implements IEmailService {
 
 		send(email, MAIL_FROM, "mycompanyhelper", "Votre planning de la journée", MAIL_DEBUT+mailMillieu+MAIL_FIN);
 		
+	}
+
+	@Override
+	@Async
+	public void sendMailSupport(Email email) {
+
+		send(email.getTo(), email.getFrom(), "demande support", email.getTitre(), email.getCorps());
+	}
+
+	@Override
+	@Async
+	public void mailSuppressionCompte(String email) {
+		final String MAIL = "<p>Bonjour</p>"
+				+ "<p>Votre compte sur mycompanyhelper a bien été supprimé</p>"
+				+ "<p>L'équipe de mycompanyhelper</p>"
+				+ "<p>Ce message vous a été envoyé depuis <a href=\"https://www.mycompanyhelper.com\">mycompanyhelper.com</a></p>";
+
+		send(email, MAIL_FROM, "mycompanyhelper", "suppression de votre compte", MAIL);
 	}
 }

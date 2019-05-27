@@ -4,18 +4,13 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import com.stockmaga.back.models.Annonce;
+import com.stockmaga.back.models.Email;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 import com.stockmaga.back.models.Reponse;
 import com.stockmaga.back.models.User;
@@ -84,6 +79,11 @@ public class UserController {
 		return userService.mailPassword(mail, lien);
 	}
 
+	@PostMapping("/sendMailSupport")
+	public ResponseEntity<?> sendMailSupport(@RequestBody Email email) {
+		return userService.sendMailSupport(email);
+	}
+
 	@PostMapping("/abonnement")
 	public ResponseEntity<?> abonnement(@RequestParam(value="token", required=true) String token, @RequestParam(value="email", required=true) String email) {
 		return abonnementService.abonement(token, email);
@@ -104,8 +104,27 @@ public class UserController {
 		return userService.addAbonnement(idSubscription, email);
 	}
 
-	@PostMapping("/stopAbonnement")
-	public ResponseEntity<?> stopAbonnement(@RequestParam(value="idUser", required=true) Long idUser) {
-		return abonnementService.stopAbonnement(idUser);
+	@PutMapping("/changeAbonnement")
+	public ResponseEntity<?> changeAbonnement(@RequestParam(value="idUser", required=true) Long idUser) {
+		return abonnementService.changerAbonnement(idUser);
+	}
+
+	@GetMapping("/suiviUtilisation")
+	@PreAuthorize("hasRole('ADMIN') or hasRole('FOURNISSEUR')")
+	public ResponseEntity<?> saveAnnonces(@RequestParam(value="idUser", required=true) Long idUser) {
+		return abonnementService.suiviUtilisation(idUser);
+	}
+
+	@DeleteMapping("/{id}/delete")
+	@PreAuthorize("hasRole('ADMIN') or hasRole('FOURNISSEUR')")
+	public ResponseEntity<?> deleteUser(@PathVariable Long id) {
+		boolean stop = abonnementService.stopAbonnement(id);
+		userService.deleteUser(id);
+
+		if(stop) {
+			return ResponseEntity.status(HttpStatus.OK).body(new Reponse("compte supprimé"));
+		} else {
+			return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Reponse("erreur lors de l'annulation"));
+		}
 	}
 }

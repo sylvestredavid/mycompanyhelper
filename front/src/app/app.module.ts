@@ -51,12 +51,13 @@ import {CoreComponent} from './partieUtilisateurs/core/core.component';
 import {CoreFournisseursComponent} from './partieFournisseurs/core-fournisseurs/core-fournisseurs.component';
 import {UsersModule} from "./users/users.module";
 import {InscriptionComponent} from "./users/inscription/inscription.component";
-import { SupportComponent } from './support/support.component';
+import { SupportComponent } from './shared/support/support.component';
+import { SuiviDialComponent } from './shared/dialogues/suivi-dial/suivi-dial.component';
 
 registerLocaleData(localeFr, 'fr-FR');
 
 @NgModule({
-    entryComponents: [AjoutGenreComponent, OptionsComponent, NotificationComponent, DialogGuardComponent, MessageListComponent],
+    entryComponents: [AjoutGenreComponent, OptionsComponent, NotificationComponent, DialogGuardComponent, MessageListComponent, SuiviDialComponent],
     declarations: [
         AppComponent,
         OptionsComponent,
@@ -70,7 +71,8 @@ registerLocaleData(localeFr, 'fr-FR');
         MenuFournisseurComponent,
         CoreComponent,
         CoreFournisseursComponent,
-        SupportComponent
+        SupportComponent,
+        SuiviDialComponent
     ],
     imports: [
         BrowserModule,

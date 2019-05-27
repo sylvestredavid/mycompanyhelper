@@ -1,0 +1,36 @@
+h2{
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.infos{
+  margin-bottom: 20px;
+
+  p{
+    font-size: 1rem;
+    margin-bottom: 8px;
+  }
+
+  h3{
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .infos {
+    width: 48%;
+    padding-right: 10px;
+    border-right: 1px solid black;
+  }
+
+  .formulaire{
+    width: 48%;
+  }
+}

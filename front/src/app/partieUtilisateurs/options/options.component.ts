@@ -1,5 +1,5 @@
 import {Component, HostListener, Inject, OnDestroy, OnInit} from '@angular/core';
-import {MatDialogRef, MatIconRegistry} from '@angular/material';
+import {MatDialogRef, MatIconRegistry, MatSnackBar} from '@angular/material';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Store} from '@ngrx/store';
 import {OptionModel} from '../../models/option.model';
@@ -30,7 +30,7 @@ export class OptionsComponent implements OnInit, OnDestroy {
     constructor(public dialogRef: MatDialogRef<OptionsComponent>,
                 private fb: FormBuilder, private optionService: OptionsService,
                 private storeUser: Store<UserState>, private userService: UsersService, iconRegistry: MatIconRegistry,
-                sanitizer: DomSanitizer) {
+                sanitizer: DomSanitizer, private  snackBar: MatSnackBar) {
         iconRegistry.addSvgIcon(
             'delete',
             sanitizer.bypassSecurityTrustResourceUrl('/assets/delete.svg'));
@@ -50,9 +50,9 @@ export class OptionsComponent implements OnInit, OnDestroy {
     initGestionnaires() {
         this.storeUser.select('user').pipe(
             map((user: UserModel) => {
-                if (user) {
-                    return user[0].id;
-                }
+                    if (user) {
+                        return user[0].id;
+                    }
                 }
             )
         ).subscribe(
@@ -177,4 +177,12 @@ export class OptionsComponent implements OnInit, OnDestroy {
         this.screenWidth = window.innerWidth;
     }
 
+    onDeleteCompte() {
+        this.userService.stop().subscribe(
+            () => {
+                this.snackBar.open('votre compte à bien été supprimé.', 'ok', {duration: 2000})
+                window.location.replace('');
+            }
+        );
+    }
 }

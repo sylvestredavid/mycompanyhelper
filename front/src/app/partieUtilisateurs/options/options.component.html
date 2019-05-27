@@ -75,6 +75,12 @@
             </ng-template>
         </form>
     </ng-container>
+    <ng-container>
+        <h2>Supprimer compte</h2>
+        <p>En supprimant votre compte, toutes vos données seront perdues.</p>
+        <p>Vous etes succeptible de recevoir une facture de régularisation</p>
+        <button mat-raised-button (click)="onDeleteCompte()" [disabled]="enCour">J'ai compris</button>
+    </ng-container>
 </mat-dialog-content>
 <mat-dialog-actions>
     <button mat-raised-button (click)="onSubmitOptions()">ok</button>

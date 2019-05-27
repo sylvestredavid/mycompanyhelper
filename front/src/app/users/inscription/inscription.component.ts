@@ -71,8 +71,8 @@ export class InscriptionComponent implements OnInit {
                     if (result === 'ok') {
                         this.router.navigate(['users']);
                     } else {
-                        this.snackBar.open(result, 'ok', {verticalPosition: 'top', duration: 2500});
-                        this.signUpForm.reset()
+                        // this.snackBar.open(result, 'ok', {verticalPosition: 'top', duration: 2500});
+                        // this.signUpForm.reset()
                     }
                 }
             });
@@ -86,8 +86,8 @@ export class InscriptionComponent implements OnInit {
                     if (result === 'ok') {
                     this.router.navigate(['fournisseurs']);
                 } else {
-                    this.snackBar.open(result, 'ok', {verticalPosition: 'top', duration: 2500});
-                    this.signUpForm.reset()
+                    // this.snackBar.open(result, 'ok', {verticalPosition: 'top', duration: 2500});
+                    // this.signUpForm.reset()
                 }
                 }
             });

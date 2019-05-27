@@ -62,6 +62,12 @@ export class CheckoutAbonnementFournisseurComponent implements OnInit {
                 let token = response.id;
                 this.chargeCard(token);
             }
+            if (status === 402) {
+                this.enCours$.next(false)
+                this.msg = 'Numero de carte incorrect';
+                this.snackBar.open(this.msg, 'ok', {verticalPosition: 'top', duration: 2500});
+                document.getElementById('encours').click();
+            }
         });
     }
 
@@ -77,12 +83,14 @@ export class CheckoutAbonnementFournisseurComponent implements OnInit {
                         this.store.dispatch(new AjoutUser(user));
                         sessionStorage.setItem('token', user.token);
                         this.dialogRef.close('ok');
+                        document.getElementById('encours').click();
                     }
                 );
             },
             err => {
                 this.msg = 'Le paiement n\'a pas été accepté';
                 this.snackBar.open(this.msg, 'ok', {verticalPosition: 'top', duration: 2500});
+                document.getElementById('encours').click();
             }
         );
     }

@@ -13,7 +13,7 @@ import {
     MatProgressSpinnerModule,
     MatRadioModule,
     MatSnackBarModule,
-    MatToolbarModule
+    MatToolbarModule, MatTooltipModule
 } from '@angular/material';
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -46,6 +46,7 @@ import {CheckoutAbonnementFournisseurComponent} from './checkout-abonnement-four
         MatIconModule,
         SharedModule,
         MatCheckboxModule,
+        MatTooltipModule,
         MatDialogModule,
         MatToolbarModule,
         MatMenuModule,

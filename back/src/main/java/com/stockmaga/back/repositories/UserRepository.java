@@ -1,6 +1,7 @@
 package com.stockmaga.back.repositories;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -38,4 +39,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	@Transactional
 	@Query(value="update user set abonnement = ?1 where username = ?2", nativeQuery=true)
 	public void addAbonnement(String abonnement, String email);
+
+	@Modifying
+	@Transactional
+	@Query(value="CALL delete_user(?1)", nativeQuery=true)
+	public void supprimerCompte(Long idUser) throws NoSuchElementException;
 }

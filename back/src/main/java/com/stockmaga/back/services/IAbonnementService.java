@@ -8,16 +8,19 @@ public interface IAbonnementService {
 
 	ResponseEntity<?> augmenterNbContacts(Integer id);
 
-	ResponseEntity<?> miseEnAvant(String token, Integer idAnnonce);
+    ResponseEntity<?> suiviUtilisation(Long idUser);
+
+    ResponseEntity<?> miseEnAvant(String token, Integer idAnnonce);
 
 	ResponseEntity<?> abonementRequete(String token, String email);
 
 	ResponseEntity<?> abonementFournisseur(String token, String email);
 
-	ResponseEntity<?> stopAbonnement(Long idUser);
+	boolean stopAbonnement(Long idUser);
 
 	ResponseEntity<?> abonement(String token, String email);
 
 	void augmenterNbRequete(Long idUser) throws StripeException;
 
+    ResponseEntity<?> changerAbonnement(Long idUser);
 }

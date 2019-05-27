@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import com.stockmaga.back.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,11 +17,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.stockmaga.back.models.Option;
-import com.stockmaga.back.models.Reponse;
-import com.stockmaga.back.models.Role;
-import com.stockmaga.back.models.RoleName;
-import com.stockmaga.back.models.User;
 import com.stockmaga.back.repositories.OptionRepository;
 import com.stockmaga.back.repositories.RoleRepository;
 import com.stockmaga.back.repositories.UserRepository;
@@ -202,6 +198,17 @@ public class UserService implements IUserService {
 		userRepository.addAbonnement(idSubscription, email);
 
 		return ResponseEntity.status(HttpStatus.OK).body(new Reponse("abonnement ajouté"));
+	}
+
+	@Override
+	public ResponseEntity<?> sendMailSupport(Email email) {
+		emailService.sendMailSupport(email);
+		return ResponseEntity.ok(new Reponse("mail envoyé"));
+	}
+
+	@Override
+	public void deleteUser(Long idUser) {
+		userRepository.supprimerCompte(idUser);
 	}
 
 }

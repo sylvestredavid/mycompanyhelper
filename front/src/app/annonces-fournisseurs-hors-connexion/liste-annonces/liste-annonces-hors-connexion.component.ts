@@ -1,10 +1,9 @@
-import {Component, HostListener, OnDestroy, OnInit, Inject, AfterViewInit, Renderer2} from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit, Renderer2} from '@angular/core';
 import {AnnonceModel} from '../../models/annonce.model';
 import {AnnuaireService} from '../annuaire.service';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder} from '@angular/forms';
 import {Subscription} from 'rxjs';
-import {SocketService} from '../../shared/socket.service';
-import { Title }  from '@angular/platform-browser';
+import {Title} from '@angular/platform-browser';
 
 @Component({
     selector: 'app-liste-annonces-hors-connexion',
@@ -23,9 +22,8 @@ export class ListeAnnoncesHorsConnexionComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.getScreenSize()
+        this.getScreenSize();
 
-        console.log(document.getElementById('33883-31'))
         this.titleService.setTitle( 'Annonces fournisseurs gratuites' );
         this.annuaireService.publishAnnonces();
         this.subscription = this.annuaireService.listeAnnonces$.subscribe(
@@ -46,7 +44,7 @@ export class ListeAnnoncesHorsConnexionComponent implements OnInit, OnDestroy {
     @HostListener('window:resize', ['$event'])
     getScreenSize(event?) {
         this.screenWidth = window.innerWidth;
-        setTimeout(() =>{this.initScripts(); }, 500);
+        setTimeout(() => {this.initScripts(); }, 500);
     }
 
     /**
@@ -119,25 +117,25 @@ export class ListeAnnoncesHorsConnexionComponent implements OnInit, OnDestroy {
     }
 
 
-    initScripts(){
-        if(document.getElementById('33883-31')) {
+    initScripts() {
+        if (document.getElementById('33883-31')) {
             const s = this.renderer2.createElement('script');
             s.src = '//ads.themoneytizer.com/s/gen.js?type=31';
-            document.getElementById('33883-31').appendChild(s)
+            document.getElementById('33883-31').appendChild(s);
 
             const s2 = this.renderer2.createElement('script');
             s2.src = '//ads.themoneytizer.com/s/requestform.js?siteId=33883&formatId=31';
-            document.getElementById('33883-31').appendChild(s2)
+            document.getElementById('33883-31').appendChild(s2);
         }
 
-        if(document.getElementById('33883-3')) {
+        if (document.getElementById('33883-3')) {
             const s3 = this.renderer2.createElement('script');
             s3.src = '//ads.themoneytizer.com/s/gen.js?type=3';
-            document.getElementById('33883-3').appendChild(s3)
+            document.getElementById('33883-3').appendChild(s3);
 
             const s4 = this.renderer2.createElement('script');
             s4.src = '//ads.themoneytizer.com/s/requestform.js?siteId=33883&formatId=3';
-            document.getElementById('33883-3').appendChild(s4)
+            document.getElementById('33883-3').appendChild(s4);
         }
     }
 

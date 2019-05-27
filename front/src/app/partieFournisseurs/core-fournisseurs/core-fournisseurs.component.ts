@@ -8,6 +8,8 @@ import {DeleteUser} from '../../shared/stores/user.actions';
 import {Router} from '@angular/router';
 import {map} from 'rxjs/operators';
 import {MessageListComponent} from '../../shared/chatbot/message-list/message-list.component';
+import {SuiviDialComponent} from "../../shared/dialogues/suivi-dial/suivi-dial.component";
+import {SuiviConsommationModel} from "../../models/suivi-consommation.model";
 
 
 @Component({
@@ -19,6 +21,7 @@ export class CoreFournisseursComponent implements OnInit {
 
     entreprise: string;
     screenWidth: number;
+    suivi: SuiviConsommationModel;
 
     constructor(private userService: UsersService, iconRegistry: MatIconRegistry, sanitizer: DomSanitizer,
                 private store: Store<UserState>, public dialog: MatDialog, private router: Router) {
@@ -28,11 +31,19 @@ export class CoreFournisseursComponent implements OnInit {
         iconRegistry.addSvgIcon(
             'aide',
             sanitizer.bypassSecurityTrustResourceUrl('/assets/aide.svg'));
+        iconRegistry.addSvgIcon(
+            'suivi',
+            sanitizer.bypassSecurityTrustResourceUrl('/assets/suivi.svg'));
     }
 
     ngOnInit(): void {
         this.getEntreprise();
         this.getScreenSize();
+        this.userService.suiviUtilisation().subscribe(
+            s => {
+                this.suivi = s;
+            }
+        );
     }
 
     /**
@@ -66,5 +77,8 @@ export class CoreFournisseursComponent implements OnInit {
 
     openChatBot() {
         this.dialog.open(MessageListComponent);
+    }
+    openSuivi() {
+        this.dialog.open(SuiviDialComponent, {data: {suivi: this.suivi}});
     }
 }

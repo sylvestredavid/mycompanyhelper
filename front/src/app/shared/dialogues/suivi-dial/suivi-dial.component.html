@@ -1,0 +1,88 @@
+<button mat-icon-button class="sortie" (click)="close()">
+  <mat-icon svgIcon="sortie"></mat-icon>
+</button>
+<div class="clear"></div>
+<ng-container ngSwitch="{{suivi.nomAbonnement}}">
+  <ng-container *ngSwitchCase="'abonnement mycompanyhelper'">
+    <p>Abonnement fixe</p>
+    <table>
+      <thead>
+      <tr>
+        <th>nomination</th>
+        <th>nb</th>
+        <th>prix</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>abonnement</td>
+        <td>1</td>
+        <td>10€</td>
+      </tr>
+      </tbody>
+      <tr>
+        <td colspan="3">A régler le {{suivi.end * 1000 | date: 'dd/MM/yyyy'}} : {{suivi.amount / 100}}€</td>
+      </tr>
+    </table>
+    <div class="changement">
+      <h2>changer d'abonnement</h2>
+      <p>Passer a l'abonnement à la requete* ?</p>
+      <button mat-raised-button (click)="onChangeAbonnement()">Changer</button>
+      <p class="smallText">création, modification et suppression d'un élément (0,20€/requete).</p>
+    </div>
+  </ng-container>
+  <ng-container *ngSwitchCase="'abonnement mycompanyhelper requete'">
+    <p>Abonnement à la requète</p>
+    <table>
+      <thead>
+      <tr>
+        <th>nomination</th>
+        <th>nb</th>
+        <th>prix</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>requètes</td>
+        <td>{{suivi.totalUsage}}</td>
+        <td>0,20€</td>
+      </tr>
+      </tbody>
+      <tr>
+        <td colspan="3">A régler le {{suivi.end * 1000 | date: 'dd/MM/yyyy'}} : {{suivi.amount / 100}}€</td>
+      </tr>
+    </table>
+    <div class="changement">
+      <h2>changer d'abonnement</h2>
+      <p>Passer à l'abonnement fixe à 10€/mois ?</p>
+      <button mat-raised-button (click)="onChangeAbonnement()">Changer</button>
+    </div>
+  </ng-container>
+  <ng-container *ngSwitchCase="'abonnement mycompanyhelper fournisseur'">
+    <p>Abonnement fournisseur</p>
+    <table>
+      <thead>
+      <tr>
+        <th>nomination</th>
+        <th>nb</th>
+        <th>prix</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>mail reçus</td>
+        <td>{{suivi.totalUsage}}</td>
+        <td>1€</td>
+      </tr>
+      </tbody>
+      <tr>
+        <td colspan="3">A régler le {{suivi.end * 1000 | date: 'dd/MM/yyyy'}} : {{suivi.amount / 100}}€</td>
+      </tr>
+    </table>
+  </ng-container>
+  <ng-container *ngSwitchDefault>
+    <p>error</p>
+  </ng-container>
+</ng-container>
+
+
