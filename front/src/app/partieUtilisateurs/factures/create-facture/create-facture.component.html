@@ -131,12 +131,36 @@
                 </ng-container>
                 </tbody>
             </table>
-            <p class="align-right">
-                <ng-container *ngIf="produits.controls[0].value.produit">
-                    Total : {{getTotal(produits.controls)}}
-                </ng-container>
-                €
-            </p>
+            <ng-container *ngIf="produits.controls[0].value.produit">
+                <p class="align-right">
+                    Total HT : {{getTotalHT(produits.controls)}} €
+                </p>
+            </ng-container>
+            <ng-container *ngIf="tvaExist(produits.controls, 2.1)">
+                <p class="align-right">
+                    TVA à 2.1% : {{getTotalTva(produits.controls, 2.1)}} €
+                </p>
+            </ng-container>
+            <ng-container *ngIf="tvaExist(produits.controls, 5.5)">
+                <p class="align-right">
+                    TVA à 5.5% : {{getTotalTva(produits.controls, 5.5)}} €
+                </p>
+            </ng-container>
+            <ng-container *ngIf="tvaExist(produits.controls, 10)">
+                <p class="align-right">
+                    TVA à 10% : {{getTotalTva(produits.controls, 10)}}  €
+                </p>
+            </ng-container>
+            <ng-container *ngIf="tvaExist(produits.controls, 20)">
+                <p class="align-right">
+                    TVA à 20% : {{getTotalTva(produits.controls, 20)}} €
+                </p>
+            </ng-container>
+            <ng-container *ngIf="produits.controls[0].value.produit">
+                <p class="align-right">
+                    Total HT : {{getTotalTTC(produits.controls)}} €
+                </p>
+            </ng-container>
         </div>
     </div>
 </div>

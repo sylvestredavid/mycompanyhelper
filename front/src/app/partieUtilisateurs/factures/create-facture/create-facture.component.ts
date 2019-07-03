@@ -146,7 +146,7 @@ export class CreateFactureComponent implements OnInit, OnDestroy {
         this.enCour = true;
         const clientFormValue = this.clientForm.value;
         const produitsFormValue = this.produitsForm.value;
-        const total = this.getTotal(this.produits.controls);
+        const total = this.getTotalHT(this.produits.controls);
         const facture = new FactureModel();
         facture.date = new Date();
         facture.client = clientFormValue['client'];
@@ -158,7 +158,7 @@ export class CreateFactureComponent implements OnInit, OnDestroy {
             finalize(() => this.enCour = false)
         ).subscribe(
             facture => {
-                for (let control of this.produits.controls) {
+                for (const control of this.produits.controls) {
                     this.factureService.saveProduitsFacture(control.value.quantite, facture.idFacture, control.value.produit.idProduit);
                     this.produitService.diminuerQte(control.value.quantite, control.value.produit.idProduit);
                     this.produitService.ajoutFacture(control.value.quantite, facture.idFacture, control.value.produit.idProduit);
@@ -184,9 +184,9 @@ export class CreateFactureComponent implements OnInit, OnDestroy {
      * calcul le total de la facture
      * @param controls les inputs du formarray
      */
-    getTotal(controls: AbstractControl[]): number {
+    getTotalHT(controls: AbstractControl[]): number {
         let total = 0;
-        for (let control of controls) {
+        for (const control of controls) {
             total += (control.value.produit.prixVente * control.value.quantite);
         }
         return total;
@@ -233,7 +233,7 @@ export class CreateFactureComponent implements OnInit, OnDestroy {
             return;
         }
 
-        let message = this.messageQueue.shift();
+        const message = this.messageQueue.shift();
         this.snackBarRef = this.snackBar.open(message, 'ok', {duration: 1500, verticalPosition: 'top'});
         this.snackBarRef.afterDismissed().subscribe(() => {
             this.showNext();
@@ -265,19 +265,46 @@ export class CreateFactureComponent implements OnInit, OnDestroy {
      */
     public generatePDF() {
 
-        let data = document.getElementById('facture');
+        const data = document.getElementById('facture');
         html2canvas(data).then(canvas => {
             // Few necessary setting options
-            let imgWidth = 208;
-            let pageHeight = 295;
-            let imgHeight = canvas.height * imgWidth / canvas.width;
-            let heightLeft = imgHeight;
+            const imgWidth = 208;
+            const pageHeight = 295;
+            const imgHeight = canvas.height * imgWidth / canvas.width;
+            const heightLeft = imgHeight;
 
             const contentDataURL = canvas.toDataURL('image/png');
-            let pdf = new jsPDF(); // A4 size page of PDF
-            let position = 0;
+            const pdf = new jsPDF(); // A4 size page of PDF
+            const position = 0;
             pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight);
             pdf.save(`facture-${this.clientForm.value.client.nom}-${this.clientForm.value.client.prenom}-${this.datePipe.transform(new Date(), 'dd/MM/yy')}.pdf`); // Generated PDF
         });
+    }
+
+    tvaExist(controls: AbstractControl[], tva: number): boolean {
+        for (const control of controls) {
+            if (control.value.produit.tva === tva) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    getTotalTva(controls: AbstractControl[], tva: number): number {
+        let total = 0;
+        for (const control of controls) {
+            if (control.value.produit.tva === tva) {
+                total += ((control.value.produit.prixVente * tva / 100) * control.value.quantite);
+            }
+        }
+        return total;
+    }
+
+    getTotalTTC(controls: AbstractControl[]): number {
+        let total = 0;
+        for (const control of controls) {
+            total += ((control.value.produit.prixVente + (control.value.produit.prixVente * control.value.produit.tva / 100)) * control.value.quantite);
+        }
+        return total;
     }
 }
