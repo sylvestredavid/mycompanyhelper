@@ -78,6 +78,18 @@
   }
 }
 
+select, option{
+  text-align: center;
+  text-align-last: center;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.marge{
+  font-size: 13px;
+}
+
 .selected {
   background-color: rgba(103, 58, 183, 0.2);
 }

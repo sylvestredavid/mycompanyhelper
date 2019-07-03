@@ -18,10 +18,10 @@ const routes: Routes = [
         path: 'connexion',
         loadChildren: './users/users.module#UsersModule'
     },
-    {
-        path: 'annonces',
-        loadChildren: './annonces-fournisseurs-hors-connexion/annuaire.module#AnnuaireModule'
-    },
+    // {
+    //     path: 'annonces',
+    //     loadChildren: './annonces-fournisseurs-hors-connexion/annuaire.module#AnnuaireModule'
+    // },
     {
         path: 'users',
         component: CoreComponent,
@@ -54,34 +54,34 @@ const routes: Routes = [
                 path: 'fournisseurs',
                 loadChildren: './partieUtilisateurs/fournisseurs/fournisseurs.module#FournisseursModule'
             },
-            {
-                path: 'annuaire-fournisseurs',
-                loadChildren: './partieUtilisateurs/annuaire-fournisseurs/annuaire.module#AnnuaireModule'
-            },
+            // {
+            //     path: 'annuaire-fournisseurs',
+            //     loadChildren: './partieUtilisateurs/annuaire-fournisseurs/annuaire.module#AnnuaireModule'
+            // },
             {
                 path: 'calendrier',
                 loadChildren: './partieUtilisateurs/calendrier/calendrier.module#CalendrierModule'
             }
         ]
     },
-    {
-        path: 'fournisseurs',
-        component: CoreFournisseursComponent,
-        children: [
-            {
-                path: '',
-                component: MenuFournisseurComponent,
-            },
-            {
-                path: 'support',
-                component: SupportComponent,
-            },
-            {
-                path: 'annonces',
-                loadChildren: './partieFournisseurs/annonces/annonces.module#AnnoncesModule'
-            }
-        ]
-    }
+    // {
+    //     path: 'fournisseurs',
+    //     component: CoreFournisseursComponent,
+    //     children: [
+    //         {
+    //             path: '',
+    //             component: MenuFournisseurComponent,
+    //         },
+    //         {
+    //             path: 'support',
+    //             component: SupportComponent,
+    //         },
+    //         {
+    //             path: 'annonces',
+    //             loadChildren: './partieFournisseurs/annonces/annonces.module#AnnoncesModule'
+    //         }
+    //     ]
+    // }
 ];
 
 

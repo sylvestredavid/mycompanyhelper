@@ -106,7 +106,7 @@ export class InscriptionComponent implements OnInit {
             password2: ['', Validators.compose(
                 [Validators.required, CustomValidators.passwordMatchValidator()])],
             typeAbo: 'fixe',
-            typeInscription: ['', Validators.required],
+            typeInscription: ['user', Validators.required],
 
         });
     }

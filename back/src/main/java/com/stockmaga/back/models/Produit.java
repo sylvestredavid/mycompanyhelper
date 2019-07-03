@@ -59,4 +59,6 @@ public class Produit implements Serializable {
 	
 	@Type(type = "org.hibernate.type.NumericBooleanType")
 	private boolean enVente;
+
+	private double tva;
 }

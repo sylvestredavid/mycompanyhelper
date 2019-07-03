@@ -20,4 +20,6 @@ export class ProduitModel {
   idUser: number;
 
   enVente: boolean;
+
+  tva: number;
 }

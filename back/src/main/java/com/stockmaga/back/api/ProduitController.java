@@ -22,7 +22,8 @@ import com.stockmaga.back.services.IEmailService;
 import com.stockmaga.back.services.IProduitService;
 
 @Controller
-@CrossOrigin({"http://localhost:4200", "http://www.mycompanyhelper.com", "https://www.mycompanyhelper.com", "http://powersell.eu-west-3.elasticbeanstalk.com"})
+@CrossOrigin({"http://localhost:4200", "http://www.mycompanyhelper.com", "https://www.mycompanyhelper.com",
+		"http://powersell.eu-west-3.elasticbeanstalk.com"})
 @RequestMapping("/api")
 public class ProduitController {
 

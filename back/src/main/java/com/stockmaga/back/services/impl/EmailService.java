@@ -82,7 +82,6 @@ public class EmailService implements IEmailService {
 			// Send message
 			Transport.send(message);
 
-			System.out.println("Sent message successfully....");
 
 		} catch (MessagingException e) {
 			e.printStackTrace();

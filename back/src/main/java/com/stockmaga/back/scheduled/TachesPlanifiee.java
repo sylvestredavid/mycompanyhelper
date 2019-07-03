@@ -84,7 +84,7 @@ public class TachesPlanifiee {
 		} else {
 			dayStr = "" + day;
 		}
-		String start = year + "-" + monthStr + "-" + dayStr;
+		String start = new StringBuilder().append(year).append("-").append(monthStr).append("-").append(dayStr).toString();
 		users.forEach(user -> {
 			List<Calendrier> calendriers = calendrierRepository.findByStartStartingWithAndIdUser(start, user.getId());
 			if(calendriers.size() > 0) {

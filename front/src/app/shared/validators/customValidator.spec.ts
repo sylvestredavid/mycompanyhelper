@@ -3,10 +3,10 @@ import {FormControl, FormGroup} from '@angular/forms';
 
 describe('customValidator', () => {
 
-    it('prixMaxValidator', () => {
+    it('passwordMatchValidator', () => {
         const genericForm = new FormGroup({
-            prixMin: new FormControl(8),
-            prixMax: new FormControl(12, CustomValidators.prixMaxValidator)
+            password1: new FormControl('Myriam24!'),
+            password2: new FormControl('Myriam24!', CustomValidators.passwordMatchValidator)
         })
         expect(genericForm.valid).toBeTruthy();
     });

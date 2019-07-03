@@ -2,14 +2,14 @@
     <p routerLink="" class="acueil">mycompanyhelper</p>
     <div class="flex-spacer"></div>
     <ng-container *ngIf="screenWidth >= 768 else mobile">
-        <button mat-button routerLink="/annonces">Annonces fournisseurs</button>
+<!--        <button mat-button routerLink="/annonces">Annonces fournisseurs</button>-->
         <button mat-button routerLink="/connexion">Connexion</button>
     </ng-container>
     <ng-template #mobile>
         <button mat-button [matMenuTriggerFor]="menu">Menu</button>
 
         <mat-menu #menu="matMenu">
-            <button mat-menu-item routerLink="/annonces">Annonces fournisseurs</button>
+<!--            <button mat-menu-item routerLink="/annonces">Annonces fournisseurs</button>-->
             <button mat-menu-item routerLink="/connexion">Connexion</button>
         </mat-menu>
     </ng-template>

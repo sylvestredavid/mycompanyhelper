@@ -19,7 +19,8 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class CA implements Serializable{/**
+public class CA implements Serializable{
+	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -48670456339760037L;

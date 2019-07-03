@@ -51,6 +51,7 @@
                     <th>prix vente</th>
                     <th>Quantitée</th>
                     <th>Marge</th>
+                    <th>tva</th>
                     <ng-container *ngIf="!genre">
                         <th>Categorie</th>
                     </ng-container>
@@ -76,8 +77,18 @@
                             <mat-error *ngIf="control.controls.quantite.invalid">la quantitée doit etre supérieure a 0
                             </mat-error>
                         </td>
-                        <td [ngStyle]="{'color': getColor(control.value)}">{{produitService.marge(control.value.prixVente, control.value.prixAchat)}}
+                        <td class="marge" [ngStyle]="{'color': getColor(control.value)}">{{produitService.marge(control.value.prixVente, control.value.prixAchat)}}
                             %
+                        </td>
+                        <td>
+                            <select [inputReadOnly]="true" formControlName="tva"
+                                    (change)="envoiForm()">
+                                <option [value]="0">0</option>
+                                <option [value]="2.1">2,1%</option>
+                                <option [value]="5.5">5.5%</option>
+                                <option [value]="10">10%</option>
+                                <option [value]="20">20%</option>
+                            </select>
                         </td>
                         <ng-container *ngIf="!genre">
                             <td>
@@ -130,6 +141,14 @@
                     <mat-error *ngIf="control.controls.quantite.invalid">la quantitée doit etre supérieure a 0
                     </mat-error>
                     <br>
+                    tva: <select [inputReadOnly]="true" formControlName="tva"
+                                 (change)="envoiForm()">
+                    <option [value]="0">0</option>
+                    <option [value]="2.1">2,1%</option>
+                    <option [value]="5.5">5.5%</option>
+                    <option [value]="10">10%</option>
+                    <option [value]="20">20%</option>
+                </select>
                     <ng-container *ngIf="!genre">
                         <ng-template [ngIf]="role === 'ROLE_ADMIN'" [ngIfElse]="gest">
                             <select [inputReadOnly]="true" formControlName="genre"

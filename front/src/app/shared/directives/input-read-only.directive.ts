@@ -17,6 +17,7 @@ export class InputReadOnlyDirective {
     constructor(private elementRef: ElementRef, private renderer: Renderer2) {
         this.elt = this.elementRef.nativeElement;
         this.renderer.addClass(this.elt, 'readOnly');
+        this.elt.setAttribute('readonly', 'true');
     }
 
 
@@ -32,6 +33,7 @@ export class InputReadOnlyDirective {
                 if (inputs.item(i) !== this.elt) {
                     inputs.item(i).classList.add('readOnly');
                     inputs.item(i).style.backgroundColor = null;
+                    inputs.item(i).setAttribute('readonly', 'true');
                 }
             }
             // idem pour les textarea
@@ -40,9 +42,11 @@ export class InputReadOnlyDirective {
                 if (textarea.item(i) !== this.elt) {
                     textarea.item(i).classList.add('readOnly');
                     textarea.item(i).style.backgroundColor = null;
+                    textarea.item(i).setAttribute('readonly', 'true');
                 }
             }
             // l'input cliqué apparait et est saisissable
+            this.elt.removeAttribute('readonly');
             this.renderer.removeClass(this.elt, 'readOnly');
             this.renderer.setStyle(this.elt, 'background-color', 'white');
         }
@@ -56,6 +60,7 @@ export class InputReadOnlyDirective {
         if (this.inputReadOnly) {
             this.renderer.addClass(this.elt, 'readOnly');
             this.renderer.removeStyle(this.elt, 'background-color');
+            this.elt.setAttribute('readonly', 'true');
         }
     }
 }

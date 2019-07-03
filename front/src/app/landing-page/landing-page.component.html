@@ -2,14 +2,14 @@
     <p routerLink="" class="acueil">mycompanyhelper</p>
     <div class="flex-spacer"></div>
     <ng-container *ngIf="screenWidth >= 768 else mobile">
-        <button mat-button routerLink="/annonces">Annonces fournisseurs</button>
+<!--        <button mat-button routerLink="/annonces">Annonces fournisseurs</button>-->
         <button mat-button routerLink="/connexion">Connexion</button>
     </ng-container>
     <ng-template #mobile>
         <button mat-button [matMenuTriggerFor]="menu">Menu</button>
 
         <mat-menu #menu="matMenu">
-            <button mat-menu-item routerLink="/annonces">Annonces fournisseurs</button>
+<!--            <button mat-menu-item routerLink="/annonces">Annonces fournisseurs</button>-->
             <button mat-menu-item routerLink="/connexion">Connexion</button>
         </mat-menu>
     </ng-template>
@@ -18,15 +18,15 @@
     <div class="landing_left">
         <h1>mycompanyhelper</h1>
         <h2>Le meilleur allié pour votre entreprise</h2>
-        <p class="landing_text">
+         <p class="landing_text">
             mycompanyhelper, le crm qui vous offre toutes les fonctionnalités pour développer votre entreprise.<br>
             Avec mycompanyhelper, gérez vos stocks, vos clients, vos fournisseurs, créez et envoyez vos factures, soyez
             informé en temps réel, gérez votre planning… et bien plus encore!<br>
-            Trouvez de nouveaux fournisseurs sur mycompanyhelper grâce à notre système d'annonces.
+<!--            Trouvez de nouveaux fournisseurs sur mycompanyhelper grâce à notre système d'annonces.-->
         </p>
         <div class="landing_body">
             <div class="landing_img">
-                <video autoplay class="video">
+                <video autoplay loop controls class="video">
                     <source type="video/mp4" src="assets/mycompanyhelper.mp4">
                 </video>
             </div>
@@ -67,15 +67,15 @@
                         rappel de vos événements
                     </p>
                 </li>
-                <li>
-                    <div class="landing_puce">
-                        <img src="assets/annonces.svg" alt="annonces">
-                    </div>
-                    <p>
-                        Contactez de nouveaux fournisseurs
-                        en répondant à leurs annonces
-                    </p>
-                </li>
+<!--                <li>-->
+<!--                    <div class="landing_puce">-->
+<!--                        <img src="assets/annonces.svg" alt="annonces">-->
+<!--                    </div>-->
+<!--                    <p>-->
+<!--                        Contactez de nouveaux fournisseurs-->
+<!--                        en répondant à leurs annonces-->
+<!--                    </p>-->
+<!--                </li>-->
                 <li>
                     <div class="landing_puce">
                         <img src="assets/factures.svg" alt="factures">

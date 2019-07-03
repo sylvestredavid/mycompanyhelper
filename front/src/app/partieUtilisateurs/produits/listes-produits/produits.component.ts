@@ -88,6 +88,37 @@ export class ProduitsComponent implements OnInit, OnDestroy {
         this.initSocket();
     }
 
+    initSocket() {
+        this.socket.getAjoutProduit().subscribe(
+            (data) => {
+                if (data.idUser === this.userService.idUser) {
+                    this.produitService.pushProduit(data.produit);
+                }
+            }
+        );
+        this.socket.getModifProduit().subscribe(
+            (data) => {
+                if (data.idUser === this.userService.idUser) {
+                    this.produitService.replaceProduit(data.produit);
+                }
+            }
+        );
+        this.socket.getDeleteProduit().subscribe(
+            (data) => {
+                if (data.idUser === this.userService.idUser) {
+                    this.produitService.removeProduit(data.id);
+                }
+            }
+        );
+        this.socket.getRemisEnVenteProduit().subscribe(
+            (data) => {
+                if (data.idUser === this.userService.idUser) {
+                    this.produitService.remiseEnVente(data.id);
+                }
+            }
+        );
+    }
+
     /**
      * initiation des valeurs et de la liste d'elements a afficher
      */
@@ -154,7 +185,8 @@ export class ProduitsComponent implements OnInit, OnDestroy {
                 prixVente: [0],
                 quantite: [0, Validators.compose([Validators.required, Validators.min(0)])],
                 factures: this.fb.array([]),
-                genre: [this.genre ? this.genre.idGenre : '', Validators.required]
+                genre: [this.genre ? this.genre.idGenre : '', Validators.required],
+                tva: [0]
             }));
         } else {
             this.snackBar.open('Merci de créer une catégorie avant de créer un produit', 'ok', {duration: 1500, verticalPosition: 'top'});
@@ -215,7 +247,8 @@ export class ProduitsComponent implements OnInit, OnDestroy {
                     prixVente: [element.prixVente],
                     quantite: [element.quantite, Validators.compose([Validators.required, Validators.min(0)])],
                     factures: this.fb.array(element.factures),
-                    genre: [element.genre ? element.genre.idGenre : '', Validators.required]
+                    genre: [element.genre ? element.genre.idGenre : '', Validators.required],
+                    tva: [element.tva]
                 }));
             }
         );
@@ -354,6 +387,7 @@ export class ProduitsComponent implements OnInit, OnDestroy {
             factures: produit.factures,
             idUser: this.userService.idUser,
             enVente: true,
+            tva: +produit.tva
         };
         this.listeGenres.forEach(genre => {
             if (genre.idGenre === +produit.genre) {
@@ -401,37 +435,6 @@ export class ProduitsComponent implements OnInit, OnDestroy {
         if (this.subscriptions.length > 0) {
             this.subscriptions.forEach(subscription => subscription.unsubscribe());
         }
-    }
-
-    initSocket() {
-        this.socket.getAjoutProduit().subscribe(
-            (data) => {
-                if (data.idUser === this.userService.idUser) {
-                    this.produitService.pushProduit(data.produit);
-                }
-            }
-        );
-        this.socket.getModifProduit().subscribe(
-            (data) => {
-                if (data.idUser === this.userService.idUser) {
-                    this.produitService.replaceProduit(data.produit);
-                }
-            }
-        );
-        this.socket.getDeleteProduit().subscribe(
-            (data) => {
-                if (data.idUser === this.userService.idUser) {
-                    this.produitService.removeProduit(data.id);
-                }
-            }
-        );
-        this.socket.getRemisEnVenteProduit().subscribe(
-            (data) => {
-                if (data.idUser === this.userService.idUser) {
-                    this.produitService.remiseEnVente(data.id);
-                }
-            }
-        );
     }
 
     /**

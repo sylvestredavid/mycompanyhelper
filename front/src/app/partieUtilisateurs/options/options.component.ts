@@ -180,8 +180,10 @@ export class OptionsComponent implements OnInit, OnDestroy {
     onDeleteCompte() {
         this.userService.stop().subscribe(
             () => {
+                sessionStorage.removeItem('token');
+                localStorage.removeItem('token');
                 this.snackBar.open('votre compte à bien été supprimé.', 'ok', {duration: 2000})
-                window.location.replace('');
+                setTimeout(() => window.location.replace(''), 2000);
             }
         );
     }
