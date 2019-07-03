@@ -81,7 +81,6 @@ public class AbonnementService implements IAbonnementService {
         Stripe.apiKey = env.getProperty("stripe.apikey");
         try {
             Subscription sub = Subscription.retrieve(user.get().getAbonnement());
-            System.out.println(sub.getItems().getData().get(0).getPlan().getAmount());
             Map<String, Object> subscriptionitemParams = new HashMap<String, Object>();
             subscriptionitemParams.put("subscription", sub.getId());
 
@@ -102,7 +101,6 @@ public class AbonnementService implements IAbonnementService {
                         .amount((double) (sub.getItems().getData().get(0).getPlan().getAmount()) * usage.getData().get(0).getTotalUsage())
                         .build();
             }
-            System.out.println(suivi);
 
 
             return ResponseEntity.status(HttpStatus.OK).body(suivi);
@@ -145,15 +143,19 @@ public class AbonnementService implements IAbonnementService {
             Customer customer = Customer.create(params);
 
             Map<String, Object> item = new HashMap<String, Object>();
-            item.put("plan", "plan_F2kt3QgaRHVEUK");
+            item.put("plan", "plan_F95vKw1meOdgHk");
 
             Map<String, Object> items = new HashMap<String, Object>();
             items.put("0", item);
 
+            Instant instant = Instant.now().plusSeconds(2592000);
+            long timeStamp = instant.getEpochSecond();
+
             Map<String, Object> planParams = new HashMap<String, Object>();
             planParams.put("customer", customer.getId());
             planParams.put("items", items);
-            planParams.put("trial_period_days", 30);
+            planParams.put("trial_end", timeStamp);
+
 
             Subscription subscription = Subscription.create(planParams);
 
@@ -175,15 +177,19 @@ public class AbonnementService implements IAbonnementService {
             Customer customer = Customer.create(params);
 
             Map<String, Object> item = new HashMap<String, Object>();
-            item.put("plan", "plan_F3SX3mQa0vS0Ri");
+            item.put("plan", "plan_F95y8IznjvnUO1");
 
             Map<String, Object> items = new HashMap<String, Object>();
             items.put("0", item);
 
+            Instant instant = Instant.now().plusSeconds(2592000);
+            long timeStamp = instant.getEpochSecond();
+
             Map<String, Object> planParams = new HashMap<String, Object>();
             planParams.put("customer", customer.getId());
             planParams.put("items", items);
-            planParams.put("trial_period_days", 30);
+            planParams.put("trial_end", timeStamp);
+
 
             Subscription subscription = Subscription.create(planParams);
 
@@ -205,15 +211,19 @@ public class AbonnementService implements IAbonnementService {
             Customer customer = Customer.create(params);
 
             Map<String, Object> item = new HashMap<String, Object>();
-            item.put("plan", "plan_F36c2RRZRzT5Ac");
+            item.put("plan", "plan_F960SLB5WnWnFA");
 
             Map<String, Object> items = new HashMap<String, Object>();
             items.put("0", item);
 
+            Instant instant = Instant.now().plusSeconds(2592000);
+            long timeStamp = instant.getEpochSecond();
+
             Map<String, Object> planParams = new HashMap<String, Object>();
             planParams.put("customer", customer.getId());
             planParams.put("items", items);
-            planParams.put("trial_period_days", 30);
+            planParams.put("trial_end", timeStamp);
+
 
             Subscription subscription = Subscription.create(planParams);
 
@@ -250,7 +260,7 @@ public class AbonnementService implements IAbonnementService {
         if (user.get().getAbonnement() != null && user.get().getAbonnement() != "") {
             Subscription sub = Subscription.retrieve(user.get().getAbonnement());
 
-            if ("plan_F3SX3mQa0vS0Ri".equals(sub.getPlan().getId())) {
+            if ("plan_F95y8IznjvnUO1".equals(sub.getPlan().getId())) {
                 Map<String, Object> subscriptionitemParams = new HashMap<String, Object>();
                 subscriptionitemParams.put("subscription", sub.getId());
                 SubscriptionItem item = SubscriptionItem.list(subscriptionitemParams).getData().get(0);
@@ -275,10 +285,10 @@ public class AbonnementService implements IAbonnementService {
             String customer = subscription.getCustomer();
             String plan = subscription.getPlan().getId();
             subscription.cancel();
-            if("plan_F2kt3QgaRHVEUK".equals(plan)) {
+            if("plan_F95vKw1meOdgHk".equals(plan)) {
 
                 Map<String, Object> item = new HashMap<String, Object>();
-                item.put("plan", "plan_F3SX3mQa0vS0Ri");
+                item.put("plan", "plan_F95y8IznjvnUO1");
 
                 Map<String, Object> items = new HashMap<String, Object>();
                 items.put("0", item);
@@ -286,15 +296,14 @@ public class AbonnementService implements IAbonnementService {
                 Map<String, Object> planParams = new HashMap<String, Object>();
                 planParams.put("customer", customer);
                 planParams.put("items", items);
-                planParams.put("trial_period_days", 0);
                 planParams.put("trial_end", "now");
 
                 Subscription sub = Subscription.create(planParams);
                 userRepository.addAbonnement(sub.getId(), user.get().getUsername());
-            } else if("plan_F3SX3mQa0vS0Ri".equals(plan)) {
+            } else if("plan_F95y8IznjvnUO1".equals(plan)) {
 
                 Map<String, Object> item = new HashMap<String, Object>();
-                item.put("plan", "plan_F2kt3QgaRHVEUK");
+                item.put("plan", "plan_F95vKw1meOdgHk");
 
                 Map<String, Object> items = new HashMap<String, Object>();
                 items.put("0", item);
@@ -302,7 +311,6 @@ public class AbonnementService implements IAbonnementService {
                 Map<String, Object> planParams = new HashMap<String, Object>();
                 planParams.put("customer", customer);
                 planParams.put("items", items);
-                planParams.put("trial_period_days", 0);
                 planParams.put("trial_end", "now");
 
                 Subscription sub = Subscription.create(planParams);
