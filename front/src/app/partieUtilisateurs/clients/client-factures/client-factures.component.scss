@@ -7,10 +7,21 @@ table {
 tr.example-detail-row {
   height: 0;
 }
-.facture{
+
+button{
   margin: 10px;
+}
+
+.facture{
   border: 1px solid black;
-  padding: 20px;
+  max-width: 759px;
+  margin: auto;
+}
+
+.facturePdf{
+  padding: 40px 20px;
+  height: 29.7cm;
+
 }
 
 .body table, .body tr, .body thead, .body th, .body tbody, .body td{

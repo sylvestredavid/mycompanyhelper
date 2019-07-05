@@ -22,11 +22,19 @@
     <td mat-cell *matCellDef="let element">{{element.totalTTC}}€</td>
   </ng-container>
 
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="generatePDF">
+    <th mat-header-cell *matHeaderCellDef ></th>
+    <td mat-cell *matCellDef="let element"><button (click)="generatePDF('facture_' + element.idFacture)">PDF</button></td>
+  </ng-container>
+
   <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
   <ng-container matColumnDef="expandedDetail">
     <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
-      <div class="facture"
-           [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+      <div [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+      <button mat-raised-button (click)="generatePDF('facture_' + element.idFacture)">PDF</button>
+      <div class="facture">
+        <div class="facturePdf" [id]="'facture_' + element.idFacture">
         <div class="detailClient">
           <p>{{client.nom}} {{client.prenom}}</p>
           <p>{{client.adresse}}</p>
@@ -69,6 +77,8 @@
           </ng-container>
             <p class="align-right">Total TTC : {{element.totalTTC}} €</p>
         </div>
+        </div>
+      </div>
       </div>
     </td>
   </ng-container>
