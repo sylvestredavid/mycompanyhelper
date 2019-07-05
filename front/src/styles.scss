@@ -59,6 +59,12 @@ mat-toolbar:not(.footer){
   }
 }
 
+.align-right{
+  width: 100%;
+  text-align: right;
+  margin-top: 10px;
+}
+
 .selectionable:hover{
   cursor: pointer;
 }

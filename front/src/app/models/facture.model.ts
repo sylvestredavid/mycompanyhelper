@@ -4,11 +4,21 @@ import {ProduitsFactureModel} from './produitsFacture.model';
 
 export class FactureModel {
 
-  idFacture: number;
+  idFacture?: number;
 
   date: Date;
 
-  total: number;
+  totalHT: number;
+
+  totalTTC: number;
+
+  tva21: number;
+
+  tva55: number;
+
+  tva10: number;
+
+  tva20: number;
 
   client: ClientModel;
 

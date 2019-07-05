@@ -43,7 +43,17 @@ public class Facture implements Serializable {
 	
 	private Date date;
 	
-	private Double total;
+	private Double totalHT;
+
+	private Double totalTTC;
+
+	private Double tva21;
+
+	private Double tva55;
+
+	private Double tva10;
+
+	private Double tva20;
 
 	@ManyToOne
 	@JoinColumn(name="idClient")

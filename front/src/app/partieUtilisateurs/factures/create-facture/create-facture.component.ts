@@ -146,13 +146,25 @@ export class CreateFactureComponent implements OnInit, OnDestroy {
         this.enCour = true;
         const clientFormValue = this.clientForm.value;
         const produitsFormValue = this.produitsForm.value;
-        const total = this.getTotalHT(this.produits.controls);
-        const facture = new FactureModel();
-        facture.date = new Date();
-        facture.client = clientFormValue['client'];
-        facture.produitsFacture = produitsFormValue['produits'];
-        facture.total = total;
-        facture.idUser = this.userService.idUser;
+        const totalHT = this.getTotalHT(this.produits.controls);
+        const totalTTC = this.getTotalTTC(this.produits.controls);
+        const tva21 = this.getTotalTva(this.produits.controls, 2.1);
+        const tva55 = this.getTotalTva(this.produits.controls, 5.5);
+        const tva10 = this.getTotalTva(this.produits.controls, 10);
+        const tva20 = this.getTotalTva(this.produits.controls, 20);
+
+        const facture: FactureModel = {
+            date : new Date(),
+            client : clientFormValue['client'],
+            produitsFacture : produitsFormValue['produits'],
+            totalHT : totalHT,
+            totalTTC : totalTTC,
+            tva21 : tva21,
+            tva55 : tva55,
+            tva10 : tva10,
+            tva20 : tva20,
+            idUser : this.userService.idUser,
+        };
 
         this.factureService.saveFacture(facture).pipe(
             finalize(() => this.enCour = false)

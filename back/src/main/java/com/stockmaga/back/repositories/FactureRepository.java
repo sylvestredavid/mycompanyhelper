@@ -47,4 +47,9 @@ public interface FactureRepository extends JpaRepository<Facture, Integer> {
 	 */
 	@Query(value="SELECT id_user AS user, sum(total) AS total FROM factures where month(date)=?1 and year(date)=?2 group by id_user", nativeQuery=true)
 	public List<CARecu> getChiffreDAffaire(int mois, int annee);
+
+	@Modifying
+	@Transactional
+	@Query(value="ALTER TABLE factures AUTO_INCREMENT=1234", nativeQuery=true)
+	public void setAutoIncrement();
 }

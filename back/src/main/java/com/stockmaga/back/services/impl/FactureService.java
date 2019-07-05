@@ -76,4 +76,8 @@ public class FactureService implements IFactureService {
 
 	}
 
+	public void autoIncrement() {
+		factureRepository.setAutoIncrement();
+	}
+
 }

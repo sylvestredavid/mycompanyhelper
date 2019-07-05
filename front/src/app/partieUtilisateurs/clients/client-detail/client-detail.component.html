@@ -1,16 +1,16 @@
-<ul class="fil-ariane">
-    <li>
-        <a routerLink="/users">Menu</a>
-    </li>
-    <li>
-        <a routerLink="/users/clients">Clients</a>
-    </li>
-    <li>
-        <a class="actif">Détails client {{client.nom}} {{client.prenom}}</a>
-    </li>
-</ul>
-<h1>Détail client</h1>
 <ng-container *ngIf="client">
+    <ul class="fil-ariane">
+        <li>
+            <a routerLink="/users">Menu</a>
+        </li>
+        <li>
+            <a routerLink="/users/clients">Clients</a>
+        </li>
+        <li>
+            <a class="actif">Détails client {{client.nom}} {{client.prenom}}</a>
+        </li>
+    </ul>
+    <h1>Détail client</h1>
     <div class="details">
         <h3 class="client_nom">{{client.nom}} {{client.prenom}}</h3>
         <div class="contacts">
