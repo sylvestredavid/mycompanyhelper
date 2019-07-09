@@ -5,6 +5,8 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 import html2canvas from 'html2canvas';
 import * as jsPDF from 'jspdf';
 import {DatePipe} from '@angular/common';
+import {EntrepriseService} from "../../entreprise/entreprise.service";
+import {EntrepriseModel} from "../../../models/entreprise.model";
 
 
 @Component({
@@ -26,11 +28,15 @@ export class ClientFacturesComponent implements OnInit {
   columnsToDisplay = ['numero', 'date', 'total'];
   expandedElement: FactureModel | null;
   screenWidth: number;
+  entreprise: EntrepriseModel;
 
-  constructor(private datePipe: DatePipe) {
+  constructor(private datePipe: DatePipe, private entrepriseService: EntrepriseService) {
   }
 
   ngOnInit() {
+      this.entrepriseService.entreprise$.subscribe(
+          e => this.entreprise = e
+      )
     this.dataSource = this.client.factures;
     this.getScreenSize();
   }
