@@ -61,6 +61,10 @@ const routes: Routes = [
             {
                 path: 'calendrier',
                 loadChildren: './partieUtilisateurs/calendrier/calendrier.module#CalendrierModule'
+            },
+            {
+                path: 'monEntreprise',
+                loadChildren: './partieUtilisateurs/entreprise/entreprise.module#EntrepriseModule'
             }
         ]
     },

@@ -21,6 +21,8 @@ import html2canvas from 'html2canvas';
 import {Store} from '@ngrx/store';
 import {UserState} from '../../../shared/stores/user.reducer';
 import {OptionsService} from '../../options/options.service';
+import {EntrepriseService} from "../../entreprise/entreprise.service";
+import {EntrepriseModel} from "../../../models/entreprise.model";
 
 
 @Component({
@@ -43,6 +45,7 @@ export class CreateFactureComponent implements OnInit, OnDestroy {
     email: string;
     limiteStock: number;
     enCour: boolean;
+    entreprise: EntrepriseModel;
 
     @ViewChild('facture') facture: ElementRef;
 
@@ -50,7 +53,7 @@ export class CreateFactureComponent implements OnInit, OnDestroy {
                 private clientService: ClientsService, private produitService: ProduitService, private factureService: FactureService,
                 private router: Router, private snackBar: MatSnackBar, private userService: UsersService,
                 private notificationService: NotificationsService, private datePipe: DatePipe, private store: Store<UserState>,
-                private optionService: OptionsService) {
+                private optionService: OptionsService, private entrepriseService: EntrepriseService) {
         iconRegistry.addSvgIcon(
             'edit',
             sanitizer.bypassSecurityTrustResourceUrl('/assets/edit.svg'));
@@ -62,14 +65,6 @@ export class CreateFactureComponent implements OnInit, OnDestroy {
                 }
             }
         );
-
-        this.optionService.options$.subscribe(
-            option => {
-                if (option) {
-                    this.limiteStock = option.limiteStock;
-                }
-            }
-        );
     }
 
     get produits() {
@@ -77,6 +72,16 @@ export class CreateFactureComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        this.entrepriseService.entreprise$.subscribe(
+            e => this.entreprise = e
+        )
+        this.optionService.options$.subscribe(
+            option => {
+                if (option) {
+                    this.limiteStock = option.limiteStock;
+                }
+            }
+        );
         this.initClients();
         this.initProduits();
         this.initForms();

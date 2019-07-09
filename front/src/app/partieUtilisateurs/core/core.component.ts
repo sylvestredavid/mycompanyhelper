@@ -21,6 +21,7 @@ import {CalendrierService} from '../calendrier/calendrier.service';
 import {SuiviDialComponent} from "../../shared/dialogues/suivi-dial/suivi-dial.component";
 import {UsersService} from "../../users/users.service";
 import {SuiviConsommationModel} from "../../models/suivi-consommation.model";
+import {EntrepriseService} from "../entreprise/entreprise.service";
 
 @Component({
     selector: 'app-core',
@@ -40,7 +41,7 @@ export class CoreComponent implements OnInit, OnDestroy {
     constructor(private fournisseurService: FournisseursService, private genreService: GenreService, private store: Store<UserState>
         , public dialog: MatDialog, iconRegistry: MatIconRegistry, sanitizer: DomSanitizer, private produitService: ProduitService,
                 private clientService: ClientsService, private optionService: OptionsService, private router: Router, private calendrierService: CalendrierService,
-                private notificationService: NotificationsService, private userService: UsersService) {
+                private notificationService: NotificationsService, private userService: UsersService, private entrepriseService: EntrepriseService) {
         iconRegistry.addSvgIcon(
             'options',
             sanitizer.bypassSecurityTrustResourceUrl('/assets/settings.svg'));
@@ -62,6 +63,7 @@ export class CoreComponent implements OnInit, OnDestroy {
         this.optionService.publishOptions();
         this.produitService.publishProduits();
         this.clientService.publishClients();
+        this.entrepriseService.publishEntreprise();
         this.calendrierService.publishCalendrier();
         this.genreService.publishGenres();
         this.fournisseurService.publishFournisseurs();

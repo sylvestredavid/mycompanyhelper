@@ -48,7 +48,7 @@
                                 </td>
                                 <td>
                                     <mat-form-field>
-                                        <input matInput type="number" placeholder="Quantitée" formControlName="quantite"
+                                        <input matInput type="number" placeholder="Quantitée" formControlName="quantite" min="0"
                                                max="{{control.value.produit.quantite}}">
                                         <mat-hint align="end" *ngIf="control.value.produit">{{control.value.quantite}}
                                             / {{control.value.produit.quantite}} en stock
@@ -71,7 +71,7 @@
                                 </mat-autocomplete>
                             </mat-form-field>
                             <mat-form-field class="example-full-width">
-                                <input matInput type="number" placeholder="Quantitée" formControlName="quantite"
+                                <input matInput type="number" placeholder="Quantitée" formControlName="quantite" min="0"
                                        max="{{control.value.produit.quantite}}">
                                 <mat-hint align="end" *ngIf="control.value.produit">{{control.value.quantite}}
                                     / {{control.value.produit.quantite}} en stock
@@ -103,10 +103,24 @@
 <div class="factureVue mat-elevation-z12">
     <div id="facture" class="facturePdf">
         <div class="detailClient">
-            <p>{{clientForm.value.client.nom}} {{clientForm.value.client.prenom}}</p>
-            <p>{{clientForm.value.client.adresse}}</p>
-            <p>{{clientForm.value.client.codePostal}} {{clientForm.value.client.ville}}</p>
+            <ng-container *ngIf="clientForm.value.client else vide">
+                <p>{{clientForm.value.client.nom}} {{clientForm.value.client.prenom}}</p>
+                <p>{{clientForm.value.client.adresse}}</p>
+                <p>{{clientForm.value.client.codePostal}} {{clientForm.value.client.ville}}</p>
+            </ng-container>
+            <ng-template #vide>
+                <p style="color: #fff;">p</p>
+            </ng-template>
         </div>
+        <div *ngIf="entreprise" class="entreprise">
+            <p>{{entreprise.nom}}</p>
+            <p>siret : {{entreprise.siret}}</p>
+            <p>{{entreprise.adresse}}</p>
+            <p>{{entreprise.codePostal}} {{entreprise.ville}}</p>
+            <p>{{entreprise.telephone}}</p>
+            <p>{{entreprise.email}}</p>
+        </div>
+        <div class="clear"></div>
         <div class="body">
             <h3>Facture</h3>
             <table>
