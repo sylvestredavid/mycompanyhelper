@@ -1,4 +1,4 @@
-import {Component, HostListener, OnInit, Inject} from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import {UsersService} from '../../users/users.service';
 import {MatDialog, MatIconRegistry} from '@angular/material';
 import {DomSanitizer} from '@angular/platform-browser';

@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { CreerAnnonceComponent } from './creer-annonce.component';
+import {CreerAnnonceComponent} from './creer-annonce.component';
 
 describe('CreerAnnonceComponent', () => {
   let component: CreerAnnonceComponent;

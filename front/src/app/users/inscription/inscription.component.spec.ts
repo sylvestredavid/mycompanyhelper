@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { InscriptionComponent } from './inscription.component';
+import {InscriptionComponent} from './inscription.component';
 
 describe('InscriptionComponent', () => {
   let component: InscriptionComponent;

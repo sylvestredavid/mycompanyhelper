@@ -1,12 +1,11 @@
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
 import {Observable} from 'rxjs';
-import {Injectable, Inject} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {UserModel} from '../../models/user.modele';
 import {UserState} from '../stores/user.reducer';
 import {Store} from '@ngrx/store';
 import {AjoutUser} from '../stores/user.actions';
 import {UsersService} from '../../users/users.service';
-import {GetOptions} from '../stores/options.actions';
 import {OptionsService} from '../../partieUtilisateurs/options/options.service';
 import {ProduitService} from '../../partieUtilisateurs/produits/produit.service';
 import {ClientsService} from '../../partieUtilisateurs/clients/clients.service';

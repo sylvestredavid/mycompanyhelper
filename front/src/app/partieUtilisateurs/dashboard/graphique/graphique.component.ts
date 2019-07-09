@@ -9,7 +9,6 @@ import {ProduitsFactureModel} from '../../../models/produitsFacture.model';
 import {ProduitModel} from '../../../models/produit.model';
 import {Store} from '@ngrx/store';
 import {UserState} from '../../../shared/stores/user.reducer';
-import {Subscription} from 'rxjs';
 import {FactureService} from '../../factures/facture.service';
 
 @Component({

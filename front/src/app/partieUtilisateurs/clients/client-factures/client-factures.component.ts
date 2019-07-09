@@ -1,10 +1,9 @@
-import {Component, HostListener, Input, OnInit, Inject} from '@angular/core';
+import {Component, HostListener, Input, OnInit} from '@angular/core';
 import {FactureModel} from '../../../models/facture.model';
 import {ClientModel} from '../../../models/client.model';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import html2canvas from 'html2canvas';
 import * as jsPDF from 'jspdf';
-import {NotificationsService} from '../../notification/notifications.service';
 import {DatePipe} from '@angular/common';
 
 

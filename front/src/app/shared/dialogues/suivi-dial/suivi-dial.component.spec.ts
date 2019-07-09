@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { SuiviDialComponent } from './suivi-dial.component';
+import {SuiviDialComponent} from './suivi-dial.component';
 
 describe('SuiviDialComponent', () => {
   let component: SuiviDialComponent;

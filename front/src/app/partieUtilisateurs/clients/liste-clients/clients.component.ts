@@ -1,4 +1,4 @@
-import {Component, HostListener, OnDestroy, OnInit, Inject} from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {MatIconRegistry, MatSnackBar} from '@angular/material';
 import {ClientModel} from '../../../models/client.model';
 import {ActivatedRoute, Router} from '@angular/router';

@@ -1,5 +1,4 @@
 import {ClientModel} from './client.model';
-import {ProduitModel} from './produit.model';
 import {ProduitsFactureModel} from './produitsFacture.model';
 
 export class FactureModel {

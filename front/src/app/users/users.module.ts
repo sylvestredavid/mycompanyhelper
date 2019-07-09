@@ -13,7 +13,8 @@ import {
     MatProgressSpinnerModule,
     MatRadioModule,
     MatSnackBarModule,
-    MatToolbarModule, MatTooltipModule
+    MatToolbarModule,
+    MatTooltipModule
 } from '@angular/material';
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';

@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { AjoutGenreComponent } from './ajout-genre.component';
+import {AjoutGenreComponent} from './ajout-genre.component';
 
 describe('MenuFournisseurComponent', () => {
   let component: AjoutGenreComponent;

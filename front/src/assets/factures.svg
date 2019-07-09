@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve" width="512px" height="512px" class=""><g><g>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 512 512"
+     style="enable-background:new 0 0 512 512;" xml:space="preserve" width="512px" height="512px" class=""><g><g>
 	<g>
 		<g>
 			<path d="M444.875,109.792L338.208,3.125c-2-2-4.708-3.125-7.542-3.125h-224C83.146,0,64,19.135,64,42.667v426.667     C64,492.865,83.146,512,106.667,512h298.667C428.854,512,448,492.865,448,469.333v-352     C448,114.5,446.875,111.792,444.875,109.792z M341.333,36.417l70.25,70.25h-48.917c-11.771,0-21.333-9.573-21.333-21.333V36.417z      M426.667,469.333c0,11.76-9.563,21.333-21.333,21.333H106.667c-11.771,0-21.333-9.573-21.333-21.333V42.667     c0-11.76,9.563-21.333,21.333-21.333H320v64C320,108.865,339.146,128,362.667,128h64V469.333z" data-original="#000000" class="active-path" data-old_color="#0100FE" fill="#FCFCFF"/>

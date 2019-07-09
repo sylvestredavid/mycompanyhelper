@@ -1,5 +1,4 @@
-import { Injectable } from '@angular/core';
-import {OptionModel} from "../../models/option.model";
+import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {UsersService} from "../../users/users.service";

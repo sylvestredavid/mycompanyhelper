@@ -1,4 +1,4 @@
-import {Component, HostListener, OnDestroy, OnInit, Inject} from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {GenreModel} from '../../../models/genre.model';
 import {ProduitModel} from '../../../models/produit.model';
 import {FormBuilder} from '@angular/forms';
@@ -9,7 +9,6 @@ import {ProduitService} from '../produit.service';
 import {MatIconRegistry, MatSnackBar} from '@angular/material';
 import {DomSanitizer} from '@angular/platform-browser';
 import {Store} from '@ngrx/store';
-import {OptionsState} from '../../../shared/stores/options.reducer';
 import {UserState} from '../../../shared/stores/user.reducer';
 import {UsersService} from '../../../users/users.service';
 import {SocketService} from '../../../shared/socket.service';

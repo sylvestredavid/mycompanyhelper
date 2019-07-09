@@ -10,7 +10,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {
     MatButtonModule,
     MatDatepickerModule,
-    MatFormFieldModule, MatIconModule,
+    MatFormFieldModule,
     MatInputModule,
     MatOptionModule,
     MatSelectModule

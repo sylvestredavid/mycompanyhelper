@@ -1,9 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {CalendrierModel} from '../../../models/calendrier.model';
 import {CalendrierService} from '../../calendrier/calendrier.service';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import timeGridPlugin from '@fullcalendar/timegrid';
-import interactionPlugin from '@fullcalendar/interaction';
 import listPlugin from '@fullcalendar/list';
 import frLocale from '@fullcalendar/core/locales/fr';
 

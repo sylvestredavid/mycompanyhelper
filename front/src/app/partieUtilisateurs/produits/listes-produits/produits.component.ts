@@ -1,4 +1,4 @@
-import {Component, HostListener, OnDestroy, OnInit, Inject} from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {GenreService} from '../../genres/genre.service';
 import {MatDialog, MatIconRegistry, MatSnackBar} from '@angular/material';
@@ -8,7 +8,6 @@ import {GenreModel} from '../../../models/genre.model';
 import {DomSanitizer} from '@angular/platform-browser';
 import {Subscription} from 'rxjs';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {OptionsState} from '../../../shared/stores/options.reducer';
 import {Store} from '@ngrx/store';
 import {UserState} from '../../../shared/stores/user.reducer';
 import {UsersService} from '../../../users/users.service';

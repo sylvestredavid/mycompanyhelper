@@ -1,4 +1,4 @@
-import {Component, HostListener, OnInit, Inject} from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 
 import {Title} from '@angular/platform-browser';
 

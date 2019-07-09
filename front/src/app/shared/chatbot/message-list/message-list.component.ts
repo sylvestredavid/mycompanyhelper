@@ -3,7 +3,6 @@ import {MessageModel} from '../../../models/message.model';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {ChatbotService} from '../chatbot.service';
 import {MatDialogRef, MatIconRegistry} from '@angular/material';
-import {UsersService} from '../../../users/users.service';
 import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({

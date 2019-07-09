@@ -18,24 +18,22 @@ global['CSS'] = null;
 global['Prism'] = null;
 
 import * as ts from 'typescript';
-
 // Load zone.js for the server.
 import 'zone.js/dist/zone-node';
 import 'reflect-metadata';
-import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs';
-import { join } from 'path';
+import {existsSync, mkdirSync, readFileSync, writeFileSync} from 'fs';
+import {join} from 'path';
 
-import { enableProdMode } from '@angular/core';
+import {enableProdMode} from '@angular/core';
+// Import module map for lazy loading
+import {provideModuleMap} from '@nguniversal/module-map-ngfactory-loader';
+import {renderModuleFactory} from '@angular/platform-server';
+import {ROUTES} from './static.paths';
+import {REQUEST, RESPONSE} from '@nguniversal/express-engine/tokens';
 // Faster server renders w/ Prod mode (dev mode never needed)
 enableProdMode();
 
-// Import module map for lazy loading
-import { provideModuleMap } from '@nguniversal/module-map-ngfactory-loader';
-import { renderModuleFactory } from '@angular/platform-server';
-import { ROUTES } from './static.paths';
-
 const { AppServerModuleNgFactory, LAZY_MODULE_MAP } = require(`./dist/server/main.js`);
-import { REQUEST, RESPONSE } from '@nguniversal/express-engine/tokens';
 
 const BROWSER_FOLDER = join(process.cwd(), 'dist/static');
 

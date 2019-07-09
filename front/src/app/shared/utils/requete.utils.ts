@@ -1,5 +1,4 @@
 import {HttpHeaders} from '@angular/common/http';
-import { Inject } from '@angular/core';
 
 
 export class RequeteUtils {

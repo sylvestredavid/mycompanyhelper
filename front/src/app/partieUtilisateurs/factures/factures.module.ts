@@ -3,26 +3,19 @@ import {CommonModule} from '@angular/common';
 import {RouterModule} from '@angular/router';
 import {CreateFactureComponent} from './create-facture/create-facture.component';
 import {
-  MatAutocompleteModule,
-  MatButtonModule,
-  MatFormFieldModule,
-  MatIconModule,
-  MatInputModule,
-  MatPaginatorModule,
-  MatProgressSpinnerModule,
-  MatRadioModule,
-  MatSelectModule,
-  MatSnackBarModule,
-  MatSortModule,
-  MatStepperModule,
-  MatTableModule
+    MatAutocompleteModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatSelectModule,
+    MatSnackBarModule,
+    MatStepperModule
 } from '@angular/material';
 import {HttpClientModule} from '@angular/common/http';
 import {ScrollingModule} from '@angular/cdk/scrolling';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AuthGuard} from '../../shared/guards/auth-guard.service';
-import {FournisseurGuard} from '../../shared/guards/fournisseur-guard.service';
-import {IsConnectedGuard} from '../../shared/guards/is-connected-guard.service';
 
 @NgModule({
   declarations: [

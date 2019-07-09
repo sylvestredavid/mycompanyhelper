@@ -1,5 +1,4 @@
 import {FormControl, FormGroup} from "@angular/forms";
-import {CustomValidators} from "../validators/custom.validator";
 import {MdpUtils} from "./mdp-utils";
 
 const mdpUtils = new MdpUtils();

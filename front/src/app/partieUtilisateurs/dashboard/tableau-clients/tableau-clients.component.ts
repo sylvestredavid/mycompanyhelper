@@ -1,8 +1,6 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {ClientModel} from '../../../models/client.model';
 import {MatPaginator, MatTableDataSource} from '@angular/material';
-import {Store} from '@ngrx/store';
-import {OptionsState} from '../../../shared/stores/options.reducer';
 
 @Component({
     selector: 'app-tableau-clients',

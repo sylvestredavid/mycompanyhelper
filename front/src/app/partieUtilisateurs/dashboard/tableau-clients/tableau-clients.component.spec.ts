@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { TableauClientsComponent } from './tableau-clients.component';
+import {TableauClientsComponent} from './tableau-clients.component';
 
 describe('TableauClientsComponent', () => {
   let component: TableauClientsComponent;

@@ -1,17 +1,19 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { CoreComponent } from './core.component';
+import {CoreComponent} from './core.component';
 import {BrowserModule} from '@angular/platform-browser';
 import {AppRoutingModule} from '../../app-routing.module';
 import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {
-  MatAutocompleteModule, MatBadgeModule,
-  MatButtonModule,
-  MatDialogModule,
-  MatFormFieldModule,
-  MatIconModule,
-  MatInputModule, MatMenuModule,
-  MatSelectModule, MatToolbarModule
+    MatAutocompleteModule,
+    MatBadgeModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatMenuModule,
+    MatSelectModule
 } from '@angular/material';
 import {HttpClientModule} from '@angular/common/http';
 import {ReactiveFormsModule} from '@angular/forms';

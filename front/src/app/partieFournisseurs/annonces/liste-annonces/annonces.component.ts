@@ -3,11 +3,8 @@ import {AnnonceModel} from '../../../models/annonce.model';
 import {AnnonceService} from '../annonce.service';
 import {Subscription} from 'rxjs';
 import {SocketService} from '../../../shared/socket.service';
-import {HttpClient} from '@angular/common/http';
-import {AjoutGenreComponent} from '../../../partieUtilisateurs/genres/ajout-genre/ajout-genre.component';
 import {MatDialog, MatIconRegistry, MatSnackBar} from '@angular/material';
 import {ChekoutDialComponent} from './chekout-dial/chekout-dial.component';
-import {FormBuilder} from '@angular/forms';
 import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({

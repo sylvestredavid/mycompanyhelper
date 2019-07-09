@@ -1,5 +1,5 @@
 import * as io from 'socket.io-client';
-import { Observable } from 'rxjs/Observable';
+import {Observable} from 'rxjs/Observable';
 import {Injectable} from '@angular/core';
 import {UsersService} from '../users/users.service';
 

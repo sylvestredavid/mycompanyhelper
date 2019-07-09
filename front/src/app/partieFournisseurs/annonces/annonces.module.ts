@@ -2,32 +2,23 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {RouterModule} from '@angular/router';
 import {
-    MatAutocompleteModule,
-    MatButtonModule, MatDialogModule,
+    MatButtonModule,
+    MatDialogModule,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
-    MatPaginatorModule, MatProgressBarModule,
     MatProgressSpinnerModule,
-    MatRadioModule,
-    MatSelectModule, MatSlideToggleModule,
-    MatSnackBarModule,
-    MatSortModule,
-    MatStepperModule,
-    MatTableModule
+    MatSnackBarModule
 } from '@angular/material';
 import {HttpClientModule} from '@angular/common/http';
 import {ScrollingModule} from '@angular/cdk/scrolling';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {PasswordStrengthMeterModule} from 'angular-password-strength-meter';
 import {AnnoncesComponent} from './liste-annonces/annonces.component';
 import {FournisseurGuard} from '../../shared/guards/fournisseur-guard.service';
-import { CreerAnnonceComponent } from './creer-annonce/creer-annonce.component';
-import { ModifAnnonceComponent } from './modif-annonce/modif-annonce.component';
-import { ChekoutDialComponent } from './liste-annonces/chekout-dial/chekout-dial.component';
+import {CreerAnnonceComponent} from './creer-annonce/creer-annonce.component';
+import {ModifAnnonceComponent} from './modif-annonce/modif-annonce.component';
+import {ChekoutDialComponent} from './liste-annonces/chekout-dial/chekout-dial.component';
 import {SharedModule} from '../../shared/shared.module';
-import {CardNumberPipe} from '../../shared/pipes/card-number.pipe';
-
 
 
 @NgModule({

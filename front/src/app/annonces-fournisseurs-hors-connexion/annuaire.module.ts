@@ -4,9 +4,10 @@ import {RouterModule} from '@angular/router';
 import {
     MatButtonModule,
     MatFormFieldModule,
-    MatInputModule, MatMenuModule,
+    MatInputModule,
+    MatMenuModule,
     MatSliderModule,
-    MatSnackBarModule, MatToolbarModule
+    MatToolbarModule
 } from '@angular/material';
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';

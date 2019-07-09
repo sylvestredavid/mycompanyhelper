@@ -1,5 +1,3 @@
-import {UserModel} from './user.modele';
-
 export class EntrepriseModel {
 
     id?: number;

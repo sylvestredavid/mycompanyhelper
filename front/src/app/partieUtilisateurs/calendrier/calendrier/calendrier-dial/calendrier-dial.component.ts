@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {DateAdapter, MAT_DIALOG_DATA, MatDialogRef, MatIconRegistry, MatSnackBar} from '@angular/material';
+import {DateAdapter, MAT_DIALOG_DATA, MatDialogRef, MatIconRegistry} from '@angular/material';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {DomSanitizer} from '@angular/platform-browser';
 import {CalendrierModel} from '../../../../models/calendrier.model';

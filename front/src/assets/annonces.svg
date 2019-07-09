@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 469.333 469.333" style="enable-background:new 0 0 469.333 469.333;" xml:space="preserve" width="512px" height="512px" class=""><g><g>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 469.333 469.333"
+     style="enable-background:new 0 0 469.333 469.333;" xml:space="preserve" width="512px" height="512px" class=""><g><g>
 	<g>
 		<g>
 			<path d="M426.667,0h-384C19.135,0,0,19.135,0,42.667v384c0,23.531,19.135,42.667,42.667,42.667h384     c23.531,0,42.667-19.135,42.667-42.667v-384C469.333,19.135,450.198,0,426.667,0z M448,426.667     c0,11.76-9.573,21.333-21.333,21.333h-384c-11.76,0-21.333-9.573-21.333-21.333v-320H448V426.667z M448,85.333H21.333V42.667     c0-11.76,9.573-21.333,21.333-21.333h384c11.76,0,21.333,9.573,21.333,21.333V85.333z" data-original="#000000" class="active-path" data-old_color="#00FCFC" fill="#FCFDFD"/>

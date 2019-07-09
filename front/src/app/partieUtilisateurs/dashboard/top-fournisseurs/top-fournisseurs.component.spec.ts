@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { TopFournisseursComponent } from './top-fournisseurs.component';
+import {TopFournisseursComponent} from './top-fournisseurs.component';
 
 describe('TopFournisseursComponent', () => {
   let component: TopFournisseursComponent;

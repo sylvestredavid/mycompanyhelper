@@ -1,6 +1,6 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { CalendrierService } from './calendrier.service';
+import {CalendrierService} from './calendrier.service';
 
 describe('CalendrierService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));

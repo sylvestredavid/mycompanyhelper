@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { CheckoutAbonnementFournisseurComponent } from './checkout-abonnement-fournisseur.component';
+import {CheckoutAbonnementFournisseurComponent} from './checkout-abonnement-fournisseur.component';
 
 describe('CheckoutAbonnementComponent', () => {
   let component: CheckoutAbonnementFournisseurComponent;

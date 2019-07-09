@@ -4,7 +4,6 @@ import {ClientsService} from '../clients.service';
 import {ClientModel} from '../../../models/client.model';
 import {MatIconRegistry} from '@angular/material';
 import {DomSanitizer} from '@angular/platform-browser';
-import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'app-client-detail',

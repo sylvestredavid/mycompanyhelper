@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { DialogGuardComponent } from './dialog-guard.component';
+import {DialogGuardComponent} from './dialog-guard.component';
 
 describe('DialogGuardComponent', () => {
   let component: DialogGuardComponent;

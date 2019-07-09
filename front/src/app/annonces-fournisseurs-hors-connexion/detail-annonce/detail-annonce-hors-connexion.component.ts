@@ -1,4 +1,4 @@
-import {Component, HostListener, OnDestroy, OnInit, Inject, Renderer2, AfterViewInit} from '@angular/core';
+import {AfterViewInit, Component, HostListener, OnDestroy, OnInit, Renderer2} from '@angular/core';
 import {AnnonceModel} from '../../models/annonce.model';
 import {ActivatedRoute} from '@angular/router';
 import {AnnuaireService} from '../annuaire.service';
@@ -6,8 +6,6 @@ import {Subscription} from 'rxjs';
 import {EmailModel} from '../../models/email.model';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MatSnackBar} from '@angular/material';
-
-import {SocketService} from '../../shared/socket.service';
 import {Title} from '@angular/platform-browser';
 
 @Component({

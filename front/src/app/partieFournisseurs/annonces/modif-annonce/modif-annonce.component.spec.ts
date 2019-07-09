@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { ModifAnnonceComponent } from './modif-annonce.component';
+import {ModifAnnonceComponent} from './modif-annonce.component';
 
 describe('ModifAnnonceComponent', () => {
   let component: ModifAnnonceComponent;

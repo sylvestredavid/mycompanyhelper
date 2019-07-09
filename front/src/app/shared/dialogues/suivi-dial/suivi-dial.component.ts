@@ -1,7 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {UsersService} from '../../../users/users.service';
 import {SuiviConsommationModel} from '../../../models/suivi-consommation.model';
-import {SignUpModel} from '../../../models/signUp.model';
 import {MAT_DIALOG_DATA, MatDialogRef, MatIconRegistry, MatSnackBar} from '@angular/material';
 import {DomSanitizer} from '@angular/platform-browser';
 

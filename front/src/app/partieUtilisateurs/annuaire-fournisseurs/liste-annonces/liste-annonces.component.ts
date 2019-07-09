@@ -1,12 +1,10 @@
-import {Component, HostListener, OnDestroy, OnInit, Inject, Renderer2} from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit, Renderer2} from '@angular/core';
 import {AnnonceModel} from '../../../models/annonce.model';
 import {AnnuaireService} from '../annuaire.service';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder} from '@angular/forms';
 import {Subscription} from 'rxjs';
-import {SocketService} from '../../../shared/socket.service';
-import {UsersService} from '../../../users/users.service';
 
-import { Title }  from '@angular/platform-browser';
+import {Title} from '@angular/platform-browser';
 
 @Component({
     selector: 'app-liste-annonces',

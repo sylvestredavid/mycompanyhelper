@@ -2,28 +2,18 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {RouterModule} from '@angular/router';
 import {
-    MatAutocompleteModule,
-    MatButtonModule, MatDialogModule,
+    MatButtonModule,
     MatFormFieldModule,
-    MatIconModule,
-    MatInputModule, MatMenuModule,
-    MatPaginatorModule, MatProgressBarModule,
-    MatProgressSpinnerModule,
-    MatRadioModule,
-    MatSelectModule, MatSliderModule,
-    MatSnackBarModule,
-    MatSortModule,
-    MatStepperModule,
-    MatTableModule, MatToolbarModule
+    MatInputModule,
+    MatMenuModule,
+    MatSliderModule,
+    MatToolbarModule
 } from '@angular/material';
 import {HttpClientModule} from '@angular/common/http';
-import {ScrollingModule} from '@angular/cdk/scrolling';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {PasswordStrengthMeterModule} from 'angular-password-strength-meter';
-import { ListeAnnoncesComponent } from './liste-annonces/liste-annonces.component';
-import { DetailAnnonceComponent } from './detail-annonce/detail-annonce.component';
+import {ListeAnnoncesComponent} from './liste-annonces/liste-annonces.component';
+import {DetailAnnonceComponent} from './detail-annonce/detail-annonce.component';
 import {AuthGuard} from '../../shared/guards/auth-guard.service';
-
 
 
 @NgModule({

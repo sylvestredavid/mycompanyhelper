@@ -1,4 +1,4 @@
-import {Component, HostListener, Inject, OnDestroy, OnInit} from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {MatDialogRef, MatIconRegistry, MatSnackBar} from '@angular/material';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Store} from '@ngrx/store';
@@ -9,7 +9,6 @@ import {UserState} from '../../shared/stores/user.reducer';
 import {UsersService} from '../../users/users.service';
 import {DomSanitizer} from '@angular/platform-browser';
 import {UserModel} from '../../models/user.modele';
-import {Observable} from 'rxjs';
 import {finalize, map} from 'rxjs/operators';
 
 

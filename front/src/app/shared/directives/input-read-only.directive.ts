@@ -1,6 +1,4 @@
 import {Directive, ElementRef, HostListener, Input, Renderer2} from '@angular/core';
-import {Store} from '@ngrx/store';
-import {UserState} from '../stores/user.reducer';
 
 /**
  * directive qui transforme un input en champ texte modifiable en cliquant dessus

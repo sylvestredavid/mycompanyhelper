@@ -22,7 +22,6 @@ import {HttpClientModule} from '@angular/common/http';
 import {ScrollingModule} from '@angular/cdk/scrolling';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CardNumberPipe} from './pipes/card-number.pipe';
-import {MessageItemComponent} from './chatbot/message-item/message-item.component';
 
 @NgModule({
     declarations: [

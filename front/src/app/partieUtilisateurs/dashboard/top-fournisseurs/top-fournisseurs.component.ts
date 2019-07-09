@@ -1,12 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {FournisseurAnnuaireModel} from '../../../models/fournisseurAnnuaire.model';
-import {FOURNISSEURS_ANNUAIRE} from '../../../models/mockFournisseursAnnuaire';
-import {animate, state, style, transition, trigger} from '@angular/animations';
 import {MatIconRegistry} from '@angular/material';
 import {DomSanitizer} from '@angular/platform-browser';
 import {GenreService} from '../../genres/genre.service';
 import {AnnuaireService} from '../../annuaire-fournisseurs/annuaire.service';
-import {map} from 'rxjs/operators';
 import {AnnonceModel} from '../../../models/annonce.model';
 
 @Component({

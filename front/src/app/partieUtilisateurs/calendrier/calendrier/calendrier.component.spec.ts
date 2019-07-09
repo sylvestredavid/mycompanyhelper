@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { CalendrierComponent } from './calendrier.component';
+import {CalendrierComponent} from './calendrier.component';
 
 describe('CalendrierComponent', () => {
   let component: CalendrierComponent;

@@ -1,10 +1,8 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {CoreComponent} from './partieUtilisateurs/core/core.component';
-import {CoreFournisseursComponent} from './partieFournisseurs/core-fournisseurs/core-fournisseurs.component';
 import {LandingPageComponent} from './landing-page/landing-page.component';
 import {MenuComponent} from './partieUtilisateurs/menu/menu.component';
-import {MenuFournisseurComponent} from './partieFournisseurs/menuFournisseur/menu-fournisseur.component';
 import {IsConnectedGuard} from './shared/guards/is-connected-guard.service';
 import {SupportComponent} from "./shared/support/support.component";
 

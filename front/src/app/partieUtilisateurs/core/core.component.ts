@@ -1,4 +1,4 @@
-import {Component, HostListener, Inject, OnDestroy, OnInit} from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {GenreModel} from '../../models/genre.model';
 import {GenreService} from '../genres/genre.service';
 import {FournisseursService} from '../fournisseurs/fournisseurs.service';
@@ -11,7 +11,7 @@ import {OptionsService} from '../options/options.service';
 import {Router} from '@angular/router';
 import {DeleteUser} from '../../shared/stores/user.actions';
 import {AjoutGenreComponent} from '../genres/ajout-genre/ajout-genre.component';
-import {Observable, Subscription} from 'rxjs';
+import {Subscription} from 'rxjs';
 import {NotificationsService} from '../notification/notifications.service';
 import {NotificationComponent} from '../notification/notification.component';
 import {MessageListComponent} from '../../shared/chatbot/message-list/message-list.component';

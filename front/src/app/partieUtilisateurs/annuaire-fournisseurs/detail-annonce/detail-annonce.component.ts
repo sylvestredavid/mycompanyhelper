@@ -1,4 +1,4 @@
-import {Component, HostListener, OnDestroy, OnInit, Inject, Renderer2} from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit, Renderer2} from '@angular/core';
 import {AnnonceModel} from '../../../models/annonce.model';
 import {ActivatedRoute} from '@angular/router';
 import {AnnuaireService} from '../annuaire.service';

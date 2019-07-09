@@ -3,7 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {UserState} from '../../shared/stores/user.reducer';
 import {Store} from '@ngrx/store';
 import {UsersService} from '../users.service';
-import {MatDialog, MatIconRegistry, MatSnackBar} from '@angular/material';
+import {MatIconRegistry, MatSnackBar} from '@angular/material';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UserModel} from '../../models/user.modele';
 import {CustomValidators} from '../../shared/validators/custom.validator';
