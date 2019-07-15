@@ -36,7 +36,6 @@ export class ProduitsComponent implements OnInit, OnDestroy {
     pageCourante: number;
     nbPage: number;
     nbElements: number;
-    limiteStock: number;
     subscriptions: Subscription[] = [];
     role: string;
     screenWidth: number;
@@ -46,7 +45,7 @@ export class ProduitsComponent implements OnInit, OnDestroy {
 
     constructor(private route: ActivatedRoute, private genreService: GenreService, private produitService: ProduitService,
                 private router: Router, iconRegistry: MatIconRegistry, sanitizer: DomSanitizer, private fb: FormBuilder,
-                private snackBar: MatSnackBar, private optionService: OptionsService, private storeUser: Store<UserState>,
+                private snackBar: MatSnackBar, private storeUser: Store<UserState>,
                 private userService: UsersService, private notificationService: NotificationsService, private socket: SocketService,
                 private dialog: MatDialog) {
         iconRegistry.addSvgIcon(
@@ -58,13 +57,6 @@ export class ProduitsComponent implements OnInit, OnDestroy {
         iconRegistry.addSvgIcon(
             'delete',
             sanitizer.bypassSecurityTrustResourceUrl('/assets/delete.svg'));
-        this.subscriptions.push(this.optionService.options$.subscribe(
-            options => {
-                if (options) {
-                    this.limiteStock = options.limiteStock;
-                }
-            }
-        ));
         this.subscriptions.push(this.storeUser.select('user').subscribe(
             user => {
                 if (user) {
@@ -247,7 +239,8 @@ export class ProduitsComponent implements OnInit, OnDestroy {
                     quantite: [element.quantite, Validators.compose([Validators.required, Validators.min(0)])],
                     factures: this.fb.array(element.factures),
                     genre: [element.genre ? element.genre.idGenre : '', Validators.required],
-                    tva: [element.tva]
+                    tva: [element.tva],
+                    seuilStockBas: [element.seuilStockBas]
                 }));
             }
         );
@@ -386,7 +379,8 @@ export class ProduitsComponent implements OnInit, OnDestroy {
             factures: produit.factures,
             idUser: this.userService.idUser,
             enVente: true,
-            tva: +produit.tva
+            tva: +produit.tva,
+            seuilStockBas: +produit.seuilStockBas
         };
         this.listeGenres.forEach(genre => {
             if (genre.idGenre === +produit.genre) {
@@ -412,7 +406,7 @@ export class ProduitsComponent implements OnInit, OnDestroy {
                 }
             );
             this.snackBar.open('les changements ont bien été pris en compte.', 'ok', {duration: 1500, verticalPosition: 'top'});
-            if (produit.quantite > this.limiteStock) {
+            if (produit.quantite > produit.seuilStockBas) {
                 this.notificationService.mettreVue(produit.idProduit);
             }
         }

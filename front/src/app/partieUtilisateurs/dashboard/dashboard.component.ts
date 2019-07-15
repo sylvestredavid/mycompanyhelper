@@ -20,7 +20,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
     listeClients: ClientModel[];
     listeGenres: GenreModel[];
     limiteClient: number;
-    limiteStock: number;
     subscriptions: Subscription[] = [];
 
     constructor(private produitService: ProduitService, private clientService: ClientsService, private genreService: GenreService,
@@ -33,7 +32,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
             option => {
                 if (option) {
                     this.limiteClient = option.limiteClients;
-                    this.limiteStock = option.limiteStock;
                     this. subscriptions.push(this.produitService.listeProduits$.subscribe(
                         produits => {
                             if (produits) {
@@ -41,7 +39,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
                                 this.listeProduitsStockBas = [];
                                 produits.forEach(
                                     produit => {
-                                        if (produit.enVente === true && produit.quantite <= this.limiteStock) {
+                                        if (produit.enVente === true && produit.quantite <= produit.seuilStockBas) {
                                             this.listeProduitsStockBas.push(produit);
                                         }
                                     }

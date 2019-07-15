@@ -22,4 +22,6 @@ export class ProduitModel {
   enVente: boolean;
 
   tva: number;
+
+  seuilStockBas: number;
 }

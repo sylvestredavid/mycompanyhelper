@@ -50,6 +50,7 @@
                     <th>prix achat</th>
                     <th>prix vente</th>
                     <th>Quantitée</th>
+                    <th>Seuil alerte stock</th>
                     <th>Marge</th>
                     <th>tva</th>
                     <ng-container *ngIf="!genre">
@@ -73,10 +74,11 @@
                         </td>
                         <td><input class="inputChiffre" [inputReadOnly]="true" formControlName="quantite"
                                    (keyup)="changeIsDirty()"
-                                   [ngClass]="{'rupture': control.value.quantite <= limiteStock}">
+                                   [ngClass]="{'rupture': control.value.quantite <= control.value.seuilStockBas}">
                             <mat-error *ngIf="control.controls.quantite.invalid">la quantitée doit etre supérieure a 0
                             </mat-error>
                         </td>
+                        <td><input [inputReadOnly]="true" formControlName="seuilStockBas" (keyup)="changeIsDirty()"></td>
                         <td class="marge" [ngStyle]="{'color': getColor(control.value)}">{{produitService.marge(control.value.prixVente, control.value.prixAchat)}}
                             %
                         </td>
@@ -137,9 +139,10 @@
                         %</span>
                     </p>
                     en stock : <input [inputReadOnly]="true" class="inputChiffre" formControlName="quantite"
-                                      [ngClass]="{'rupture': control.value.quantite <= limiteStock}">
+                                      [ngClass]="{'rupture': control.value.quantite <= control.value.seuilStockBas}">
                     <mat-error *ngIf="control.controls.quantite.invalid">la quantitée doit etre supérieure a 0
                     </mat-error>
+                    seuil alerte stock : <input [inputReadOnly]="true" formControlName="seuilStockBas" (keyup)="changeIsDirty()">
                     <br>
                     tva: <select [inputReadOnly]="true" formControlName="tva"
                                  (change)="envoiForm()">

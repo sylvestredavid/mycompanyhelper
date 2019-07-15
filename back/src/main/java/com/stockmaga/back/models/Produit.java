@@ -61,4 +61,6 @@ public class Produit implements Serializable {
 	private boolean enVente;
 
 	private double tva;
+
+	private int seuilStockBas;
 }

@@ -21,8 +21,8 @@ import html2canvas from 'html2canvas';
 import {Store} from '@ngrx/store';
 import {UserState} from '../../../shared/stores/user.reducer';
 import {OptionsService} from '../../options/options.service';
-import {EntrepriseService} from "../../entreprise/entreprise.service";
-import {EntrepriseModel} from "../../../models/entreprise.model";
+import {EntrepriseService} from '../../entreprise/entreprise.service';
+import {EntrepriseModel} from '../../../models/entreprise.model';
 
 
 @Component({
@@ -43,7 +43,6 @@ export class CreateFactureComponent implements OnInit, OnDestroy {
     subscriptions: Subscription[] = [];
     screenWidth: number;
     email: string;
-    limiteStock: number;
     enCour: boolean;
     entreprise: EntrepriseModel;
     numero: number;
@@ -55,7 +54,7 @@ export class CreateFactureComponent implements OnInit, OnDestroy {
                 private clientService: ClientsService, private produitService: ProduitService, private factureService: FactureService,
                 private router: Router, private snackBar: MatSnackBar, private userService: UsersService,
                 private notificationService: NotificationsService, private datePipe: DatePipe, private store: Store<UserState>,
-                private optionService: OptionsService, private entrepriseService: EntrepriseService) {
+                private entrepriseService: EntrepriseService) {
         iconRegistry.addSvgIcon(
             'edit',
             sanitizer.bypassSecurityTrustResourceUrl('/assets/edit.svg'));
@@ -76,7 +75,7 @@ export class CreateFactureComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.factureService.findAllFactures().subscribe(
             factures => {
-                if(factures && factures.length > 0) {
+                if (factures && factures.length > 0) {
                     factures.sort(function (a, b) {
                         return b.numero - a.numero;
                     });
@@ -85,17 +84,10 @@ export class CreateFactureComponent implements OnInit, OnDestroy {
                     this.numero = 1534;
                 }
             }
-        )
+        );
         this.date = new Date();
         this.entrepriseService.entreprise$.subscribe(
             e => this.entreprise = e
-        )
-        this.optionService.options$.subscribe(
-            option => {
-                if (option) {
-                    this.limiteStock = option.limiteStock;
-                }
-            }
         );
         this.initClients();
         this.initProduits();
@@ -191,14 +183,14 @@ export class CreateFactureComponent implements OnInit, OnDestroy {
             finalize(() => this.enCour = false)
         ).subscribe(
             facture => {
+                this.factureService.sendMail(facture.idFacture);
+                this.messageQueue.push('La facture a été envoyée par mail.');
                 for (const control of this.produits.controls) {
                     this.factureService.saveProduitsFacture(control.value.quantite, facture.idFacture, control.value.produit.idProduit);
                     this.produitService.diminuerQte(control.value.quantite, control.value.produit.idProduit);
                     this.produitService.ajoutFacture(control.value.quantite, facture.idFacture, control.value.produit.idProduit);
+                    this.checkStock(control.value.produit, control.value.quantite);
                 }
-                this.factureService.sendMail(facture.idFacture);
-                this.messageQueue.push('La facture a été envoyée par mail.');
-                this.checkStock(this.listeProduits);
                 this.showNext();
                 this.router.navigate(['users/produits']);
             }
@@ -229,33 +221,30 @@ export class CreateFactureComponent implements OnInit, OnDestroy {
      * verifie les stocks et envoie des notifications en cas de stock bas
      * @param produits la liste de produits a verifier
      */
-    checkStock(produits: ProduitModel[]) {
-        produits.forEach(
-            produit => {
-                if (produit.quantite <= this.limiteStock && produit.quantite > 0) {
-                    const notif: NotificationModel = {
-                        notification: `le produit "${produit.designation}" est bientot en rupture de stock.`,
-                        vue: false,
-                        idProduit: produit.idProduit,
-                        idUser: this.userService.idUser
-                    };
-                    this.notificationService.saveNotification(notif);
-                    this.factureService.sendMailStockBas(this.email, produit.designation);
-                    this.messageQueue.push(`le produit "${produit.designation}" est bientot en rupture de stock.`);
-                }
-                if (produit.quantite === 0) {
-                    const notif: NotificationModel = {
-                        notification: `le produit "${produit.designation}" est en rupture de stock.`,
-                        vue: false,
-                        idProduit: produit.idProduit,
-                        idUser: this.userService.idUser
-                    };
-                    this.notificationService.saveNotification(notif);
-                    this.factureService.sendMailStockBas(this.email, produit.designation);
-                    this.messageQueue.push(`le produit "${produit.designation}" est en rupture de stock.`);
-                }
-            }
-        );
+    checkStock(produit: ProduitModel, quantite: number) {
+        if ((produit.quantite - quantite) <= produit.seuilStockBas && produit.quantite > 0) {
+            console.log('coucou')
+            const notif: NotificationModel = {
+                notification: `le produit "${produit.designation}" est bientot en rupture de stock.`,
+                vue: false,
+                idProduit: produit.idProduit,
+                idUser: this.userService.idUser
+            };
+            this.notificationService.saveNotification(notif);
+            this.factureService.sendMailStockBas(this.email, produit.designation);
+            this.messageQueue.push(`le produit "${produit.designation}" est bientot en rupture de stock.`);
+        }
+        if (produit.quantite === 0) {
+            const notif: NotificationModel = {
+                notification: `le produit "${produit.designation}" est en rupture de stock.`,
+                vue: false,
+                idProduit: produit.idProduit,
+                idUser: this.userService.idUser
+            };
+            this.notificationService.saveNotification(notif);
+            this.factureService.sendMailStockBas(this.email, produit.designation);
+            this.messageQueue.push(`le produit "${produit.designation}" est en rupture de stock.`);
+        }
     }
 
     /**
