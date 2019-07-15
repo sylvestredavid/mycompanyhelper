@@ -16,7 +16,6 @@ public class JwtResponse {
 	private Long id;
 	private String username;
 	private RoleName authorities;
-	private String entreprise;
 	private Long managementId;
 }
 

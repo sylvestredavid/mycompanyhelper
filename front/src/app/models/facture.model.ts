@@ -24,4 +24,6 @@ export class FactureModel {
   produitsFacture: ProduitsFactureModel[];
 
   idUser: number;
+
+  numero: number;
 }

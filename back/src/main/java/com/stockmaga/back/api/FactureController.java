@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.stockmaga.back.models.User;
+import com.stockmaga.back.repositories.EntrepriseRepository;
 import com.stockmaga.back.repositories.UserRepository;
 import com.stockmaga.back.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,17 @@ public class FactureController {
 
 	@Autowired
 	private UserRepository userRepository;
-	
+
+	@Autowired
+	private EntrepriseRepository entrepriseRepository;
+
+	@GetMapping("/factures/findByUser")
+	@PreAuthorize("hasRole('ADMIN') OR hasRole('GESTIONNAIRE')")
+	public ResponseEntity<?> findAllfacturesByUser(@RequestParam Long idUser){
+		List<Facture> factures = factureService.findAllfacturesByUser(idUser);
+		return ResponseEntity.status(HttpStatus.OK).body(factures);
+	}
+
 	@GetMapping("/factures")
 	@PreAuthorize("hasRole('ADMIN') OR hasRole('GESTIONNAIRE')")
 	public ResponseEntity<?> findAllfactures(@RequestParam Integer idClient){
@@ -73,7 +84,7 @@ public class FactureController {
 	public ResponseEntity<?> sendFacture(@RequestParam(name="idFacture", required=true) Integer idFacture){
 		Facture facture = factureService.findOnefactures(idFacture);
 		Optional<User> user = userRepository.findById(facture.getIdUser());
-		String entreprise = user.get().getEntreprise() != null ? user.get().getEntreprise() : "mycompanyhelper";
+		String entreprise = entrepriseRepository.findByIdUser(user.get().getId()) != null ? entrepriseRepository.findByIdUser(user.get().getId()).getNom() : "mycompanyhelper";
 		emailService.sendFacture(facture, entreprise);
 		return ResponseEntity.status(HttpStatus.OK).body(new Reponse("mail envoyé."));
 	}  

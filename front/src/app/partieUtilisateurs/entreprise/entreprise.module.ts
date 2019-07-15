@@ -5,6 +5,7 @@ import {RouterModule} from "@angular/router";
 import {AuthGuard} from "../../shared/guards/auth-guard.service";
 import {ReactiveFormsModule} from "@angular/forms";
 import {MatButtonModule, MatInputModule} from "@angular/material";
+import {AdminGuard} from "../../shared/guards/admin-guard.service";
 
 @NgModule({
   declarations: [EntrepriseComponent],
@@ -13,7 +14,7 @@ import {MatButtonModule, MatInputModule} from "@angular/material";
         MatButtonModule,
         MatInputModule,
         RouterModule.forChild([
-            {path: '', canActivate: [AuthGuard], component: EntrepriseComponent},
+            {path: '', canActivate: [AdminGuard], component: EntrepriseComponent},
         ]),
         ReactiveFormsModule
     ]

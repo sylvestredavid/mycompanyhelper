@@ -15,6 +15,8 @@ import com.stockmaga.back.models.Facture;
 @Repository
 public interface FactureRepository extends JpaRepository<Facture, Integer> {
 
+	public List<Facture> findByIdUser(Long idUser);
+
 	public List<Facture> findByClientIdClient(Integer idClient);
 	
 	/**

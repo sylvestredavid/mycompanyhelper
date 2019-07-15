@@ -46,8 +46,10 @@ export class CreateFactureComponent implements OnInit, OnDestroy {
     limiteStock: number;
     enCour: boolean;
     entreprise: EntrepriseModel;
+    numero: number;
 
     @ViewChild('facture') facture: ElementRef;
+    date: Date;
 
     constructor(private _formBuilder: FormBuilder, iconRegistry: MatIconRegistry, sanitizer: DomSanitizer,
                 private clientService: ClientsService, private produitService: ProduitService, private factureService: FactureService,
@@ -72,6 +74,19 @@ export class CreateFactureComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        this.factureService.findAllFactures().subscribe(
+            factures => {
+                if(factures && factures.length > 0) {
+                    factures.sort(function (a, b) {
+                        return b.numero - a.numero;
+                    });
+                    this.numero = factures[0].numero + 1;
+                } else {
+                    this.numero = 1534;
+                }
+            }
+        )
+        this.date = new Date();
         this.entrepriseService.entreprise$.subscribe(
             e => this.entreprise = e
         )
@@ -169,6 +184,7 @@ export class CreateFactureComponent implements OnInit, OnDestroy {
             tva10 : tva10,
             tva20 : tva20,
             idUser : this.userService.idUser,
+            numero: this.numero
         };
 
         this.factureService.saveFacture(facture).pipe(

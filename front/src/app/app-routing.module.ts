@@ -5,6 +5,9 @@ import {LandingPageComponent} from './landing-page/landing-page.component';
 import {MenuComponent} from './partieUtilisateurs/menu/menu.component';
 import {IsConnectedGuard} from './shared/guards/is-connected-guard.service';
 import {SupportComponent} from "./shared/support/support.component";
+import {OptionsComponent} from "./partieUtilisateurs/options/options.component";
+import {AuthGuard} from "./shared/guards/auth-guard.service";
+import {AdminGuard} from "./shared/guards/admin-guard.service";
 
 const routes: Routes = [
     {
@@ -27,6 +30,11 @@ const routes: Routes = [
             {
                 path: '',
                 component: MenuComponent,
+            },
+            {
+                path: 'options',
+                canActivate: [AdminGuard],
+                component: OptionsComponent,
             },
             {
                 path: 'support',

@@ -1,23 +1,29 @@
-<mat-dialog-content>
-    <h1>Options</h1>
-    <div class="clear"></div>
+<ul class="fil-ariane">
+    <li>
+        <a routerLink="../">Menu</a>
+    </li>
+    <li>
+        <a class="actif">Options</a>
+    </li>
+</ul>
+<div class="options_container">
     <ng-container [formGroup]="optionsForm">
         <h2>Limite stocks bas</h2>
         <div class="divider"></div>
-        <mat-radio-group class="example-radio-group" formControlName="limiteStock">
+        <mat-radio-group class="example-radio-group" formControlName="limiteStock" (change)="onSubmitOptions()">
             <mat-radio-button class="example-radio-button" [value]="5">5</mat-radio-button>
             <mat-radio-button class="example-radio-button" [value]="10">10</mat-radio-button>
             <mat-radio-button class="example-radio-button" [value]="20">20</mat-radio-button>
             <mat-radio-button class="example-radio-button" [value]="50">50</mat-radio-button>
         </mat-radio-group>
-        <h2>Limite meilleurs clients</h2>
-        <div class="divider"></div>
-        <mat-radio-group class="example-radio-group" formControlName="limiteClient">
-            <mat-radio-button class="example-radio-button" [value]="5">5</mat-radio-button>
-            <mat-radio-button class="example-radio-button" [value]="10">10</mat-radio-button>
-            <mat-radio-button class="example-radio-button" [value]="20">20</mat-radio-button>
-            <mat-radio-button class="example-radio-button" [value]="50">50</mat-radio-button>
-        </mat-radio-group>
+<!--        <h2>Limite meilleurs clients</h2>-->
+<!--        <div class="divider"></div>-->
+<!--        <mat-radio-group class="example-radio-group" formControlName="limiteClient" (change)="onSubmitOptions()">-->
+<!--            <mat-radio-button class="example-radio-button" [value]="5">5</mat-radio-button>-->
+<!--            <mat-radio-button class="example-radio-button" [value]="10">10</mat-radio-button>-->
+<!--            <mat-radio-button class="example-radio-button" [value]="20">20</mat-radio-button>-->
+<!--            <mat-radio-button class="example-radio-button" [value]="50">50</mat-radio-button>-->
+<!--        </mat-radio-group>-->
     </ng-container>
     <ng-container>
         <h2>gestionnaires</h2>
@@ -81,7 +87,4 @@
         <p>Vous etes succeptible de recevoir une facture de régularisation</p>
         <button mat-raised-button (click)="onDeleteCompte()" [disabled]="enCour">J'ai compris</button>
     </ng-container>
-</mat-dialog-content>
-<mat-dialog-actions>
-    <button mat-raised-button (click)="onSubmitOptions()">ok</button>
-</mat-dialog-actions>
+</div>

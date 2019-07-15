@@ -8,7 +8,5 @@ export class SignUpModel {
 
     password: string;
 
-    entreprise: string;
-
     managementId?: number;
 }

@@ -57,18 +57,15 @@ public class User {
     
     private Long managementId;
     
-    private String entreprise;
-    
     private String abonnement;
 
 	public User(@NotBlank @Size(min = 3, max = 50) String name, @NotBlank @Size(max = 50) @Email String username,
-			@NotBlank @Size(min = 6, max = 100) String password, Long managementId, String entreprise) {
+			@NotBlank @Size(min = 6, max = 100) String password, Long managementId) {
 		super();
 		this.name = name;
 		this.username = username;
 		this.password = password;
 		this.managementId = managementId;
-		this.entreprise = entreprise;
 	}
     
     

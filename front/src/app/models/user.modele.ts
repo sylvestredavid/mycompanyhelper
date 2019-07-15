@@ -10,6 +10,4 @@ export class UserModel {
   authorities: string;
 
   managementId: number;
-
-  entreprise: string;
 }

@@ -17,4 +17,6 @@ public interface IFactureService {
 	public void saveProduitfactures(int quantite, Integer idProduit, Integer idFacture);
 	
 	public void deletefactures(Integer id);
+
+    List<Facture> findAllfacturesByUser(Long idUser);
 }

@@ -76,7 +76,7 @@ public class UserService implements IUserService {
 		Optional<User> user = userRepository.findByUsername(userDetails.getUsername());
 		RoleName authorities = ((Role) user.get().getRoles().toArray()[0]).getName();
 		return new JwtResponse(jwt, user.get().getId(), userDetails.getUsername(), authorities,
-				user.get().getEntreprise(), user.get().getManagementId());
+				user.get().getManagementId());
 	}
 	
 	/**
@@ -89,7 +89,7 @@ public class UserService implements IUserService {
 		Optional<User> user = userRepository.findByUsername(jwtProvider.getUserNameFromJwtToken(token.substring(7)));
 		RoleName authorities = ((Role) user.get().getRoles().toArray()[0]).getName();
 		return new JwtResponse(token, user.get().getId(), user.get().getUsername(), authorities,
-				user.get().getEntreprise(), user.get().getManagementId());
+				user.get().getManagementId());
 	}
 
 	/**
@@ -103,8 +103,7 @@ public class UserService implements IUserService {
 
 		// Creating user's account
 		User user = new User(signUpRequest.getName(), signUpRequest.getUsername(),
-				encoder.encode(signUpRequest.getPassword()), signUpRequest.getManagementId(),
-				signUpRequest.getEntreprise());
+				encoder.encode(signUpRequest.getPassword()), signUpRequest.getManagementId());
 
 		Set<String> strRoles = signUpRequest.getRole();
 		Set<Role> roles = new HashSet<>();

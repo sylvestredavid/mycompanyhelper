@@ -14,6 +14,10 @@ export class FactureService {
     constructor(private http: HttpClient, private userService: UsersService, private requeteUtils: RequeteUtils) {
     }
 
+    findAllFactures(): Observable<FactureModel[]> {
+        return this.http.get<FactureModel[]>(this.requeteUtils.url + 'factures/findByUser?idUser=' + this.userService.idUser, this.requeteUtils.getOptions());
+    }
+
     saveFacture(facture: FactureModel): Observable<FactureModel> {
         return this.http.post<FactureModel>(this.requeteUtils.url + 'factures/save', facture, this.requeteUtils.getOptions());
     }

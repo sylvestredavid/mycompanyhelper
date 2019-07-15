@@ -66,4 +66,6 @@ public class Facture implements Serializable {
 	
 	private Long idUser;
 
+	private int numero;
+
 }

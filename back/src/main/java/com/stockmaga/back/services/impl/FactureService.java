@@ -76,6 +76,11 @@ public class FactureService implements IFactureService {
 
 	}
 
+	@Override
+	public List<Facture> findAllfacturesByUser(Long idUser) {
+		return factureRepository.findByIdUser(idUser);
+	}
+
 	public void autoIncrement() {
 		factureRepository.setAutoIncrement();
 	}

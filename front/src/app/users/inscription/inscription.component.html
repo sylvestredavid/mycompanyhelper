@@ -14,9 +14,6 @@
         <input matInput placeholder="nom complet" formControlName="name">
     </mat-form-field>
     <mat-form-field class="example-full-width">
-        <input matInput placeholder="Entreprise" formControlName="entreprise">
-    </mat-form-field>
-    <mat-form-field class="example-full-width">
         <input matInput [type]="hideMdp1 ? 'password' : 'text'" placeholder="password" formControlName="password1">
         <p class="hide_btn" mat-icon-button matSuffix (mousedown)="hideMdp1 = false" (mouseup)="hideMdp1 = true">
             <mat-icon [svgIcon]="hideMdp1 ? 'hide' : 'nohide'"></mat-icon>

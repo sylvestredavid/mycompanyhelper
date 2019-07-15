@@ -31,6 +31,14 @@
   }
 }
 
+.disabled{
+  background-color: grey;
+  
+  &:hover{
+    cursor: default;
+  }
+}
+
 .visibility_none{
   visibility: hidden;
 }

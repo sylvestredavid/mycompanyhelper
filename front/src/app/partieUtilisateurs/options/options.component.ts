@@ -26,8 +26,7 @@ export class OptionsComponent implements OnInit, OnDestroy {
     screenWidth: number;
     enCour: boolean;
 
-    constructor(public dialogRef: MatDialogRef<OptionsComponent>,
-                private fb: FormBuilder, private optionService: OptionsService,
+    constructor(private fb: FormBuilder, private optionService: OptionsService,
                 private storeUser: Store<UserState>, private userService: UsersService, iconRegistry: MatIconRegistry,
                 sanitizer: DomSanitizer, private  snackBar: MatSnackBar) {
         iconRegistry.addSvgIcon(
@@ -117,10 +116,12 @@ export class OptionsComponent implements OnInit, OnDestroy {
                 idUser: this.userService.idUser
             };
             this.optionService.updateOptions(optionsEnvoi).subscribe(
-                options => this.optionService.options$.next(options)
+                options => {
+                    this.optionService.options$.next(options);
+                    this.snackBar.open('les changements ont bien été pris en compte.', 'ok', {duration: 1500})
+                }
             );
         }
-        this.dialogRef.close();
     }
 
     /**
@@ -136,8 +137,7 @@ export class OptionsComponent implements OnInit, OnDestroy {
                     username: this.gestionnaireForm.value.username,
                     password: 'mycompanyhelper',
                     role: role,
-                    managementId: user[0].id,
-                    entreprise: user[0].entreprise
+                    managementId: user[0].id
                 };
                 this.userService.signup(signup).pipe(
                     finalize(() => {

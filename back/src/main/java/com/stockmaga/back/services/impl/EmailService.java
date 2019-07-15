@@ -12,6 +12,7 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import com.stockmaga.back.repositories.EntrepriseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,9 @@ import com.stockmaga.back.services.IEmailService;
 public class EmailService implements IEmailService {
 
 	private static final String MAIL_FROM = "david.sylvestre.lp2@gmail.com";
+
+	@Autowired
+	private EntrepriseRepository entrepriseRepository;
 
 	@Autowired
 	private Environment env;
@@ -138,10 +142,10 @@ public class EmailService implements IEmailService {
 	@Async
 	public void sendGestMail(User user) {
 		final String Gest_Mail = "<h1>Bienvenue</h1>"
-				+ "<p>Vous avez été ajouté en tant que gestionnaire pour le compte de " + user.getEntreprise() + ".</p>"
+				+ "<p>Vous avez été ajouté en tant que gestionnaire pour le compte de " + entrepriseRepository.findByIdUser(user.getManagementId()).getNom() + ".</p>"
 				+ "<p>Vous pouvez à présent vous connecter avec les identifiants suivants:</p>"
 				+ "<p> email: cet email,</p>" + "<p>mot de passe: mycompanyhelper</p>"
-				+ "<p>lors de votre première connexion, il vous sera demandé de changer de mote de passe.</p>"
+				+ "<p>lors de votre première connexion, il vous sera demandé de changer de mot de passe.</p>"
 				+ "<p>Cordialement.</p>" + "<p>L'équipe de mycompanyhelper</p>"
 				+ "<p>Ce message vous a été envoyé depuis <a href=\"https://www.mycompanyhelper.com\">mycompanyhelper.com</a></p>";
 

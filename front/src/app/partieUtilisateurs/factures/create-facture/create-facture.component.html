@@ -122,7 +122,8 @@
         </div>
         <div class="clear"></div>
         <div class="body">
-            <h3>Facture</h3>
+            <h3>Facture n° {{numero}}</h3>
+            <p>{{date | date: "dd-MM-yyyy"}}</p>
             <table>
                 <thead>
                 <tr>
@@ -175,6 +176,10 @@
                     Total TTC : {{getTotalTTC(produits.controls)}} €
                 </p>
             </ng-container>
+        </div>
+        <div class="conditions_generales">
+            <p>Payable à 30 jours date de facture</p>
+            <p>En cas de retard de paiement, indemnité forfaitaire légale pour frais de recouvrement : 40,00 €</p>
         </div>
     </div>
 </div>

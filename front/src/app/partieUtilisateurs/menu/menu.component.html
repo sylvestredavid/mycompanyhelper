@@ -15,10 +15,18 @@
         <img src="assets/fournisseurs.svg" alt="fournisseurs">
         <p>Fournisseurs</p>
     </div>
-    <div class="menu_item" routerLink="monEntreprise">
-        <img src="assets/shop.svg" alt="mon entreprise">
-        <p>Mon entreprise</p>
-    </div>
+    <ng-template [ngIf]="role === 'ROLE_ADMIN'" [ngIfElse]="gestEntreprise">
+        <div class="menu_item" routerLink="monEntreprise">
+            <img src="assets/shop.svg" alt="mon entreprise">
+            <p>Mon entreprise</p>
+        </div>
+    </ng-template>
+    <ng-template #gestEntreprise>
+        <div class="menu_item disabled">
+            <img src="assets/shop.svg" alt="mon entreprise">
+            <p>Mon entreprise</p>
+        </div>
+    </ng-template>
     <div class="menu_item" routerLink="creer-facture">
         <img src="assets/factures.svg" alt="créer facture">
         <p>Créer facture</p>
@@ -31,6 +39,19 @@
         <img src="assets/support.svg" alt="support">
         <p>Support</p>
     </div>
-    <div class="menu_item visibility_none">
+    <ng-template [ngIf]="role === 'ROLE_ADMIN'" [ngIfElse]="gestOptions">
+    <div class="menu_item" routerLink="options">
+        <img src="assets/settings.svg" alt="options">
+        <p>options</p>
     </div>
+    </ng-template>
+    <ng-template #gestOptions>
+        <div class="menu_item disabled">
+            <img src="assets/settings.svg" alt="options">
+            <p>options</p>
+        </div>
+    </ng-template>
+    <div class="menu_item visibility_none"></div>
+    <div class="menu_item visibility_none"></div>
+    <div class="menu_item visibility_none"></div>
 </div>

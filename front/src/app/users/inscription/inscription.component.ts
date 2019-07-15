@@ -57,7 +57,6 @@ export class InscriptionComponent implements OnInit {
         const signUp: SignUpModel = {
             name: this.signUpForm.value.name,
             username: this.signUpForm.value.username,
-            entreprise: this.signUpForm.value.entreprise,
             password: this.signUpForm.value.password1,
             role: this.signUpForm.value.typeInscription === 'user' ? ['admin'] : ['fournisseur']
         };
@@ -101,7 +100,6 @@ export class InscriptionComponent implements OnInit {
         this.signUpForm = this.fb.group({
             name: ['', Validators.required],
             username: ['', Validators.compose([Validators.required, Validators.email, CustomValidators.usernameValidator(this.usernameList)])],
-            entreprise: ['', Validators.required],
             password1: ['', Validators.compose([Validators.required, Validators.pattern(this.regex)])],
             password2: ['', Validators.compose(
                 [Validators.required, CustomValidators.passwordMatchValidator()])],

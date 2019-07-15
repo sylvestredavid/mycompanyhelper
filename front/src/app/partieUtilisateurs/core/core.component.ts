@@ -43,9 +43,6 @@ export class CoreComponent implements OnInit, OnDestroy {
                 private clientService: ClientsService, private optionService: OptionsService, private router: Router, private calendrierService: CalendrierService,
                 private notificationService: NotificationsService, private userService: UsersService, private entrepriseService: EntrepriseService) {
         iconRegistry.addSvgIcon(
-            'options',
-            sanitizer.bypassSecurityTrustResourceUrl('/assets/settings.svg'));
-        iconRegistry.addSvgIcon(
             'quit',
             sanitizer.bypassSecurityTrustResourceUrl('/assets/sortie.svg'));
         iconRegistry.addSvgIcon(
@@ -72,7 +69,6 @@ export class CoreComponent implements OnInit, OnDestroy {
             user => {
                 if (user) {
                     this.role = user[0].authorities;
-                    this.entreprise = user[0].entreprise;
                 }
             }
         );
