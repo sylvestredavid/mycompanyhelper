@@ -9,7 +9,7 @@
 <h1>Fournisseurs</h1>
 <ng-container *ngIf="role === 'ROLE_ADMIN'">
     <div class="boutons-container">
-        <ng-container *ngIf="isDirty"><button mat-raised-button (click)="envoiForm()">Envoyer</button> </ng-container>
+        <ng-container *ngIf="isDirty"><button mat-raised-button (click)="envoiForm()">Valider</button> </ng-container>
         <button mat-raised-button color="accent" (click)="onAjouter()" [disabled]="isDirty">Ajouter</button>
         <button mat-raised-button color="warn" (click)="onSupprimer()" [disabled]="isDirty">Supprimer</button>
     </div>

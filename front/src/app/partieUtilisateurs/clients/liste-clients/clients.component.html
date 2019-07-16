@@ -8,7 +8,7 @@
 </ul>
 <h1>Clients</h1>
 <div class="boutons-container">
-    <ng-container *ngIf="isDirty"><button mat-raised-button (click)="envoiForm()">Envoyer</button> </ng-container>
+    <ng-container *ngIf="isDirty"><button mat-raised-button (click)="envoiForm()">Valider</button> </ng-container>
     <button mat-raised-button color="primary" (click)="onDetails()" [disabled]="isDirty">Details</button>
     <ng-container *ngIf="role === 'ROLE_ADMIN'">
         <button mat-raised-button color="accent" (click)="onAjouter()" [disabled]="isDirty">Ajouter</button>

@@ -20,7 +20,7 @@
 </ng-template>
 <div class="boutons-container">
     <ng-container *ngIf="isDirty">
-        <button mat-raised-button (click)="envoiForm()">Envoyer</button>
+        <button mat-raised-button (click)="envoiForm()">Valider</button>
     </ng-container>
     <button mat-raised-button color="accent" (click)="onAjouter()" [disabled]="isDirty">Ajouter</button>
     <button mat-raised-button color="warn" (click)="onSupprimer()" [disabled]="isDirty">Supprimer</button>
