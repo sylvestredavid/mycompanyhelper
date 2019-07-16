@@ -15,7 +15,7 @@
         <tr>
             <td>
                 <mat-form-field>
-                    <mat-select placeholder="heure" formControlName="heureStart">
+                    <mat-select placeholder="heure" formControlName="heureStart" (ngModelChange)="changeEnd()">
                         <mat-option *ngFor="let h of heures" [value]="h">
                             {{h}}
                         </mat-option>
@@ -24,7 +24,7 @@
             </td>
             <td>
                 <mat-form-field>
-                    <mat-select placeholder="minutes" formControlName="minuteStart">
+                    <mat-select placeholder="minutes" formControlName="minuteStart" (ngModelChange)="changeEnd()">
                         <mat-option *ngFor="let m of minutes" [value]="m">
                             {{m}}
                         </mat-option>
@@ -43,7 +43,7 @@
         <tr>
             <td>
                 <mat-form-field>
-                    <mat-select placeholder="heure" formControlName="heureEnd">
+                    <mat-select placeholder="heure" formControlName="heureEnd" [(ngModel)]="heureEnd">
                         <mat-option *ngFor="let h of heures" [value]="h">
                             {{h}}
                         </mat-option>
@@ -52,7 +52,7 @@
             </td>
             <td>
                 <mat-form-field>
-                    <mat-select placeholder="minutes" formControlName="minuteEnd">
+                    <mat-select placeholder="minutes" formControlName="minuteEnd" [(ngModel)]="minuteEnd">
                         <mat-option *ngFor="let m of minutes" [value]="m">
                             {{m}}
                         </mat-option>

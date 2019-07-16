@@ -98,4 +98,9 @@ export class CalendrierDialComponent implements OnInit {
             this.dateEnd = this.data.calendrier.end;
         }
     }
+
+    changeEnd() {
+        this.heureEnd = '0' + (+this.calendrierForm.value.heureStart + 1).toString();
+        this.minuteEnd = this.calendrierForm.value.minuteStart;
+    }
 }
