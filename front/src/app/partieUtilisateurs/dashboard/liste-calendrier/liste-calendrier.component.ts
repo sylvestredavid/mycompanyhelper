@@ -12,6 +12,7 @@ import frLocale from '@fullcalendar/core/locales/fr';
 export class ListeCalendrierComponent implements OnInit {
 
     events: CalendrierModel[];
+    date: Date;
 
     options;
 
@@ -19,22 +20,11 @@ export class ListeCalendrierComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.date = new Date();
 
         this.calendrierService.calendrierListe$.subscribe(
             c => this.events = c
         );
-        this.options = {
-            plugins: [listPlugin],
-            defaultView: 'listDay',
-            defaultDate: new Date(),
-            locale: frLocale,
-            allDaySlot: false,
-            header: {
-                left: '',
-                center: 'title',
-                right: ''
-            }
-        };
     }
 
 }

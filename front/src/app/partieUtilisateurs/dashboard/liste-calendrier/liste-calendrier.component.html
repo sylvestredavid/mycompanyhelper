@@ -1,1 +1,13 @@
-<p-fullCalendar [events]="events" [options]="options" class="fullcalendrier"></p-fullCalendar>
+<h2 class="title">{{date | dateFr}}</h2>
+<div class="mat-elevation-z2">
+<table class="customTable">
+    <tbody>
+        <ng-container *ngFor="let e of events">
+            <tr>
+                <td class="event_title">{{e.title}}</td>
+                <td class="event_hour">{{e.start | date: "HH'h'mm"}} - {{e.end | date: "HH'h'mm"}}</td>
+            </tr>
+        </ng-container>
+    </tbody>
+</table>
+</div>

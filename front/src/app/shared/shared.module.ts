@@ -22,11 +22,13 @@ import {HttpClientModule} from '@angular/common/http';
 import {ScrollingModule} from '@angular/cdk/scrolling';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CardNumberPipe} from './pipes/card-number.pipe';
+import {DateFrPipe} from "./pipes/date-fr.pipe";
 
 @NgModule({
     declarations: [
         InputReadOnlyDirective,
-        CardNumberPipe
+        CardNumberPipe,
+        DateFrPipe
     ],
     imports: [
         CommonModule,
@@ -52,7 +54,8 @@ import {CardNumberPipe} from './pipes/card-number.pipe';
     ],
     exports: [
         InputReadOnlyDirective,
-        CardNumberPipe
+        CardNumberPipe,
+        DateFrPipe
     ]
 })
 export class SharedModule {

@@ -15,6 +15,7 @@ import {TopFournisseursComponent} from './top-fournisseurs/top-fournisseurs.comp
 import {ListeCalendrierComponent} from './liste-calendrier/liste-calendrier.component';
 import {FullCalendarModule} from 'primeng/fullcalendar';
 import {CalendarModule} from 'primeng/primeng';
+import {SharedModule} from "../../shared/shared.module";
 
 @NgModule({
   declarations: [
@@ -25,23 +26,24 @@ import {CalendarModule} from 'primeng/primeng';
     TopFournisseursComponent,
     ListeCalendrierComponent,
   ],
-  imports: [
-    FullCalendarModule,
-    CalendarModule,
-    CommonModule,
-    HttpClientModule,
-    MatTableModule,
-      MatIconModule,
-    MatSortModule,
-    ScrollingModule,
-    MatPaginatorModule,
-    ReactiveFormsModule,
-    FormsModule,
-    NgxChartsModule,
-    RouterModule.forChild([
-      {path: '', canActivate: [AuthGuard], component: DashboardComponent},
-    ])
-  ],
+    imports: [
+        FullCalendarModule,
+        CalendarModule,
+        CommonModule,
+        HttpClientModule,
+        MatTableModule,
+        MatIconModule,
+        MatSortModule,
+        ScrollingModule,
+        MatPaginatorModule,
+        ReactiveFormsModule,
+        FormsModule,
+        NgxChartsModule,
+        RouterModule.forChild([
+            {path: '', canActivate: [AuthGuard], component: DashboardComponent},
+        ]),
+        SharedModule
+    ],
   exports: [
     DashboardComponent
   ]
