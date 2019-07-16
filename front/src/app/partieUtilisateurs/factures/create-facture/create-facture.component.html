@@ -23,7 +23,7 @@
                     </mat-select>
                 </mat-form-field>
                 <div>
-                    <button mat-button matStepperNext>Next</button>
+                    <button mat-raised-button matStepperNext>Next</button>
                 </div>
             </form>
         </mat-step>
@@ -81,21 +81,21 @@
                         </ng-template>
                     </div>
                 </div>
-                <button mat-button (click)="addProduit()">ajouter un produit</button>
-                <div>
-                    <button mat-button matStepperPrevious>Back</button>
-                    <button mat-button matStepperNext>Next</button>
+                <button mat-raised-button (click)="addProduit()">ajouter un produit</button>
+                <div class="buttons">
+                    <button mat-raised-button matStepperPrevious>Back</button>
+                    <button mat-raised-button matStepperNext>Next</button>
                 </div>
             </form>
         </mat-step>
         <mat-step>
             <ng-template matStepLabel>Fin</ng-template>
             Votre facture est prête.
-            <div>
-                <button mat-button matStepperPrevious>Back</button>
-                <button mat-button (click)="stepper.reset()">Reset</button>
-                <button mat-button (click)="onSubmit()" [disabled]="enCour">Envoyer</button>
-                <button mat-button (click)="generatePDF()">enregistrer</button>
+            <div class="buttons">
+                <button mat-raised-button matStepperPrevious>Back</button>
+                <button mat-raised-button (click)="stepper.reset()">Reset</button>
+                <button mat-raised-button (click)="onSubmit()" [disabled]="enCour">Envoyer</button>
+                <button mat-raised-button (click)="generatePDF()">enregistrer</button>
             </div>
         </mat-step>
     </mat-horizontal-stepper>
