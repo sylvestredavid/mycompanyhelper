@@ -55,6 +55,8 @@ public class Facture implements Serializable {
 
 	private Double tva20;
 
+	private  Double remise;
+
 	@ManyToOne
 	@JoinColumn(name="idClient")
 	@JsonIgnoreProperties("factures")

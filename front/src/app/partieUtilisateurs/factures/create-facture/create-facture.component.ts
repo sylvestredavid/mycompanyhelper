@@ -37,6 +37,7 @@ export class CreateFactureComponent implements OnInit, OnDestroy {
     clientForm: FormGroup;
     produitsForm: FormGroup;
     produitsFormArray: FormArray;
+    remiseForm: FormGroup;
     clients: ClientModel[];
     listeProduits: ProduitModel[];
     messageQueue: string[] = [];
@@ -132,6 +133,9 @@ export class CreateFactureComponent implements OnInit, OnDestroy {
         this.produitsForm = this._formBuilder.group({
             produits: this._formBuilder.array([this.createProduits()])
         });
+        this.remiseForm = this._formBuilder.group({
+            remise: [0]
+        });
     }
 
     /**
@@ -158,6 +162,7 @@ export class CreateFactureComponent implements OnInit, OnDestroy {
         this.enCour = true;
         const clientFormValue = this.clientForm.value;
         const produitsFormValue = this.produitsForm.value;
+        const remiseFormValue = this.remiseForm.value;
         const totalHT = this.getTotalHT(this.produits.controls);
         const totalTTC = this.getTotalTTC(this.produits.controls);
         const tva21 = this.getTotalTva(this.produits.controls, 2.1);
@@ -175,6 +180,7 @@ export class CreateFactureComponent implements OnInit, OnDestroy {
             tva55 : tva55,
             tva10 : tva10,
             tva20 : tva20,
+            remise: +remiseFormValue['remise'],
             idUser : this.userService.idUser,
             numero: this.numero
         };
@@ -223,7 +229,7 @@ export class CreateFactureComponent implements OnInit, OnDestroy {
      */
     checkStock(produit: ProduitModel, quantite: number) {
         if ((produit.quantite - quantite) <= produit.seuilStockBas && produit.quantite > 0) {
-            console.log('coucou')
+            console.log('coucou');
             const notif: NotificationModel = {
                 notification: `le produit "${produit.designation}" est bientot en rupture de stock.`,
                 vue: false,
@@ -327,6 +333,8 @@ export class CreateFactureComponent implements OnInit, OnDestroy {
         for (const control of controls) {
             total += ((control.value.produit.prixVente + (control.value.produit.prixVente * control.value.produit.tva / 100)) * control.value.quantite);
         }
+
+        total = total - (total * this.remiseForm.value.remise / 100);
         return total;
     }
 }

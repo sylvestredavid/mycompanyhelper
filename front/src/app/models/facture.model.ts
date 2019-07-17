@@ -19,6 +19,8 @@ export class FactureModel {
 
   tva20: number;
 
+  remise: number;
+
   client: ClientModel;
 
   produitsFacture: ProduitsFactureModel[];

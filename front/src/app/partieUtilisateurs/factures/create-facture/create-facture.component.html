@@ -88,6 +88,18 @@
                 </div>
             </form>
         </mat-step>
+        <mat-step [stepControl]="remiseForm">
+        <form [formGroup]="remiseForm">
+            <ng-template matStepLabel>remise (opt)</ng-template>
+            <mat-form-field>
+                <input matInput type="number" placeholder="Remise en %" formControlName="remise">
+            </mat-form-field>
+            <div class="buttons">
+                <button mat-raised-button matStepperPrevious>Back</button>
+                <button mat-raised-button matStepperNext>Next</button>
+            </div>
+        </form>
+    </mat-step>
         <mat-step>
             <ng-template matStepLabel>Fin</ng-template>
             Votre facture est prête.
@@ -169,6 +181,11 @@
             <ng-container *ngIf="tvaExist(produits.controls, 20)">
                 <p class="align-right">
                     TVA à 20% : {{getTotalTva(produits.controls, 20)}} €
+                </p>
+            </ng-container>
+            <ng-container *ngIf="+remiseForm.value.remise > 0">
+                <p class="align-right">
+                    Remise : {{remiseForm.value.remise}} %
                 </p>
             </ng-container>
             <ng-container *ngIf="produits.controls[0].value.produit">
