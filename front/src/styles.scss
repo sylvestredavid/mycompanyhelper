@@ -18,6 +18,9 @@ $theme: mat-light-theme($primary, $accent, $warn); // Or mat-dark-theme
   cursor: pointer;
 }
 
+.checkbox{
+  margin-left: 10px;
+}
 
 *{
   font-family: 'Montserrat', sans-serif;

@@ -1,7 +1,7 @@
 import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {GenreService} from '../../genres/genre.service';
-import {MatDialog, MatIconRegistry, MatSnackBar} from '@angular/material';
+import {MatCheckboxChange, MatDialog, MatIconRegistry, MatSnackBar} from '@angular/material';
 import {ProduitModel} from '../../../models/produit.model';
 import {ProduitService} from '../produit.service';
 import {GenreModel} from '../../../models/genre.model';
@@ -15,6 +15,7 @@ import {NotificationsService} from '../../notification/notifications.service';
 import {SocketService} from '../../../shared/socket.service';
 import {OptionsService} from '../../options/options.service';
 import {AjoutGenreComponent} from '../../genres/ajout-genre/ajout-genre.component';
+import {forEach} from "@angular/router/src/utils/collection";
 
 
 @Component({
@@ -26,7 +27,7 @@ export class ProduitsComponent implements OnInit, OnDestroy {
 
     genre: GenreModel;
     listeGenres: GenreModel[];
-    elementASupprimer: ProduitModel;
+    elementSelectionne: ProduitModel;
     listeElements: ProduitModel[];
     listeElementsAAfficher: ProduitModel[];
     listeTriee: ProduitModel[];
@@ -188,11 +189,11 @@ export class ProduitsComponent implements OnInit, OnDestroy {
      * supprime l'element selectionné
      */
     onSupprimer() {
-        if (this.elementASupprimer) {
-            this.produitService.deleteProduit(this.elementASupprimer.idProduit).subscribe(
+        if (this.elementSelectionne) {
+            this.produitService.deleteProduit(this.elementSelectionne.idProduit).subscribe(
                 () => {
-                    this.socket.deleteProduit(this.elementASupprimer.idProduit);
-                    this.produitService.removeProduit(this.elementASupprimer.idProduit);
+                    this.socket.deleteProduit(this.elementSelectionne.idProduit);
+                    this.produitService.removeProduit(this.elementSelectionne.idProduit);
                 }
             );
         }
@@ -273,8 +274,12 @@ export class ProduitsComponent implements OnInit, OnDestroy {
      * change l'element selectionné
      * @param client le client a selectionner
      */
-    changeElementSelectionne(produit: ProduitModel) {
-        this.elementASupprimer = produit;
+    changeElementSelectionne(produit: ProduitModel, e: MatCheckboxChange) {
+        if(e.checked) {
+            this.elementSelectionne = produit;
+        } else {
+            this.elementSelectionne = null
+        }
     }
 
     /**
@@ -345,7 +350,7 @@ export class ProduitsComponent implements OnInit, OnDestroy {
      * @param liste la liste qui sera utilisée
      */
     initTableau(indexDebut: number = 0, indexFin: number = this.nbElements, pageCourante: number = 1, liste = this.listeElements) {
-        this.elementASupprimer = null;
+        this.elementSelectionne = null;
         this.viderForm();
         this.indexDebut = indexDebut;
         this.indexFin = indexFin;

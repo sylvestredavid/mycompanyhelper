@@ -23,6 +23,7 @@
     <table class="customTable">
         <thead>
         <tr class="customTable-tr">
+            <th></th>
             <th>Nom</th>
             <th>Prenom</th>
             <th>Email</th>
@@ -34,8 +35,8 @@
         </thead>
         <tbody [formGroup]="elementForm">
         <ng-container formArrayName="elements" *ngFor="let control of elements.controls; let i = index;">
-            <tr class="customTable-tr selectionable" [formGroupName]="i" (click)="changeElementSelectionne(control.value)"
-                [ngClass]="{'selected': elementSelectionne && elementSelectionne === control.value}">
+            <tr class="customTable-tr" [formGroupName]="i" [ngClass]="{'selected': elementSelectionne && elementSelectionne === control.value}">
+                <td><mat-checkbox class="checkbox" color="primary" (change)="changeElementSelectionne(control.value, $event)" [checked]="elementSelectionne === control.value"></mat-checkbox></td>
                 <td><input  (keyup)="changeIsDirty()" id="input-des-{{i}}" [inputReadOnly]="role === 'ROLE_ADMIN'" formControlName="nom" placeholder="Nom"></td>
                 <td><input  (keyup)="changeIsDirty()" [inputReadOnly]="role === 'ROLE_ADMIN'" formControlName="prenom" placeholder="Prenom"></td>
                 <td><input  (keyup)="changeIsDirty()" [inputReadOnly]="role === 'ROLE_ADMIN'" formControlName="email" placeholder="Email"></td>

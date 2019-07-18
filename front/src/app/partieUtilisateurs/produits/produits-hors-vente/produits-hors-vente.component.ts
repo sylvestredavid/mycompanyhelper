@@ -6,7 +6,7 @@ import {Subscription} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
 import {GenreService} from '../../genres/genre.service';
 import {ProduitService} from '../produit.service';
-import {MatIconRegistry, MatSnackBar} from '@angular/material';
+import {MatCheckboxChange, MatIconRegistry, MatSnackBar} from '@angular/material';
 import {DomSanitizer} from '@angular/platform-browser';
 import {Store} from '@ngrx/store';
 import {UserState} from '../../../shared/stores/user.reducer';
@@ -203,8 +203,12 @@ export class ProduitsHorsVenteComponent implements OnInit, OnDestroy {
      * change l'element selectionné
      * @param client le client a selectionner
      */
-    changeElementSelectionne(produit: ProduitModel) {
-        this.elementSelectionne = produit;
+    changeElementSelectionne(produit: ProduitModel, e: MatCheckboxChange) {
+        if(e.checked) {
+            this.elementSelectionne = produit;
+        } else {
+            this.elementSelectionne = null
+        }
     }
 
     /**

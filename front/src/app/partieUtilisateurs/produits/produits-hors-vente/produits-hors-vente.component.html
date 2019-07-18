@@ -31,6 +31,7 @@
             <table class="customTable">
                 <thead>
                 <tr class="customTable-tr">
+                    <th></th>
                     <th>designation</th>
                     <th>prix achat</th>
                     <th>prix vente</th>
@@ -40,8 +41,8 @@
                 </thead>
                 <tbody>
                 <ng-container *ngFor="let produit of listeElementsAAfficher">
-                    <tr class="selectionable" (click)="changeElementSelectionne(produit)"
-                        [ngClass]="{'selected': elementSelectionne && elementSelectionne === produit}">
+                    <tr [ngClass]="{'selected': elementSelectionne && elementSelectionne === produit}">
+                        <td><mat-checkbox class="checkbox" color="primary" (change)="changeElementSelectionne(produit, $event)" [checked]="elementSelectionne === produit"></mat-checkbox></td>
                         <td><p>{{produit.designation}}</p></td>
                         <td><p>{{produit.prixAchat}}</p></td>
                         <td><p>{{produit.prixVente}}</p></td>

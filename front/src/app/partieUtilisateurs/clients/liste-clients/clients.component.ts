@@ -1,5 +1,5 @@
 import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
-import {MatIconRegistry, MatSnackBar} from '@angular/material';
+import {MatCheckboxChange, MatIconRegistry, MatSnackBar} from '@angular/material';
 import {ClientModel} from '../../../models/client.model';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Subscription} from 'rxjs';
@@ -11,6 +11,7 @@ import {Store} from '@ngrx/store';
 import {UserState} from '../../../shared/stores/user.reducer';
 import {UsersService} from '../../../users/users.service';
 import {SocketService} from '../../../shared/socket.service';
+import {ProduitModel} from "../../../models/produit.model";
 
 
 @Component({
@@ -189,8 +190,12 @@ export class ClientsComponent implements OnInit, OnDestroy {
      * change l'element selectionné
      * @param client le client a selectionner
      */
-    changeElementSelectionne(client: ClientModel) {
-        this.elementSelectionne = client;
+    changeElementSelectionne(client: ClientModel, e: MatCheckboxChange) {
+        if(e.checked) {
+            this.elementSelectionne = client;
+        } else {
+            this.elementSelectionne = null
+        }
     }
 
     /**

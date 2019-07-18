@@ -3,12 +3,12 @@ import {CommonModule} from '@angular/common';
 import {ProduitsComponent} from './listes-produits/produits.component';
 import {RouterModule} from '@angular/router';
 import {
-    MatButtonModule,
-    MatFormFieldModule,
-    MatIconModule,
-    MatInputModule,
-    MatSelectModule,
-    MatSnackBarModule
+  MatButtonModule, MatCheckboxModule,
+  MatFormFieldModule,
+  MatIconModule,
+  MatInputModule,
+  MatSelectModule,
+  MatSnackBarModule
 } from '@angular/material';
 import {HttpClientModule} from '@angular/common/http';
 import {ScrollingModule} from '@angular/cdk/scrolling';
@@ -26,6 +26,7 @@ import {ProduitsFormGuard} from '../../shared/guards/produits-form-guard.service
   imports: [
     CommonModule,
     SharedModule,
+    MatCheckboxModule,
     MatButtonModule,
     HttpClientModule,
     MatFormFieldModule,

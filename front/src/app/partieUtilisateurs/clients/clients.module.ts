@@ -5,7 +5,7 @@ import {ClientsComponent} from './liste-clients/clients.component';
 import {ClientDetailComponent} from './client-detail/client-detail.component';
 import {ClientFacturesComponent} from './client-factures/client-factures.component';
 import {
-    MatButtonModule,
+    MatButtonModule, MatCheckboxModule,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
@@ -28,6 +28,7 @@ import {ClientsFormGuard} from '../../shared/guards/clients-form-guard.service';
     imports: [
         CommonModule,
         MatButtonModule,
+        MatCheckboxModule,
         HttpClientModule,
         MatTableModule,
         MatFormFieldModule,

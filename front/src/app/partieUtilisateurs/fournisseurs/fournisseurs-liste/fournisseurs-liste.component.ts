@@ -1,6 +1,6 @@
 import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {FournisseursService} from '../fournisseurs.service';
-import {MatDialog, MatIconRegistry, MatSnackBar} from '@angular/material';
+import {MatCheckboxChange, MatDialog, MatIconRegistry, MatSnackBar} from '@angular/material';
 import {FournisseurModel} from '../../../models/fournisseur.model';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Subscription} from 'rxjs';
@@ -13,6 +13,7 @@ import {Store} from '@ngrx/store';
 import {UserState} from '../../../shared/stores/user.reducer';
 import {UsersService} from '../../../users/users.service';
 import {SocketService} from '../../../shared/socket.service';
+import {ProduitModel} from "../../../models/produit.model";
 
 
 @Component({
@@ -202,9 +203,11 @@ export class FournisseursListeComponent implements OnInit, OnDestroy {
      * change l'element selectionné
      * @param client le client a selectionner
      */
-    changeElementSelectionne(fournisseur: FournisseurModel) {
-        if (this.role === 'ROLE_ADMIN') {
+    changeElementSelectionne(fournisseur: FournisseurModel, e: MatCheckboxChange) {
+        if(e.checked) {
             this.elementSelectionne = fournisseur;
+        } else {
+            this.elementSelectionne = null
         }
     }
 

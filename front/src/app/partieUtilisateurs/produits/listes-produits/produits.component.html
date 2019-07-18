@@ -46,6 +46,7 @@
             <table class="customTable">
                 <thead>
                 <tr class="customTable-tr">
+                    <th></th>
                     <th>designation</th>
                     <th>prix achat</th>
                     <th>prix vente</th>
@@ -60,9 +61,8 @@
                 </thead>
                 <tbody [formGroup]="elementForm">
                 <ng-container formArrayName="elements" *ngFor="let control of elements.controls; let i = index;">
-                    <tr class="customTable-tr selectionable" [formGroupName]="i"
-                        (click)="changeElementSelectionne(control.value)"
-                        [ngClass]="{'selected': elementASupprimer && elementASupprimer === control.value}">
+                    <tr class="customTable-tr" [formGroupName]="i" [ngClass]="{'selected': elementSelectionne && elementSelectionne === control.value}">
+                        <td><mat-checkbox class="checkbox" color="primary" (change)="changeElementSelectionne(control.value, $event)" [checked]="elementSelectionne === control.value"></mat-checkbox></td>
                         <td><input id="input-des-{{i}}" class="readOnly" [inputReadOnly]="true"
                                    formControlName="designation" placeholder="Désignation" (keyup)="changeIsDirty()">
                         </td>
@@ -127,7 +127,7 @@
             <ng-container formArrayName="elements" *ngFor="let control of elements.controls; let i = index;">
                 <div class="contenaire selectionable" [formGroupName]="i"
                      (click)="changeElementSelectionne(control.value)"
-                     [ngClass]="{'selected': elementASupprimer && elementASupprimer === control.value}">
+                     [ngClass]="{'selected': elementSelectionne && elementSelectionne === control.value}">
                     <input [inputReadOnly]="true" class="h2-like" formControlName="designation"
                            placeholder="Désignation" (keyup)="changeIsDirty()">
                     <p>prix d'achat : <input [inputReadOnly]="true" class="inputChiffre"
