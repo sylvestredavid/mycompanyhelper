@@ -11,7 +11,8 @@ import {Store} from '@ngrx/store';
 import {UserState} from '../../../shared/stores/user.reducer';
 import {UsersService} from '../../../users/users.service';
 import {SocketService} from '../../../shared/socket.service';
-import {ProduitModel} from "../../../models/produit.model";
+import {ProduitModel} from '../../../models/produit.model';
+import {FournisseurModel} from "../../../models/fournisseur.model";
 
 
 @Component({
@@ -21,7 +22,7 @@ import {ProduitModel} from "../../../models/produit.model";
 })
 export class ClientsComponent implements OnInit, OnDestroy {
 
-    elementSelectionne: ClientModel;
+    selection: ClientModel[];
     listeElements: ClientModel[];
     listeElementsAAfficher: ClientModel[];
     listeTriee: ClientModel[];
@@ -35,6 +36,7 @@ export class ClientsComponent implements OnInit, OnDestroy {
     role: string;
     screenWidth: number;
     isDirty: boolean;
+    allSelected: boolean;
 
 
     constructor(private route: ActivatedRoute, private genreService: GenreService, private clientService: ClientsService,
@@ -53,6 +55,8 @@ export class ClientsComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        this.selection = [];
+        this.allSelected = false;
         this.isDirty = false;
         this.getScreenSize();
         this.initValues();
@@ -99,8 +103,8 @@ export class ClientsComponent implements OnInit, OnDestroy {
                 });
 
                 this.nbPage = Math.ceil(this.listeElements.length / this.nbElements);
-                if( this.screenWidth < 1024) {
-                    this.listeElementsAAfficher = this.listeElements
+                if ( this.screenWidth < 1024) {
+                    this.listeElementsAAfficher = this.listeElements;
                 } else {
                     this.listeElementsAAfficher = this.listeElements.slice(this.indexDebut, this.indexFin);
                 }
@@ -130,11 +134,15 @@ export class ClientsComponent implements OnInit, OnDestroy {
      * supprime l'element selectionné
      */
     onSupprimer() {
-        if (this.elementSelectionne) {
-            this.clientService.deleteClient(this.elementSelectionne.idClient).subscribe(
-                () => {
-                    this.socket.deleteClient(this.elementSelectionne.idClient);
-                    this.clientService.removeClient(this.elementSelectionne.idClient);
+        if (this.selection) {
+            this.selection.forEach(
+                c => {
+                    this.clientService.deleteClient(c.idClient).subscribe(
+                        () => {
+                            this.socket.deleteClient(c.idClient);
+                            this.clientService.removeClient(c.idClient);
+                        }
+                    );
                 }
             );
         }
@@ -190,11 +198,15 @@ export class ClientsComponent implements OnInit, OnDestroy {
      * change l'element selectionné
      * @param client le client a selectionner
      */
-    changeElementSelectionne(client: ClientModel, e: MatCheckboxChange) {
-        if(e.checked) {
-            this.elementSelectionne = client;
+    changeSelection(client: ClientModel, e: MatCheckboxChange) {
+        const index = this.selection.findIndex(c => c === client);
+        if (e.checked && index === -1) {
+            this.selection.push(client);
         } else {
-            this.elementSelectionne = null
+            this.selection.splice(index, 1);
+            if (this.selection.length === 0) {
+                this.allSelected = false;
+            }
         }
     }
 
@@ -209,7 +221,7 @@ export class ClientsComponent implements OnInit, OnDestroy {
             this.initTableau();
         } else {
             this.listeElements.forEach(client => {
-                for (let prop in client) {
+                for (const prop in client) {
                     this.remplirListeTriee(client[prop], recherche, client);
                 }
 
@@ -266,7 +278,7 @@ export class ClientsComponent implements OnInit, OnDestroy {
      * @param liste la liste qui sera utilisée
      */
     initTableau(indexDebut: number = 0, indexFin: number = this.nbElements, pageCourante: number = 1, liste = this.listeElements) {
-        this.elementSelectionne = null;
+        this.selection = null;
         this.viderForm();
         this.indexDebut = indexDebut;
         this.indexFin = indexFin;
@@ -325,7 +337,7 @@ export class ClientsComponent implements OnInit, OnDestroy {
         }
     }
 
-    changeIsDirty(){
+    changeIsDirty() {
         this.isDirty = true;
     }
 
@@ -333,8 +345,8 @@ export class ClientsComponent implements OnInit, OnDestroy {
      * navigation vers la page detail du client selectionné
      */
     onDetails() {
-        if (this.elementSelectionne) {
-            this.router.navigate(['users/clients/detailClient/' + this.elementSelectionne.idClient]);
+        if (this.selection) {
+            this.router.navigate(['users/clients/detailClient/' + this.selection[0].idClient]);
         }
     }
 
@@ -345,5 +357,26 @@ export class ClientsComponent implements OnInit, OnDestroy {
 
     ngOnDestroy(): void {
         this.subscriptions.forEach(subscription => subscription.unsubscribe());
+    }
+
+    selectAll(e: MatCheckboxChange) {
+        console.log(e.checked)
+        if(e.checked) {
+            this.listeElements.forEach(
+                c => this.selection.push(c)
+            )
+            this.allSelected = true;
+        } else {
+            this.selection = [];
+            this.allSelected = false;
+        }
+    }
+
+    isSelected(value: ClientModel): boolean {
+        if (this.selection.findIndex(c => c === value) !== -1) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

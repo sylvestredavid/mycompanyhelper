@@ -46,6 +46,7 @@ import {CoreFournisseursComponent} from './partieFournisseurs/core-fournisseurs/
 import {UsersModule} from "./users/users.module";
 import {SupportComponent} from './shared/support/support.component';
 import {SuiviDialComponent} from './shared/dialogues/suivi-dial/suivi-dial.component';
+import {MailingComponent} from "./partieUtilisateurs/mailing/mailing/mailing.component";
 
 registerLocaleData(localeFr, 'fr-FR');
 
@@ -65,7 +66,7 @@ registerLocaleData(localeFr, 'fr-FR');
         CoreComponent,
         CoreFournisseursComponent,
         SupportComponent,
-        SuiviDialComponent
+        SuiviDialComponent,
     ],
     imports: [
         BrowserModule,
@@ -102,6 +103,8 @@ registerLocaleData(localeFr, 'fr-FR');
         MdpUtils,
         RequeteUtils,
 
+    ],
+    exports: [
     ],
     bootstrap: [AppComponent]
 })

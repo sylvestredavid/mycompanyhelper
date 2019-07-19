@@ -9,7 +9,7 @@
 <h1>Clients</h1>
 <div class="boutons-container">
     <ng-container *ngIf="isDirty"><button mat-raised-button (click)="envoiForm()">Valider</button> </ng-container>
-    <button mat-raised-button color="primary" (click)="onDetails()" [disabled]="isDirty">Details</button>
+    <button mat-raised-button color="primary" (click)="onDetails()" [disabled]="isDirty || selection.length > 1">Details</button>
     <ng-container *ngIf="role === 'ROLE_ADMIN'">
         <button mat-raised-button color="accent" (click)="onAjouter()" [disabled]="isDirty">Ajouter</button>
         <button mat-raised-button color="warn" (click)="onSupprimer()" [disabled]="isDirty">Supprimer</button>
@@ -23,7 +23,7 @@
     <table class="customTable">
         <thead>
         <tr class="customTable-tr">
-            <th></th>
+            <th><mat-checkbox class="checkbox" color="primary" (change)="selectAll($event)" [checked]="allSelected || selection.length === listeElements.length"></mat-checkbox></th>
             <th>Nom</th>
             <th>Prenom</th>
             <th>Email</th>
@@ -35,8 +35,8 @@
         </thead>
         <tbody [formGroup]="elementForm">
         <ng-container formArrayName="elements" *ngFor="let control of elements.controls; let i = index;">
-            <tr class="customTable-tr" [formGroupName]="i" [ngClass]="{'selected': elementSelectionne && elementSelectionne === control.value}">
-                <td><mat-checkbox class="checkbox" color="primary" (change)="changeElementSelectionne(control.value, $event)" [checked]="elementSelectionne === control.value"></mat-checkbox></td>
+            <tr class="customTable-tr" [formGroupName]="i">
+                <td><mat-checkbox class="checkbox" color="primary" (change)="changeSelection(control.value, $event)" [checked]="isSelected(control.value) || allSelected"></mat-checkbox></td>
                 <td><input  (keyup)="changeIsDirty()" id="input-des-{{i}}" [inputReadOnly]="role === 'ROLE_ADMIN'" formControlName="nom" placeholder="Nom"></td>
                 <td><input  (keyup)="changeIsDirty()" [inputReadOnly]="role === 'ROLE_ADMIN'" formControlName="prenom" placeholder="Prenom"></td>
                 <td><input  (keyup)="changeIsDirty()" [inputReadOnly]="role === 'ROLE_ADMIN'" formControlName="email" placeholder="Email"></td>
@@ -61,13 +61,14 @@
         <mat-icon svgIcon="right" (click)="pagination('right')"></mat-icon>
     </div>
 </div>
+    <app-mailing [selection]="selection"></app-mailing>
 </ng-container>
 <!-- version mobile / tablette -->
 <ng-template #mobile>
     <form [formGroup]="elementForm" class="flex">
         <ng-container formArrayName="elements" *ngFor="let control of elements.controls; let i = index;">
             <div class="contenaire selectionable" [formGroupName]="i" (click)="changeElementSelectionne(control.value)"
-                 [ngClass]="{'selected': elementSelectionne && elementSelectionne === control.value}">
+                 [ngClass]="{'selected': selection && selection === control.value}">
                 <input  (keyup)="changeIsDirty()" [inputReadOnly]="role === 'ROLE_ADMIN'" class="readOnly h2-like" formControlName="nom" placeholder="Nom">
                 <input  (keyup)="changeIsDirty()" [inputReadOnly]="role === 'ROLE_ADMIN'" class="readOnly h2-like" formControlName="prenom" placeholder="Prenom">
                 <input  (keyup)="changeIsDirty()" [inputReadOnly]="role === 'ROLE_ADMIN'" formControlName="email" placeholder="Email">

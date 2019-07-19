@@ -1,0 +1,12 @@
+<div class="mail_form">
+  <h2>Envoyer mail</h2>
+  <form [formGroup]="mailForm" (ngSubmit)="onSubmit()">
+    <mat-form-field class="example-full-width">
+      <input matInput type="text" placeholder="titre" formControlName="titre">
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <textarea matInput placeholder="corps de l'annonce" formControlName="corps" rows="20"></textarea>
+    </mat-form-field>
+    <button mat-raised-button type="submit" [disabled]="selection.length === 0">Valider</button>
+  </form>
+</div>

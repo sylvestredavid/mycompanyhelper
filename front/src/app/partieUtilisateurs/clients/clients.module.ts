@@ -18,12 +18,14 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AuthGuard} from '../../shared/guards/auth-guard.service';
 import {SharedModule} from '../../shared/shared.module';
 import {ClientsFormGuard} from '../../shared/guards/clients-form-guard.service';
+import {MailingComponent} from "../mailing/mailing/mailing.component";
 
 @NgModule({
     declarations: [
         ClientsComponent,
         ClientDetailComponent,
         ClientFacturesComponent,
+        MailingComponent
     ],
     imports: [
         CommonModule,

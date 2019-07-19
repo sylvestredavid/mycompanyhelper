@@ -78,7 +78,7 @@ public class AnnonceController {
 
 	@PostMapping("/sendMail")
 	public ResponseEntity<?> sendMailToFournisseur(@RequestBody Email email) {
-//		emailService.sendMailToFournisseur(email);
+		emailService.sendMailToFournisseur(email);
 		return ResponseEntity.status(HttpStatus.OK).body(new Reponse("mail envoyé"));
 	}
 

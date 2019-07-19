@@ -18,12 +18,14 @@ import {AuthGuard} from '../../shared/guards/auth-guard.service';
 import {SharedModule} from '../../shared/shared.module';
 import {DialogFournisseursComponent} from './fournisseurs-liste/dialog-fournisseurs/dialog-fournisseurs.component';
 import {FournisseursFormGuard} from '../../shared/guards/fournisseurs-form-guard.service';
+import {MailingComponent} from "../mailing/mailing/mailing.component";
 
 @NgModule({
     entryComponents: [DialogFournisseursComponent],
     declarations: [
         FournisseursListeComponent,
-        DialogFournisseursComponent],
+        DialogFournisseursComponent,
+        MailingComponent],
     exports: [FournisseursListeComponent],
     imports: [
         CommonModule,
@@ -40,8 +42,13 @@ import {FournisseursFormGuard} from '../../shared/guards/fournisseurs-form-guard
         SharedModule,
         MatCheckboxModule,
         RouterModule.forChild([
-            {path: '', canActivate: [AuthGuard], component: FournisseursListeComponent, canDeactivate: [FournisseursFormGuard]},
-        ])
+            {
+                path: '',
+                canActivate: [AuthGuard],
+                component: FournisseursListeComponent,
+                canDeactivate: [FournisseursFormGuard]
+            },
+        ]),
     ]
 })
 export class FournisseursModule {

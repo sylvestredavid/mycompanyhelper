@@ -24,7 +24,7 @@ import {ProduitModel} from "../../../models/produit.model";
 export class FournisseursListeComponent implements OnInit, OnDestroy {
 
     listeGenres: GenreModel[];
-    elementSelectionne: FournisseurModel;
+    selection: FournisseurModel[];
     listeElements: FournisseurModel[];
     listeElementsAAfficher: FournisseurModel[];
     listeTriee: FournisseurModel[];
@@ -38,6 +38,8 @@ export class FournisseursListeComponent implements OnInit, OnDestroy {
     role: string;
     screenWidth: number;
     isDirty: boolean;
+    allSelected: boolean;
+
 
 
     constructor(private route: ActivatedRoute, private fournisseurService: FournisseursService,
@@ -61,6 +63,8 @@ export class FournisseursListeComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        this.allSelected = false;
+        this.selection = [];
         this.isDirty = false;
         this.getScreenSize();
         this.initValues();
@@ -141,13 +145,17 @@ export class FournisseursListeComponent implements OnInit, OnDestroy {
      * supprime l'element selectionné
      */
     onSupprimer() {
-        if (this.elementSelectionne) {
-            this.fournisseurService.deleteFournisseur(this.elementSelectionne.idFournisseur).subscribe(
-                () => {
-                    this.socket.deleteFournisseur(this.elementSelectionne.idFournisseur);
-                    this.fournisseurService.removeFournisseur(this.elementSelectionne.idFournisseur);
+        if (this.selection) {
+            this.selection.forEach(
+                f => {
+                    this.fournisseurService.deleteFournisseur(f.idFournisseur).subscribe(
+                        () => {
+                            this.socket.deleteFournisseur(f.idFournisseur);
+                            this.fournisseurService.removeFournisseur(f.idFournisseur);
+                        }
+                    );
                 }
-            );
+            )
         }
     }
 
@@ -203,11 +211,15 @@ export class FournisseursListeComponent implements OnInit, OnDestroy {
      * change l'element selectionné
      * @param client le client a selectionner
      */
-    changeElementSelectionne(fournisseur: FournisseurModel, e: MatCheckboxChange) {
-        if(e.checked) {
-            this.elementSelectionne = fournisseur;
+    changeSelection(fournisseur: FournisseurModel, e: MatCheckboxChange) {
+        const index = this.selection.findIndex(f => f === fournisseur);
+        if(e.checked && index === -1) {
+            this.selection.push(fournisseur);
         } else {
-            this.elementSelectionne = null
+            this.selection.splice(index, 1);
+            if(this.selection.length === 0) {
+                this.allSelected = false
+            }
         }
     }
 
@@ -279,7 +291,7 @@ export class FournisseursListeComponent implements OnInit, OnDestroy {
      * @param liste la liste qui sera utilisée
      */
     initTableau(indexDebut: number = 0, indexFin: number = this.nbElements, pageCourante: number = 1, liste = this.listeElements) {
-        this.elementSelectionne = null;
+        this.selection = null;
         this.viderForm();
         this.indexDebut = indexDebut;
         this.indexFin = indexFin;
@@ -400,4 +412,24 @@ export class FournisseursListeComponent implements OnInit, OnDestroy {
         this.subscriptions.forEach(subscription => subscription.unsubscribe());
     }
 
+    isSelected(value: FournisseurModel): boolean {
+        if (this.selection.findIndex(f => f === value) !== -1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    selectAll(e: MatCheckboxChange) {
+        console.log(e.checked)
+        if(e.checked) {
+            this.listeElements.forEach(
+                f => this.selection.push(f)
+            )
+            this.allSelected = true;
+        } else {
+            this.selection = [];
+            this.allSelected = false;
+        }
+    }
 }
