@@ -22,6 +22,10 @@ $theme: mat-light-theme($primary, $accent, $warn); // Or mat-dark-theme
   margin-left: 10px;
 }
 
+mat-error{
+  font-size: 10px;
+}
+
 *{
   font-family: 'Montserrat', sans-serif;
   list-style: none;

@@ -65,6 +65,8 @@
                         <td><mat-checkbox class="checkbox" color="primary" (change)="changeElementSelectionne(control.value, $event)" [checked]="elementSelectionne === control.value"></mat-checkbox></td>
                         <td><input id="input-des-{{i}}" class="readOnly" [inputReadOnly]="true"
                                    formControlName="designation" placeholder="Désignation" (keyup)="changeIsDirty()">
+                            <mat-error *ngIf="control.controls.designation.invalid">Un produit avec ce nom existe déjà.
+                            </mat-error>
                         </td>
                         <td><input class="inputChiffre" [inputReadOnly]="true" formControlName="prixAchat"
                                    (keyup)="changeIsDirty()">€

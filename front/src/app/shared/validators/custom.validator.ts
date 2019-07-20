@@ -67,7 +67,7 @@ export class CustomValidators {
     /**
      * verifie que le produit entré fait partie de la liste de produits
      */
-    static usernameValidator(liste: string[]) {
+    static existeValidator(liste: string[]) {
         return (control: AbstractControl): { [key: string]: any } | null => {
             let existe = false;
             if (liste) {
@@ -80,7 +80,7 @@ export class CustomValidators {
                 );
             }
             if (existe) {
-                return {'username': true};
+                return {'existe': true};
             } else {
                 return null;
             }

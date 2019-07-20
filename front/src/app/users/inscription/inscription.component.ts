@@ -99,7 +99,7 @@ export class InscriptionComponent implements OnInit {
     private initForm() {
         this.signUpForm = this.fb.group({
             name: ['', Validators.required],
-            username: ['', Validators.compose([Validators.required, Validators.email, CustomValidators.usernameValidator(this.usernameList)])],
+            username: ['', Validators.compose([Validators.required, Validators.email, CustomValidators.existeValidator(this.usernameList)])],
             password1: ['', Validators.compose([Validators.required, Validators.pattern(this.regex)])],
             password2: ['', Validators.compose(
                 [Validators.required, CustomValidators.passwordMatchValidator()])],

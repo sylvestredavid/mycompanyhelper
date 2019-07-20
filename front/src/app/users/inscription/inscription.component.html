@@ -7,7 +7,7 @@
     <mat-form-field class="example-full-width">
         <input matInput placeholder="Email" formControlName="username">
     </mat-form-field>
-    <p class="error" *ngIf="signUpForm.controls['username'].hasError('username')">
+    <p class="error" *ngIf="signUpForm.controls['username'].hasError('existe')">
         Un compte existe déjà avec cet email.
     </p>
     <mat-form-field class="example-full-width">

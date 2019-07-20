@@ -15,7 +15,8 @@ import {NotificationsService} from '../../notification/notifications.service';
 import {SocketService} from '../../../shared/socket.service';
 import {OptionsService} from '../../options/options.service';
 import {AjoutGenreComponent} from '../../genres/ajout-genre/ajout-genre.component';
-import {forEach} from "@angular/router/src/utils/collection";
+import {forEach} from '@angular/router/src/utils/collection';
+import {CustomValidators} from '../../../shared/validators/custom.validator';
 
 
 @Component({
@@ -26,6 +27,7 @@ import {forEach} from "@angular/router/src/utils/collection";
 export class ProduitsComponent implements OnInit, OnDestroy {
 
     genre: GenreModel;
+    listeNomProduits: string[];
     listeGenres: GenreModel[];
     elementSelectionne: ProduitModel;
     listeElements: ProduitModel[];
@@ -68,9 +70,10 @@ export class ProduitsComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        this.listeNomProduits = [];
         this.genreService.listeGenre$.subscribe(
             g => this.genres = g
-        )
+        );
         this.isDirty = false;
         this.getScreenSize();
         this.initValues();
@@ -125,13 +128,18 @@ export class ProduitsComponent implements OnInit, OnDestroy {
                     genre => {
                         this.genre = genre;
                         this.initListe(genre.produits);
+                        genre.produits.forEach(
+                            p => this.listeNomProduits.push(p.designation)
+                        );
                     }
                 ));
             } else {
                 this.subscriptions.push(this.produitService.listeProduits$.subscribe(
                     produits => {
                         this.initListe(produits);
-
+                        produits.forEach(
+                            p => this.listeNomProduits.push(p.designation)
+                        );
                     }
                 ));
             }
@@ -172,7 +180,7 @@ export class ProduitsComponent implements OnInit, OnDestroy {
         if (this.listeGenres && this.listeGenres.length > 0) {
             this.elements.insert(0, this.fb.group({
                 idProduit: [''],
-                designation: [''],
+                designation: ['', CustomValidators.existeValidator(this.listeNomProduits)],
                 prixAchat: [0],
                 prixVente: [0],
                 quantite: [0, Validators.compose([Validators.required, Validators.min(0)])],
@@ -265,7 +273,7 @@ export class ProduitsComponent implements OnInit, OnDestroy {
                     this.envoi(produit, 'modifier');
                 }
             } else {
-                this.snackBar.open('Merci d\'affecter une catégorie à tout vos produits.', 'ok', {duration: 1500, verticalPosition: 'top'});
+                this.snackBar.open('Une ou plusieurs erreurs ont été détectéees, merci de vérifier les champs', 'ok', {duration: 1500, verticalPosition: 'top'});
             }
         }
     }
@@ -275,10 +283,10 @@ export class ProduitsComponent implements OnInit, OnDestroy {
      * @param client le client a selectionner
      */
     changeElementSelectionne(produit: ProduitModel, e: MatCheckboxChange) {
-        if(e.checked) {
+        if (e.checked) {
             this.elementSelectionne = produit;
         } else {
-            this.elementSelectionne = null
+            this.elementSelectionne = null;
         }
     }
 
@@ -293,7 +301,7 @@ export class ProduitsComponent implements OnInit, OnDestroy {
             this.initTableau();
         } else {
             this.listeElements.forEach(produit => {
-                for (let prop in produit) {
+                for (const prop in produit) {
                     this.remplirListeTriee(produit[prop], recherche, produit);
                 }
 
