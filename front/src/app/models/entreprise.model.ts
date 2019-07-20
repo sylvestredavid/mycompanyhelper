@@ -17,4 +17,6 @@ export class EntrepriseModel {
     email?: string;
 
     idUser?: number;
+
+    logo?: string;
 }

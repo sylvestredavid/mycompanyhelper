@@ -7,18 +7,26 @@
 .facturePdf{
   padding: 40px 20px;
   height: 29.7cm;
+}
 
+img{
+  width: 100%;
 }
 
 .detailClient{
   float: left;
-  width: 50%;
+  width: 40%;
 }
 
 .entreprise{
   float: left;
-  width: 50%;
+  width: 40%;
   text-align: right;
+}
+
+.logo{
+  float: left;
+  width: 20%;
 }
 
 .conditions_generales{

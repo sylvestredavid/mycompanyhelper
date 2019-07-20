@@ -29,5 +29,9 @@
   <mat-form-field class="example-full-width">
     <input matInput type="text" placeholder="email" formControlName="email">
   </mat-form-field>
+  <label for="file" class="img_btn">choisir une image</label>
+  <input type="file" id="file" (change)="handleFileInput($event.target.files)" class="img_input"><br>
+  <img src="http://localhost:5000/api/entreprise/files/{{entrepriseForm.value.logo}}"
+       alt="{{entrepriseForm.value.logo}}"><br>
   <button mat-raised-button type="submit">Valider</button>
 </form>

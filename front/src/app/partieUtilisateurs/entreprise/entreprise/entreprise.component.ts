@@ -16,6 +16,8 @@ export class EntrepriseComponent implements OnInit {
 
   entreprise: EntrepriseModel;
 
+  fileToUpload: File = null;
+
   constructor(private entrepriseService: EntrepriseService, private fb: FormBuilder, private userService: UsersService,
               private snackBar: MatSnackBar) { }
 
@@ -37,7 +39,19 @@ export class EntrepriseComponent implements OnInit {
       siret: [this.entreprise ? this.entreprise.siret : '', Validators.required],
       telephone: [this.entreprise ? this.entreprise.telephone : '', Validators.required],
       email: [this.entreprise ? this.entreprise.email : '', Validators.required],
+      logo: [this.entreprise ? this.entreprise.logo : ''],
     })
+  }
+  handleFileInput(files: FileList) {
+    if (this.fileToUpload) {
+      this.entrepriseService.deleteFile(this.fileToUpload.name);
+    }
+    this.fileToUpload = files.item(0);
+    this.entrepriseService.sendFile(this.fileToUpload).subscribe(
+        () => this.entrepriseForm.get('logo').setValue(this.fileToUpload.name),
+        err => this.snackBar.open('un fichier porte le même nom, merci de renommer votre fichier et de reessayer.', 'ok', {duration: 6000})
+    );
+
   }
 
   onSubmit() {
@@ -51,7 +65,8 @@ export class EntrepriseComponent implements OnInit {
       siret: value.siret,
       telephone: value.telephone,
       email: value.email,
-      idUser: this.userService.idUser
+      idUser: this.userService.idUser,
+      logo: value.logo
     }
 
     this.entrepriseService.saveEntreprise(entreprise).subscribe(

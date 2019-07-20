@@ -34,4 +34,18 @@ export class EntrepriseService {
   saveEntreprise(entreprise: EntrepriseModel): Observable<EntrepriseModel> {
     return this.http.post<EntrepriseModel>(this.requeteUtils.url + 'entreprise/save', entreprise, this.requeteUtils.getOptions());
   }
+
+  sendFile(file: File) {
+    const data: FormData = new FormData();
+    data.append(`data`, file, file.name);
+    return this.http.post(this.requeteUtils.url + 'entreprise/files/upload', data);
+  }
+
+  getFile(filename: string): Observable<string> {
+    return this.http.get<string>(this.requeteUtils.url + 'entreprise/files/' + filename);
+  }
+
+  deleteFile(filename: string) {
+    this.http.delete(this.requeteUtils.url + 'entreprise/files/delete?nom=' + filename).subscribe();
+  }
 }

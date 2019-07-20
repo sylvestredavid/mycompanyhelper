@@ -43,4 +43,6 @@ public class Entreprise implements Serializable {
 
 	private Long idUser;
 
+	private String logo;
+
 }

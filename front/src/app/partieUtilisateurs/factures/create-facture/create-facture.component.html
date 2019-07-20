@@ -124,14 +124,19 @@
                 <p style="color: #fff;">p</p>
             </ng-template>
         </div>
-        <div *ngIf="entreprise" class="entreprise">
-            <p>{{entreprise.nom}}</p>
-            <p>siret : {{entreprise.siret}}</p>
-            <p>{{entreprise.adresse}}</p>
-            <p>{{entreprise.codePostal}} {{entreprise.ville}}</p>
-            <p>{{entreprise.telephone}}</p>
-            <p>{{entreprise.email}}</p>
-        </div>
+        <ng-container *ngIf="entreprise">
+            <figure class="logo">
+                <img src="http://localhost:5000/api/entreprise/files/{{entreprise.logo}}" alt="{{entreprise.logo}}">
+            </figure>
+            <div class="entreprise">
+                <p>{{entreprise.nom}}</p>
+                <p>siret : {{entreprise.siret}}</p>
+                <p>{{entreprise.adresse}}</p>
+                <p>{{entreprise.codePostal}} {{entreprise.ville}}</p>
+                <p>{{entreprise.telephone}}</p>
+                <p>{{entreprise.email}}</p>
+            </div>
+        </ng-container>
         <div class="clear"></div>
         <div class="body">
             <h3>Facture n° {{numero}}</h3>
