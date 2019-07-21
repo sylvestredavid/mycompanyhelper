@@ -23,6 +23,7 @@ import {UserState} from '../../../shared/stores/user.reducer';
 import {OptionsService} from '../../options/options.service';
 import {EntrepriseService} from '../../entreprise/entreprise.service';
 import {EntrepriseModel} from '../../../models/entreprise.model';
+import {SocketService} from "../../../shared/socket.service";
 
 
 @Component({
@@ -55,7 +56,7 @@ export class CreateFactureComponent implements OnInit, OnDestroy {
                 private clientService: ClientsService, private produitService: ProduitService, private factureService: FactureService,
                 private router: Router, private snackBar: MatSnackBar, private userService: UsersService,
                 private notificationService: NotificationsService, private datePipe: DatePipe, private store: Store<UserState>,
-                private entrepriseService: EntrepriseService) {
+                private entrepriseService: EntrepriseService, private socket: SocketService) {
         iconRegistry.addSvgIcon(
             'edit',
             sanitizer.bypassSecurityTrustResourceUrl('/assets/edit.svg'));
@@ -190,6 +191,11 @@ export class CreateFactureComponent implements OnInit, OnDestroy {
         ).subscribe(
             facture => {
                 this.factureService.sendMail(facture.idFacture);
+                this.clientService.updatePanierMoyen(this.calculPanierMoyen(clientFormValue['client']), clientFormValue['client'].idClient).subscribe(
+                    client => {
+                    this.socket.modifClient(client);
+                    this.clientService.replaceClient(client);
+                })
                 this.messageQueue.push('La facture a été envoyée par mail.');
                 for (const control of this.produits.controls) {
                     this.factureService.saveProduitsFacture(control.value.quantite, facture.idFacture, control.value.produit.idProduit);
@@ -325,7 +331,7 @@ export class CreateFactureComponent implements OnInit, OnDestroy {
                 total += ((control.value.produit.prixVente * tva / 100) * control.value.quantite);
             }
         }
-        return total;
+        return +total.toFixed(2);
     }
 
     getTotalTTC(controls: AbstractControl[]): number {
@@ -335,6 +341,14 @@ export class CreateFactureComponent implements OnInit, OnDestroy {
         }
 
         total = total - (total * this.remiseForm.value.remise / 100);
-        return total;
+        return +total.toFixed(2);
+    }
+
+    calculPanierMoyen(client: ClientModel): number{
+        let total = this.getTotalTTC(this.produits.controls);
+        client.factures.forEach(
+            facture => total += facture.totalTTC
+        );
+        return +(total / (client.factures.length + 1)).toFixed(2);
     }
 }

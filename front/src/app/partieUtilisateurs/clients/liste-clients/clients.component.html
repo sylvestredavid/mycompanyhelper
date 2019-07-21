@@ -31,6 +31,7 @@
             <th>Adresse</th>
             <th>Code Postal</th>
             <th>Ville</th>
+            <th>Panier moyen</th>
         </tr>
         </thead>
         <tbody [formGroup]="elementForm">
@@ -44,6 +45,7 @@
                 <td><input  (keyup)="changeIsDirty()" [inputReadOnly]="role === 'ROLE_ADMIN'" formControlName="adresse" placeholder="Adresse"></td>
                 <td><input  (keyup)="changeIsDirty()" class="codePostal" maxlength="5" [inputReadOnly]="role === 'ROLE_ADMIN'" formControlName="codePostal" placeholder="CP"></td>
                 <td><input  (keyup)="changeIsDirty()" class="ville" [inputReadOnly]="role === 'ROLE_ADMIN'" formControlName="ville" placeholder="Ville"></td>
+                <td>{{listeElementsAAfficher[i].panierMoyen}}€</td>
             </tr>
         </ng-container>
         </tbody>

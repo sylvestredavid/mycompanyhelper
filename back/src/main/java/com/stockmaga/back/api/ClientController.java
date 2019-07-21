@@ -2,6 +2,7 @@ package com.stockmaga.back.api;
 
 import java.util.List;
 
+import com.stockmaga.back.models.Reponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,7 +45,15 @@ public class ClientController {
 	@PostMapping("/clients/save")
 	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> saveclient(@RequestBody Client client){
+
 		return clientService.saveclient(client);
+	}
+
+	@PostMapping("/clients/updatePanierMoyen")
+	@PreAuthorize("hasRole('ADMIN') OR hasRole('GESTIONNAIRE')")
+	public ResponseEntity<?> updatePanierMoyen(@RequestParam(name="panierMoyen", required=true) Double panierMoyen, @RequestParam(name="idClient", required=true) Integer idClient){
+		;
+		return ResponseEntity.status(HttpStatus.OK).body(clientService.updatePanierMoyen(panierMoyen, idClient));
 	}
 	
 	@DeleteMapping("/clients/delete")

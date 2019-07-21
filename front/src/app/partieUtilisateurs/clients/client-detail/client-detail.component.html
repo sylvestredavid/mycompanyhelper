@@ -25,6 +25,7 @@
             <p>{{client.adresse}}</p>
             <p>{{client.codePostal}} {{client.ville}}</p>
         </div>
+        <p>Panier moyen: {{client.panierMoyen? client.panierMoyen : 0}}€</p>
     </div>
     <ng-container *ngIf="client && client.factures.length > 0 else empty">
         <app-client-factures [client]="client"></app-client-factures>

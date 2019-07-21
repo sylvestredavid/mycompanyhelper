@@ -81,4 +81,10 @@ public class ClientService implements IClientService {
 		}
 	}
 
+	@Override
+	public Optional<Client> updatePanierMoyen(Double panierMoyen, Integer idClient) {
+		clientRepository.updatePanierMoyen(panierMoyen, idClient);
+		return clientRepository.findById(idClient);
+	}
+
 }

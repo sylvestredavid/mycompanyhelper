@@ -55,4 +55,6 @@ public class Client implements Serializable {
 
 	private Long idUser;
 
+	private Double panierMoyen;
+
 }

@@ -1,6 +1,7 @@
 package com.stockmaga.back.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
 
@@ -15,4 +16,6 @@ public interface IClientService {
 	public ResponseEntity<?> saveclient(Client client);
 	
 	public ResponseEntity<?> deleteclient(Integer id);
+
+	public Optional<Client> updatePanierMoyen(Double panierMoyen, Integer idClient);
 }

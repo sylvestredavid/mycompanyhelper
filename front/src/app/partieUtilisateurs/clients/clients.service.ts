@@ -42,6 +42,10 @@ export class ClientsService {
         return this.http.post<ClientModel>(this.requeteUtils.url + 'clients/save', client, this.requeteUtils.getOptions());
     }
 
+    updatePanierMoyen(panierMoyen: number, idClient: number) {
+        return this.http.post<ClientModel>(this.requeteUtils.url + 'clients/updatePanierMoyen?panierMoyen=' + panierMoyen + '&idClient=' + idClient, '', this.requeteUtils.getOptions());
+    }
+
     deleteClient(id: number) {
         const url = this.requeteUtils.url + 'clients/delete?id=' + id;
         return this.http.delete(url, this.requeteUtils.getOptions());

@@ -21,4 +21,6 @@ export class ClientModel {
   factures: FactureModel[];
 
   idUser: number;
+
+  panierMoyen?: number;
 }
