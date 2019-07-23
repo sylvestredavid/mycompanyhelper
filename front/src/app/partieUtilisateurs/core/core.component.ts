@@ -22,6 +22,7 @@ import {SuiviDialComponent} from "../../shared/dialogues/suivi-dial/suivi-dial.c
 import {UsersService} from "../../users/users.service";
 import {SuiviConsommationModel} from "../../models/suivi-consommation.model";
 import {EntrepriseService} from "../entreprise/entreprise.service";
+import {AchatService} from "../achat/achat.service";
 
 @Component({
     selector: 'app-core',
@@ -41,7 +42,8 @@ export class CoreComponent implements OnInit, OnDestroy {
     constructor(private fournisseurService: FournisseursService, private genreService: GenreService, private store: Store<UserState>
         , public dialog: MatDialog, iconRegistry: MatIconRegistry, sanitizer: DomSanitizer, private produitService: ProduitService,
                 private clientService: ClientsService, private optionService: OptionsService, private router: Router, private calendrierService: CalendrierService,
-                private notificationService: NotificationsService, private userService: UsersService, private entrepriseService: EntrepriseService) {
+                private notificationService: NotificationsService, private userService: UsersService, private entrepriseService: EntrepriseService,
+                private achatService: AchatService) {
         iconRegistry.addSvgIcon(
             'quit',
             sanitizer.bypassSecurityTrustResourceUrl('/assets/sortie.svg'));
@@ -59,6 +61,7 @@ export class CoreComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.optionService.publishOptions();
         this.produitService.publishProduits();
+        this.achatService.publishAchats();
         this.clientService.publishClients();
         this.entrepriseService.publishEntreprise();
         this.calendrierService.publishCalendrier();

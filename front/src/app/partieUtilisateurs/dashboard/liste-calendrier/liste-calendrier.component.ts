@@ -21,9 +21,19 @@ export class ListeCalendrierComponent implements OnInit {
 
     ngOnInit() {
         this.date = new Date();
+        this.events = [];
 
         this.calendrierService.calendrierListe$.subscribe(
-            c => this.events = c
+            c => {
+                c.forEach(
+                    event => {
+                        const dateEvent = new Date(event.start);
+                        if (dateEvent.getDate() === this.date.getDate() && dateEvent.getMonth() === this.date.getMonth() && dateEvent.getFullYear() === this.date.getFullYear()) {
+                            this.events.push(event);
+                        }
+                    }
+                );
+            }
         );
     }
 

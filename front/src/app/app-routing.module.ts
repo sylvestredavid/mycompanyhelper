@@ -41,6 +41,10 @@ const routes: Routes = [
                 component: SupportComponent,
             },
             {
+                path: 'achats',
+                loadChildren: './partieUtilisateurs/achat/achat.module#AchatModule'
+            },
+            {
                 path: 'dashboard',
                 loadChildren: './partieUtilisateurs/dashboard/dashboard.module#DashboardModule'
             },

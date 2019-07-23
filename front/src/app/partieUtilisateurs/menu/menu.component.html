@@ -27,6 +27,18 @@
             <p>Mon entreprise</p>
         </div>
     </ng-template>
+    <ng-template [ngIf]="role === 'ROLE_ADMIN'" [ngIfElse]="gestAchat">
+        <div class="menu_item" routerLink="achats">
+            <img src="assets/achats.svg" alt="achats">
+            <p>Achats</p>
+        </div>
+    </ng-template>
+    <ng-template #gestAchat>
+        <div class="menu_item disabled">
+            <img src="assets/achats.svg" alt="achats">
+            <p>Mon entreprise</p>
+        </div>
+    </ng-template>
     <div class="menu_item" routerLink="creer-facture">
         <img src="assets/factures.svg" alt="créer facture">
         <p>Créer facture</p>

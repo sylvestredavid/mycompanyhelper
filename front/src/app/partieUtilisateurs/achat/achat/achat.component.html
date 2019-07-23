@@ -1,0 +1,64 @@
+<ul class="fil-ariane">
+  <li>
+    <a routerLink="/users">Menu</a>
+  </li>
+  <li>
+    <a class="actif">Achats</a>
+  </li>
+</ul>
+<ng-container *ngIf="listeAchatAAfficher">
+  <form [formGroup]="rechercheForm" (ngSubmit)="recherche()">
+    <select class="moisExpiration" formControlName="mois">
+      <option value="0">01</option>
+      <option value="1">02</option>
+      <option value="2">03</option>
+      <option value="3">04</option>
+      <option value="4">05</option>
+      <option value="5">06</option>
+      <option value="6">07</option>
+      <option value="7">08</option>
+      <option value="8">09</option>
+      <option value="9">10</option>
+      <option value="10">11</option>
+      <option value="11">12</option>
+    </select>
+    <select class="anneeExpiration" formControlName="annee">
+      <ng-container *ngFor="let a of anneeListe">
+        <option value="{{a}}">{{a}}</option>
+      </ng-container>
+    </select>
+    <button mat-raised-button type="submit">recherche</button>
+  </form>
+  <div class="boutons-container">
+    <button mat-raised-button color="accent" (click)="onAjouter()">Ajouter</button>
+    <button mat-raised-button color="primary" (click)="onModifier()" [disabled]="!elementSelectionne">Modifier</button>
+    <button mat-raised-button color="warn" (click)="onSupprimer()" [disabled]="!elementSelectionne">Supprimer</button>
+  </div>
+  <div class="clear"></div>
+  <div class="mat-elevation-z2">
+    <table class="customTable">
+      <thead>
+      <tr class="customTable-tr">
+        <th></th>
+        <th>date</th>
+        <th>designation</th>
+        <th>Prix</th>
+        <th>Quantitée</th>
+        <th>Total</th>
+      </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let a of listeAchatAAfficher; let i = index">
+          <tr class="customTable-tr">
+            <td><mat-checkbox class="checkbox" color="primary" (change)="changeElementSelectionne(a, $event)" [checked]="elementSelectionne === a"></mat-checkbox></td>
+            <td>{{a.date | date: 'dd-MM-yy'}}</td>
+            <td>{{a.designation}}</td>
+            <td>{{a.prixUnitaire}}€</td>
+            <td>{{a.quantite}}</td>
+            <td>{{a.total}}€</td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+</ng-container>

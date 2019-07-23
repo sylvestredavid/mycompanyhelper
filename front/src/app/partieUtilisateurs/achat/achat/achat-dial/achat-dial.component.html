@@ -1,0 +1,26 @@
+<form [formGroup]="achatForm" (ngSubmit)="onSubmit()">
+  <mat-form-field class="example-full-width">
+    <input matInput placeholder="Désignation" formControlName="designation">
+  </mat-form-field>
+  <table class="example-full-width">
+    <td>
+      <mat-form-field class="example-full-width">
+        <input matInput type="number" placeholder="Prix unitaire" formControlName="prixUnitaire">
+      </mat-form-field>
+    </td>
+    <td>
+      <mat-form-field class="example-full-width">
+        <input matInput type="number" placeholder="Quantitée" formControlName="quantite">
+      </mat-form-field>
+    </td>
+  </table>
+  <mat-form-field class="example-full-width">
+    <input matInput placeholder="Total" disabled [value]="calculTotal()">
+  </mat-form-field>
+  <mat-form-field class="example-full-width">
+    <input matInput [matDatepicker]="picker2" placeholder="date" formControlName="date">
+    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+    <mat-datepicker #picker2></mat-datepicker>
+  </mat-form-field>
+  <button mat-raised-button type="submit">Valider</button>
+</form>

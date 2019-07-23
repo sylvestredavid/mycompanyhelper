@@ -25,19 +25,28 @@
                     </div>
                 </div>
                 <div class="content-slide">
-                    <h2>Nombre de ventes par produits</h2>
+                    <h2>entrées/sorties</h2>
                     <div class="chart-container">
-                        <ngx-charts-bar-vertical
+                        <ngx-charts-pie-chart
                                 [scheme]="colorScheme"
-                                [results]="produitDiag"
-                                [gradient]="true"
-                                [xAxis]="true"
-                                [yAxis]="true"
-                                [xAxisLabel]="'produit'"
-                                [yAxisLabel]="'nb de vente'">
-                        </ngx-charts-bar-vertical>
+                                [results]="pieData">
+                        </ngx-charts-pie-chart>
                     </div>
                 </div>
+<!--                <div class="content-slide">-->
+<!--                    <h2>Nombre de ventes par produits</h2>-->
+<!--                    <div class="chart-container">-->
+<!--                        <ngx-charts-bar-vertical-->
+<!--                                [scheme]="colorScheme"-->
+<!--                                [results]="produitDiag"-->
+<!--                                [gradient]="true"-->
+<!--                                [xAxis]="true"-->
+<!--                                [yAxis]="true"-->
+<!--                                [xAxisLabel]="'produit'"-->
+<!--                                [yAxisLabel]="'nb de vente'">-->
+<!--                        </ngx-charts-bar-vertical>-->
+<!--                    </div>-->
+<!--                </div>-->
             </div>
         </div>
         <mat-icon class="pagination pagination_right" (click)="slider('right')" svgIcon="right"></mat-icon>

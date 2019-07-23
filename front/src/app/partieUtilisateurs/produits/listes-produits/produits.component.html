@@ -7,7 +7,7 @@
     </li>
 </ul>
 
-<ng-template [ngIf]="genre" [ngIfElse]="toutLesProduits" xmlns="http://www.w3.org/1999/html">
+<ng-template [ngIf]="genre" [ngIfElse]="toutLesProduits">
     <h1>Produits de la catégorie {{genre.designation}}
         <ng-container *ngIf="genre && role === 'ROLE_ADMIN'">
             <mat-icon svgIcon="delete" (click)="onDeleteGenre(genre.idGenre)"

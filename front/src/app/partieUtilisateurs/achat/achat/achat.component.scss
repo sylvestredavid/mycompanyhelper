@@ -1,0 +1,36 @@
+form{
+  float: left;
+  width: 30%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+button{
+  width: 25%;
+}
+
+select {
+  background-color: white;
+  width: 35%;
+  padding: 10px 0;
+  text-align: center;
+  border-radius: 5px;
+}
+
+table {
+  width: 100%;
+  text-align: center;
+}
+
+.boutons-container {
+  float: left;
+  width: 70%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.boutons-container button {
+  margin-left: 10px;
+  width: 15%;
+}

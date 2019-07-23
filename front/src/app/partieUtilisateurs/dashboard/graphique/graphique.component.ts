@@ -10,6 +10,8 @@ import {ProduitModel} from '../../../models/produit.model';
 import {Store} from '@ngrx/store';
 import {UserState} from '../../../shared/stores/user.reducer';
 import {FactureService} from '../../factures/facture.service';
+import {AchatService} from '../../achat/achat.service';
+import {ClientsService} from '../../clients/clients.service';
 
 @Component({
     selector: 'app-graphique',
@@ -47,9 +49,12 @@ export class GraphiqueComponent implements OnInit {
     colorScheme = {
         domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
     };
+    pieData: any[];
+    date: Date;
 
     constructor(private datePipe: DatePipe, iconRegistry: MatIconRegistry, private factureService: FactureService,
-                sanitizer: DomSanitizer, private storeUser: Store<UserState>) {
+                sanitizer: DomSanitizer, private storeUser: Store<UserState>, private achatService: AchatService,
+                private clientService: ClientsService) {
         iconRegistry.addSvgIcon(
             'right',
             sanitizer.bypassSecurityTrustResourceUrl('/assets/right.svg'));
@@ -66,6 +71,8 @@ export class GraphiqueComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.date = new Date();
+        this.initPieData();
         this.initCA();
         this.initproduitData();
     }
@@ -155,5 +162,49 @@ export class GraphiqueComponent implements OnInit {
             total += facture.quantite;
         });
         return total;
+    }
+
+    private initPieData() {
+        let totalEntree = 0;
+        let totalSorties = 0;
+
+        this.achatService.listeAchats$.subscribe(
+            achats => {
+                achats.forEach(
+                    a => {
+                        const dateAchat = new Date(a.date);
+                        if (dateAchat.getMonth() === this.date.getMonth() && dateAchat.getFullYear() === this.date.getFullYear()) {
+                            totalSorties += a.total;
+                        }
+                    }
+                );
+                this.clientService.listeClients$.subscribe(
+                    clients => {
+                        clients.forEach(
+                            c => {
+                                c.factures.forEach(
+                                    f => {
+                                        const dateFacture = new Date(f.date);
+                                        if (dateFacture.getMonth() === this.date.getMonth() && dateFacture.getFullYear() === this.date.getFullYear()) {
+                                            totalEntree += f.totalTTC;
+                                        }
+                                    }
+                                );
+                            }
+                        );
+                        this.pieData = [
+                            {
+                                'name': 'Entrées',
+                                'value': totalEntree
+                            },
+                            {
+                                'name': 'Sorties',
+                                'value': totalSorties
+                            }
+                        ];
+                    }
+                );
+            }
+        );
     }
 }

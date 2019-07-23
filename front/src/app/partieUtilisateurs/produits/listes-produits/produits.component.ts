@@ -17,6 +17,8 @@ import {OptionsService} from '../../options/options.service';
 import {AjoutGenreComponent} from '../../genres/ajout-genre/ajout-genre.component';
 import {forEach} from '@angular/router/src/utils/collection';
 import {CustomValidators} from '../../../shared/validators/custom.validator';
+import {AchatModel} from "../../../models/achat.model";
+import {AchatService} from "../../achat/achat.service";
 
 
 @Component({
@@ -50,7 +52,7 @@ export class ProduitsComponent implements OnInit, OnDestroy {
                 private router: Router, iconRegistry: MatIconRegistry, sanitizer: DomSanitizer, private fb: FormBuilder,
                 private snackBar: MatSnackBar, private storeUser: Store<UserState>,
                 private userService: UsersService, private notificationService: NotificationsService, private socket: SocketService,
-                private dialog: MatDialog) {
+                private dialog: MatDialog, private achatService: AchatService) {
         iconRegistry.addSvgIcon(
             'right',
             sanitizer.bypassSecurityTrustResourceUrl('/assets/right.svg'));
@@ -400,6 +402,14 @@ export class ProduitsComponent implements OnInit, OnDestroy {
                 produitAEnvoyer.genre = genre;
             }
         });
+        const achat: AchatModel = {
+            designation: produitAEnvoyer.designation,
+            idUser: this.userService.idUser,
+            prixUnitaire: produitAEnvoyer.prixAchat,
+            quantite: produitAEnvoyer.quantite,
+            total: produitAEnvoyer.prixAchat * produitAEnvoyer.quantite,
+            date: new Date()
+        }
 
         if (mode === 'creer') {
             this.produitService.saveProduit(produitAEnvoyer).subscribe(
@@ -409,8 +419,19 @@ export class ProduitsComponent implements OnInit, OnDestroy {
                     this.isDirty = false;
                 }
             );
+            this.achatService.saveAchat(achat).subscribe(
+                a => this.achatService.pushAchat(a)
+            )
             this.snackBar.open('le produit a bien été enregistré.', 'ok', {duration: 1500, verticalPosition: 'top'});
         } else if (mode === 'modifier') {
+            const index = this.listeElements.findIndex(p => p.idProduit === produitAEnvoyer.idProduit);
+            if(produitAEnvoyer.quantite > this.listeElements[index].quantite){
+                achat.quantite = produitAEnvoyer.quantite - this.listeElements[index].quantite;
+                achat.total = produitAEnvoyer.prixAchat * (produitAEnvoyer.quantite - this.listeElements[index].quantite);
+                this.achatService.saveAchat(achat).subscribe(
+                    a => this.achatService.pushAchat(a)
+                )
+            }
             this.produitService.modifProduit(produitAEnvoyer).subscribe(
                 produit => {
                     this.socket.modifProduit(produit);
