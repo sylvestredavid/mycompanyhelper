@@ -9,9 +9,9 @@ import {ProduitsFactureModel} from '../../../models/produitsFacture.model';
 import {ProduitModel} from '../../../models/produit.model';
 import {Store} from '@ngrx/store';
 import {UserState} from '../../../shared/stores/user.reducer';
-import {FactureService} from '../../factures/facture.service';
 import {AchatService} from '../../achat/achat.service';
 import {ClientsService} from '../../clients/clients.service';
+import {CaService} from '../../ca/ca.service';
 
 @Component({
     selector: 'app-graphique',
@@ -40,8 +40,10 @@ export class GraphiqueComponent implements OnInit {
     @Input() listeProduits: ProduitModel[];
     ca: CAModel[];
     position = 'initial';
-    annees: number[] = [];
+    annee: number;
+    mois: string[];
     caDiag: any[];
+    caPrevisionnelData: any[];
     produitDiag: any[] = [];
     role: string;
     exemple = false;
@@ -52,7 +54,7 @@ export class GraphiqueComponent implements OnInit {
     pieData: any[];
     date: Date;
 
-    constructor(private datePipe: DatePipe, iconRegistry: MatIconRegistry, private factureService: FactureService,
+    constructor(private datePipe: DatePipe, iconRegistry: MatIconRegistry, private caService: CaService,
                 sanitizer: DomSanitizer, private storeUser: Store<UserState>, private achatService: AchatService,
                 private clientService: ClientsService) {
         iconRegistry.addSvgIcon(
@@ -71,6 +73,8 @@ export class GraphiqueComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.annee = new Date().getFullYear();
+        this.mois = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'aout', 'septembre', 'octobre', 'novembre', 'decembre'];
         this.date = new Date();
         this.initPieData();
         this.initCA();
@@ -82,7 +86,7 @@ export class GraphiqueComponent implements OnInit {
      */
     initCA() {
         if (this.role === 'ROLE_ADMIN') {
-            this.factureService.getCA().subscribe(
+            this.caService.getCA().subscribe(
                 ca => {
                     if (ca.length > 2) {
                         this.ca = ca;
@@ -90,8 +94,11 @@ export class GraphiqueComponent implements OnInit {
                         this.ca = CHIFFRE_AFFAIRE;
                         this.exemple = true;
                     }
-                    this.initAnnees();
+                    this.ca.sort(function(a, b) {
+                        return a.mois - b.mois;
+                    });
                     this.initCaData();
+                    this.initCaPrevisionnelData();
                 }
             );
         }
@@ -103,26 +110,15 @@ export class GraphiqueComponent implements OnInit {
     private initCaData() {
         this.caDiag = [];
         let series: any[] = [];
-        this.annees.forEach(annee => {
-            series = [];
-            this.ca.forEach(ca => {
-                if (ca.annee === annee) {
-                    series.push({name: this.datePipe.transform(new Date(ca.annee, ca.mois), 'MM'), value: ca.chiffreDAffaire});
-                }
-            });
-            this.caDiag.push({name: annee, series: series});
-        });
-    }
-
-    /**
-     * initialisation des années afin de creer les données du graphique du chiffre d'affaire
-     */
-    private initAnnees() {
-        this.ca.forEach(ca => {
-            if (!this.annees.includes(ca.annee)) {
-                this.annees.push(ca.annee);
+            for (let i = 0; i < this.mois.length; i++) {
+                series = [];
+                this.ca.forEach(ca => {
+                    if (ca.mois === i) {
+                        series.push({name: ca.annee, value: ca.chiffreDAffaire});
+                    }
+                });
+                this.caDiag.push({name: this.mois[i], series: series});
             }
-        });
     }
 
     /**
@@ -135,9 +131,15 @@ export class GraphiqueComponent implements OnInit {
                 if (this.position === 'initial') {
                     this.position = 'step1';
                 }
+                else if (this.position === 'step1') {
+                    this.position = 'step2';
+                }
             } else if (direction === 'left') {
                 if (this.position === 'step1') {
                     this.position = 'initial';
+                }
+                else if (this.position === 'step2') {
+                    this.position = 'step1';
                 }
             }
         }
@@ -206,5 +208,30 @@ export class GraphiqueComponent implements OnInit {
                 );
             }
         );
+    }
+
+    private initCaPrevisionnelData() {
+        this.caService.listeCAPrevisionnel$.subscribe(
+            caPrevisionel =>{
+                caPrevisionel.sort(function(a, b) {
+                    return a.mois - b.mois;
+                });
+                this.caPrevisionnelData = [];
+                let seriesPrévisionnel: any[] = [];
+                caPrevisionel.forEach(ca => {
+                    seriesPrévisionnel.push({name: this.mois[ca.mois], value: ca.chiffreDAffaire});
+                });
+                this.caPrevisionnelData.push({name: 'prévisionnel', series: seriesPrévisionnel});
+
+                let series: any[] = [];
+                this.ca.forEach(ca => {
+                    if (ca.annee === this.annee) {
+                        series.push({name: this.mois[ca.mois], value: ca.chiffreDAffaire});
+                    }
+                });
+                this.caPrevisionnelData.push({name: this.annee, series: series});
+            }
+        )
+
     }
 }

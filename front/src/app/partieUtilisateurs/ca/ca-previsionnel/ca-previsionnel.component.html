@@ -1,0 +1,26 @@
+<ul class="fil-ariane">
+  <li>
+    <a routerLink="/users">Menu</a>
+  </li>
+  <li>
+    <a class="actif">CA prévisionnel</a>
+  </li>
+</ul>
+<form [formGroup]="caPrevisionnelForm" (ngSubmit)="onSubmit()">
+    <ng-container formArrayName="ca" *ngFor="let control of ca.controls; let i = index;">
+      <ng-container [formGroupName]="i">
+        <table>
+          <td>
+            <p>{{mois[i]}}</p>
+          </td>
+          <td class="input_td">
+            <mat-form-field>
+              <input matInput placeholder="Chiffre d'affaire" formControlName="chiffreDAffaire">
+              <span matSuffix>€</span>
+            </mat-form-field>
+          </td>
+        </table>
+      </ng-container>
+    </ng-container>
+  <button mat-raised-button type="submit">Valider</button>
+</form>

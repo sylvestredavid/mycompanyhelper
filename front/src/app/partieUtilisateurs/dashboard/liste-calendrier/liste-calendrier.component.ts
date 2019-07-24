@@ -1,8 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {CalendrierModel} from '../../../models/calendrier.model';
 import {CalendrierService} from '../../calendrier/calendrier.service';
-import listPlugin from '@fullcalendar/list';
-import frLocale from '@fullcalendar/core/locales/fr';
 
 @Component({
     selector: 'app-liste-calendrier',

@@ -27,6 +27,18 @@
             <p>Mon entreprise</p>
         </div>
     </ng-template>
+    <ng-template [ngIf]="role === 'ROLE_ADMIN'" [ngIfElse]="gestCA">
+        <div class="menu_item" routerLink="caPrevisionnel">
+            <img src="assets/shop.svg" alt="CA prévisionnel">
+            <p>CA prévisionnel</p>
+        </div>
+    </ng-template>
+    <ng-template #gestCA>
+        <div class="menu_item disabled">
+            <img src="assets/shop.svg" alt="CA previsionnel">
+            <p>CA prévisionnel</p>
+        </div>
+    </ng-template>
     <ng-template [ngIf]="role === 'ROLE_ADMIN'" [ngIfElse]="gestAchat">
         <div class="menu_item" routerLink="achats">
             <img src="assets/achats.svg" alt="achats">
@@ -36,7 +48,7 @@
     <ng-template #gestAchat>
         <div class="menu_item disabled">
             <img src="assets/achats.svg" alt="achats">
-            <p>Mon entreprise</p>
+            <p>Achats</p>
         </div>
     </ng-template>
     <div class="menu_item" routerLink="creer-facture">

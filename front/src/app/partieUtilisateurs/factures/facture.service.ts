@@ -36,8 +36,4 @@ export class FactureService {
         this.http.post(this.requeteUtils.url + 'produits/mailStockBas?email=' + email + '&produit=' + produit, '',
             this.requeteUtils.getOptions()).subscribe();
     }
-
-    getCA(): Observable<CAModel[]> {
-        return this.http.get<CAModel[]>(this.requeteUtils.url + 'ca?idUser=' + this.userService.idUser, this.requeteUtils.getOptions());
-    }
 }

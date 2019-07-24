@@ -18,11 +18,12 @@ import {MessageListComponent} from '../../shared/chatbot/message-list/message-li
 import {ProduitService} from '../produits/produit.service';
 import {ClientsService} from '../clients/clients.service';
 import {CalendrierService} from '../calendrier/calendrier.service';
-import {SuiviDialComponent} from "../../shared/dialogues/suivi-dial/suivi-dial.component";
-import {UsersService} from "../../users/users.service";
-import {SuiviConsommationModel} from "../../models/suivi-consommation.model";
-import {EntrepriseService} from "../entreprise/entreprise.service";
-import {AchatService} from "../achat/achat.service";
+import {SuiviDialComponent} from '../../shared/dialogues/suivi-dial/suivi-dial.component';
+import {UsersService} from '../../users/users.service';
+import {SuiviConsommationModel} from '../../models/suivi-consommation.model';
+import {EntrepriseService} from '../entreprise/entreprise.service';
+import {AchatService} from '../achat/achat.service';
+import {CaService} from "../ca/ca.service";
 
 @Component({
     selector: 'app-core',
@@ -43,7 +44,7 @@ export class CoreComponent implements OnInit, OnDestroy {
         , public dialog: MatDialog, iconRegistry: MatIconRegistry, sanitizer: DomSanitizer, private produitService: ProduitService,
                 private clientService: ClientsService, private optionService: OptionsService, private router: Router, private calendrierService: CalendrierService,
                 private notificationService: NotificationsService, private userService: UsersService, private entrepriseService: EntrepriseService,
-                private achatService: AchatService) {
+                private achatService: AchatService, private caService: CaService) {
         iconRegistry.addSvgIcon(
             'quit',
             sanitizer.bypassSecurityTrustResourceUrl('/assets/sortie.svg'));
@@ -60,6 +61,7 @@ export class CoreComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.optionService.publishOptions();
+        this.caService.publishCAPrevisionnel();
         this.produitService.publishProduits();
         this.achatService.publishAchats();
         this.clientService.publishClients();

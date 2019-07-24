@@ -49,6 +49,10 @@ const routes: Routes = [
                 loadChildren: './partieUtilisateurs/dashboard/dashboard.module#DashboardModule'
             },
             {
+                path: 'caPrevisionnel',
+                loadChildren: './partieUtilisateurs/ca/ca.module#CaModule'
+            },
+            {
                 path: 'produits',
                 loadChildren: './partieUtilisateurs/produits/produits.module#ProduitsModule'
             },

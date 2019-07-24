@@ -6,22 +6,28 @@
                 <div class="content-slide">
                     <h2>Evolution du chiffre d'affaire</h2>
                     <div class="chart-container">
-                        <ngx-charts-line-chart
+                        <ngx-charts-bar-vertical-2d
                                 [results]="caDiag"
                                 [legend]="true"
                                 [legendPosition]="'below'"
                                 [xAxis]="true"
                                 [yAxis]="true"
-                                [xAxisLabel]="'mois'"
-                                [yAxisLabel]="'chiffre d\'affaire'">
+                                [roundDomains]="false"
+                                [roundEdges]="false">
+                        </ngx-charts-bar-vertical-2d>
+                    </div>
+                </div>
+                <div class="content-slide">
+                    <h2>Comparaison CA/CA prévisionnel</h2>
+                    <div class="chart-container">
+                        <ngx-charts-line-chart
+                                [results]="caPrevisionnelData"
+                                [legend]="true"
+                                [legendPosition]="'below'"
+                                [xAxis]="true"
+                                [yAxis]="true"
+                                [roundDomains]="false">
                         </ngx-charts-line-chart>
-                        <ng-container *ngIf="exemple">
-                            <div class="exempleCA">
-                                <p>Ceci est un exemple</p>
-                                <p>votre ca sera calculé</p>
-                                <p>chaques fin de mois.</p>
-                            </div>
-                        </ng-container>
                     </div>
                 </div>
                 <div class="content-slide">
@@ -29,24 +35,12 @@
                     <div class="chart-container">
                         <ngx-charts-pie-chart
                                 [scheme]="colorScheme"
-                                [results]="pieData">
+                                [results]="pieData"
+                                [legend]="true"
+                                [legendPosition]="'below'">
                         </ngx-charts-pie-chart>
                     </div>
                 </div>
-<!--                <div class="content-slide">-->
-<!--                    <h2>Nombre de ventes par produits</h2>-->
-<!--                    <div class="chart-container">-->
-<!--                        <ngx-charts-bar-vertical-->
-<!--                                [scheme]="colorScheme"-->
-<!--                                [results]="produitDiag"-->
-<!--                                [gradient]="true"-->
-<!--                                [xAxis]="true"-->
-<!--                                [yAxis]="true"-->
-<!--                                [xAxisLabel]="'produit'"-->
-<!--                                [yAxisLabel]="'nb de vente'">-->
-<!--                        </ngx-charts-bar-vertical>-->
-<!--                    </div>-->
-<!--                </div>-->
             </div>
         </div>
         <mat-icon class="pagination pagination_right" (click)="slider('right')" svgIcon="right"></mat-icon>
