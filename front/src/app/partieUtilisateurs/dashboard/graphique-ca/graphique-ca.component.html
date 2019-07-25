@@ -1,0 +1,45 @@
+<div class="flex">
+    <mat-icon class="pagination pagination_left" (click)="slider('left')" svgIcon="left"></mat-icon>
+    <div class="container">
+        <div class="content" [@slider]="position">
+            <div class="content-slide">
+                <h2>Evolution du chiffre d'affaire</h2>
+                <div class="chart-container">
+                    <ngx-charts-bar-vertical-2d
+                            [results]="caDiag"
+                            [legend]="true"
+                            [legendPosition]="'below'"
+                            [xAxis]="true"
+                            [yAxis]="true"
+                            [roundDomains]="false"
+                            [roundEdges]="false">
+                    </ngx-charts-bar-vertical-2d>
+                </div>
+            </div>
+            <div class="content-slide">
+                <h2>Comparaison CA/CA prévisionnel</h2>
+                <div class="chart-container">
+                    <ngx-charts-line-chart
+                            [results]="caPrevisionnelData"
+                            [legend]="true"
+                            [legendPosition]="'below'"
+                            [xAxis]="true"
+                            [yAxis]="true"
+                            [roundDomains]="false">
+                    </ngx-charts-line-chart>
+                </div>
+            </div>
+            <div class="content-slide">
+                <h2>entrées/sorties</h2>
+                <div class="chart-container">
+                    <ngx-charts-pie-grid
+                            [scheme]="colorScheme"
+                            [results]="pieData">
+                    </ngx-charts-pie-grid>
+                </div>
+            </div>
+        </div>
+    </div>
+    <mat-icon class="pagination pagination_right" (click)="slider('right')" svgIcon="right"></mat-icon>
+</div>
+

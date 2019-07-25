@@ -14,9 +14,9 @@ import {ClientsService} from '../../clients/clients.service';
 import {CaService} from '../../ca/ca.service';
 
 @Component({
-    selector: 'app-graphique',
-    templateUrl: './graphique.component.html',
-    styleUrls: ['./graphique.component.scss'],
+    selector: 'app-graphique-ca',
+    templateUrl: './graphique-ca.component.html',
+    styleUrls: ['./graphique-ca.component.scss'],
     animations: [
         trigger('slider', [
             state('initial', style({
@@ -35,16 +35,14 @@ import {CaService} from '../../ca/ca.service';
         ]),
     ]
 })
-export class GraphiqueComponent implements OnInit {
+export class GraphiqueCaComponent implements OnInit {
 
-    @Input() listeProduits: ProduitModel[];
     ca: CAModel[];
     position = 'initial';
     annee: number;
     mois: string[];
     caDiag: any[];
     caPrevisionnelData: any[];
-    produitDiag: any[] = [];
     role: string;
     exemple = false;
 
@@ -78,7 +76,6 @@ export class GraphiqueComponent implements OnInit {
         this.date = new Date();
         this.initPieData();
         this.initCA();
-        this.initproduitData();
     }
 
     /**
@@ -143,27 +140,6 @@ export class GraphiqueComponent implements OnInit {
                 }
             }
         }
-    }
-
-    /**
-     * initialisation des données du graphique des produits
-     */
-    private initproduitData() {
-        this.listeProduits.forEach(produit => {
-            this.produitDiag.push({name: produit.designation, value: this.nbVente(produit.factures)});
-        });
-    }
-
-    /**
-     * calcul le nombre de vente par produit
-     * @param factures les factures associées au produit
-     */
-    private nbVente(factures: ProduitsFactureModel[]): number {
-        let total = 0;
-        factures.forEach(facture => {
-            total += facture.quantite;
-        });
-        return total;
     }
 
     private initPieData() {

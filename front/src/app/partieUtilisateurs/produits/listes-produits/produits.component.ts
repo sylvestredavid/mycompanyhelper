@@ -185,6 +185,7 @@ export class ProduitsComponent implements OnInit, OnDestroy {
                 designation: ['', CustomValidators.existeValidator(this.listeNomProduits)],
                 prixAchat: [0],
                 prixVente: [0],
+                seuilStockBas: [0],
                 quantite: [0, Validators.compose([Validators.required, Validators.min(0)])],
                 factures: this.fb.array([]),
                 genre: [this.genre ? this.genre.idGenre : '', Validators.required],

@@ -7,7 +7,7 @@ import {ScrollingModule} from '@angular/cdk/scrolling';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AuthGuard} from '../../shared/guards/auth-guard.service';
 import {DashboardComponent} from './dashboard.component';
-import {GraphiqueComponent} from './graphique/graphique.component';
+import {GraphiqueCaComponent} from './graphique-ca/graphique-ca.component';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
 import {TableauProduitComponent} from './tableau-produit/tableau-produit.component';
 import {TableauClientsComponent} from './tableau-clients/tableau-clients.component';
@@ -15,12 +15,14 @@ import {TopFournisseursComponent} from './top-fournisseurs/top-fournisseurs.comp
 import {ListeCalendrierComponent} from './liste-calendrier/liste-calendrier.component';
 import {FullCalendarModule} from 'primeng/fullcalendar';
 import {CalendarModule} from 'primeng/primeng';
-import {SharedModule} from "../../shared/shared.module";
+import {SharedModule} from '../../shared/shared.module';
+import {GraphiqueProduitsComponent} from './graphique-produits/graphique-produits.component';
 
 @NgModule({
   declarations: [
     DashboardComponent,
-    GraphiqueComponent,
+    GraphiqueCaComponent,
+    GraphiqueProduitsComponent,
     TableauProduitComponent,
     TableauClientsComponent,
     TopFournisseursComponent,

@@ -556,15 +556,15 @@
 <path fill="none" stroke="#000000" d="M5372,-122.2667C5372,-140.5552 5372,-166 5372,-166 5372,-166 5283.1111,-166 5283.1111,-166"/>
 <polygon fill="#000000" stroke="#000000" points="5283.1111,-162.5001 5273.1111,-166 5283.111,-169.5001 5283.1111,-162.5001"/>
 </g>
-<!-- GraphiqueComponent -->
+<!-- GraphiqueProduitsComponent -->
 <g id="node32" class="node">
-<title>GraphiqueComponent</title>
+<title>GraphiqueProduitsComponent</title>
 <polygon fill="#ffffb3" stroke="#000000" points="5283.42,-122 5142.58,-122 5142.58,-86 5283.42,-86 5283.42,-122"/>
-<text text-anchor="middle" x="5213" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">GraphiqueComponent</text>
+<text text-anchor="middle" x="5213" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">GraphiqueProduitsComponent</text>
 </g>
-<!-- GraphiqueComponent&#45;&gt;DashboardModule -->
+<!-- GraphiqueProduitsComponent&#45;&gt;DashboardModule -->
 <g id="edge31" class="edge">
-<title>GraphiqueComponent&#45;&gt;DashboardModule</title>
+<title>GraphiqueProduitsComponent&#45;&gt;DashboardModule</title>
 <path fill="none" stroke="#000000" d="M5213,-122.2228C5213,-122.2228 5213,-143.7269 5213,-143.7269"/>
 <polygon fill="#000000" stroke="#000000" points="5209.5001,-143.7269 5213,-153.7269 5216.5001,-143.727 5209.5001,-143.7269"/>
 </g>

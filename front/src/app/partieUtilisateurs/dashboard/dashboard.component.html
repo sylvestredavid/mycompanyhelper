@@ -9,9 +9,10 @@
 <ng-template [ngIf]="listeProduits && listeClients" [ngIfElse]="loading">
   <h1>Tableau de bord</h1>
 <div class="grid-container">
-  <div class="grid-content grid-content-un"><app-graphique [listeProduits]="listeProduits"></app-graphique></div>
+  <div class="grid-content grid-content-un"><app-graphique-ca></app-graphique-ca></div>
   <div class="grid-content grid-content-deux lien" routerLink="/users/produits"><app-tableau-produit [listeProduits]="listeProduitsStockBas"></app-tableau-produit></div>
   <div class="grid-content grid-content-cinq lien" routerLink="/users/calendrier"><app-liste-calendrier></app-liste-calendrier></div>
+    <div class="grid-content grid-content-trois"><app-graphique-produits [listeProduits]="listeProduits"></app-graphique-produits></div>
 <!--  <div class="grid-content grid-content-trois"><app-tableau-clients [listeClients]="listeClients"></app-tableau-clients></div>-->
 <!--  <div class="grid-content grid-content-quatre"><app-top-fournisseurs></app-top-fournisseurs></div>-->
 </div>

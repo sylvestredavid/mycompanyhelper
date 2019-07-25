@@ -1,0 +1,45 @@
+<div class="flex">
+    <mat-icon class="pagination pagination_left" (click)="slider('left')" svgIcon="left"></mat-icon>
+    <div class="container">
+        <div class="content" [@slider]="position">
+            <div class="content-slide">
+                <h2>Nombre de ventes par produits</h2>
+                <div class="chart-container">
+                    <ngx-charts-bar-vertical
+                            [scheme]="colorScheme"
+                            [results]="produitDiag"
+                            [gradient]="true"
+                            [xAxis]="true"
+                            [yAxis]="true"
+                            [showXAxisLabel]="true"
+                            [showYAxisLabel]="true"
+                            [xAxisLabel]="'produit'"
+                            [yAxisLabel]="'nb de vente'"
+                            [roundEdges]="false"
+                            [roundDomains]="false">
+                    </ngx-charts-bar-vertical>
+                </div>
+            </div>
+            <div class="content-slide">
+                <h2>Marge par produits</h2>
+                <div class="chart-container">
+                    <ngx-charts-bar-vertical
+                            [scheme]="colorScheme"
+                            [results]="margetDiag"
+                            [gradient]="true"
+                            [xAxis]="true"
+                            [yAxis]="true"
+                            [showXAxisLabel]="true"
+                            [showYAxisLabel]="true"
+                            [xAxisLabel]="'produit'"
+                            [yAxisLabel]="'marge (%)'"
+                            [roundEdges]="false"
+                            [roundDomains]="false">
+                    </ngx-charts-bar-vertical>
+                </div>
+            </div>
+        </div>
+    </div>
+    <mat-icon class="pagination pagination_right" (click)="slider('right')" svgIcon="right"></mat-icon>
+</div>
+
