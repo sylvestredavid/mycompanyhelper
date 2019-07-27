@@ -147,7 +147,7 @@ export class ProduitsHorsVenteComponent implements OnInit, OnDestroy {
      * fonction qui rempli la liste a afficher avec les resultat de la recherche
      * @param entree les proprietes de l'element
      * @param recherche l'input
-     * @param sortie le produit a inserer
+     * @param sortie le prestation a inserer
      */
     remplirListeTriee(entree: any, recherche: string, sortie: ProduitModel) {
         if (entree.toString().toLowerCase().indexOf(recherche) !== -1) {
@@ -212,7 +212,7 @@ export class ProduitsHorsVenteComponent implements OnInit, OnDestroy {
     }
 
     /**
-     * remet en vente le produit selectionné
+     * remet en vente le prestation selectionné
      */
     remettreEnVente() {
         if (this.elementSelectionne) {

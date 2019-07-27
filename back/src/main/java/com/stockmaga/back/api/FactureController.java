@@ -77,8 +77,17 @@ public class FactureController {
 			@RequestParam(name="idFacture", required=true) Integer idFacture){
 		factureService.saveProduitfactures(quantite, idProduit, idFacture);
 		return ResponseEntity.status(HttpStatus.CREATED).body(new Reponse("Facture enregistrée"));
-	} 
-	
+	}
+
+	@PostMapping("/factures/savePestations")
+	@PreAuthorize("hasRole('ADMIN')")
+	public ResponseEntity<?> savePrestationfactures(@RequestParam(name="quantite", required=true) int quantite,
+												 @RequestParam(name="idPrestation", required=true) Integer idPrestation,
+												 @RequestParam(name="idFacture", required=true) Integer idFacture){
+		factureService.savePrestationfactures(quantite, idPrestation, idFacture);
+		return ResponseEntity.status(HttpStatus.CREATED).body(new Reponse("Facture enregistrée"));
+	}
+
 	@PostMapping("/factures/sendMail")
 	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> sendFacture(@RequestParam(name="idFacture", required=true) Integer idFacture){

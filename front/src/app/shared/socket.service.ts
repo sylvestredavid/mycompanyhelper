@@ -204,4 +204,42 @@ export class SocketService {
       });
     });
   }
+
+  ///////////////////////////// PRESTATIONS //////////////////////////////////
+
+  public ajoutPrestation(prestation) { // envoi au serveur l'ajout d'un prestation
+    this.socket.emit('ajout-prestation', prestation, this.userService.idUser);
+  }
+
+  public modifPrestation(prestation) { // envoi au serveur la modification d'un prestation
+    this.socket.emit('modif-prestation', prestation, this.userService.idUser);
+  }
+
+  public deletePrestation(id) { // envoi au serveur la suppression d'un prestation
+    this.socket.emit('delete-prestation', id, this.userService.idUser);
+  }
+
+  public getAjoutPrestation = () => { // reception de l'ajout d'un prestation (ce que le serveur node a renvoyé)
+    return Observable.create((observer) => {
+      this.socket.on('nouveau-prestation', (data) => {
+        observer.next(data);
+      });
+    });
+  }
+
+  public getModifPrestation = () => { // reception de la modification d'un prestation (ce que le serveur node a renvoyé)
+    return Observable.create((observer) => {
+      this.socket.on('prestation-modifier', (data) => {
+        observer.next(data);
+      });
+    });
+  }
+
+  public getDeletePrestation = () => { // reception de la suppression d'un prestation (ce que le serveur node a renvoyé)
+    return Observable.create((observer) => {
+      this.socket.on('prestation-supprimer', (data) => {
+        observer.next(data);
+      });
+    });
+  }
 }

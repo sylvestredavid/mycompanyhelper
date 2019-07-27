@@ -1,32 +1,28 @@
 import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
-import {FournisseursService} from '../fournisseurs.service';
+import {PrestationsService} from '../prestations.service';
 import {MatCheckboxChange, MatDialog, MatIconRegistry, MatSnackBar} from '@angular/material';
-import {FournisseurModel} from '../../../models/fournisseur.model';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Subscription} from 'rxjs';
 import {FormArray, FormBuilder, FormGroup} from '@angular/forms';
 import {DomSanitizer} from '@angular/platform-browser';
-import {GenreService} from '../../genres/genre.service';
-import {GenreModel} from '../../../models/genre.model';
-import {DialogFournisseursComponent} from './dialog-fournisseurs/dialog-fournisseurs.component';
 import {Store} from '@ngrx/store';
 import {UserState} from '../../../shared/stores/user.reducer';
 import {UsersService} from '../../../users/users.service';
 import {SocketService} from '../../../shared/socket.service';
+import {PrestationModel} from '../../../models/prestation.model';
 
 
 @Component({
-    selector: 'app-fournisseurs-liste',
-    templateUrl: './fournisseurs-liste.component.html',
-    styleUrls: ['./fournisseurs-liste.component.scss']
+    selector: 'app-prestations',
+    templateUrl: './prestations.component.html',
+    styleUrls: ['./prestations.component.scss']
 })
-export class FournisseursListeComponent implements OnInit, OnDestroy {
+export class PrestationsComponent implements OnInit, OnDestroy {
 
-    listeGenres: GenreModel[];
-    selection: FournisseurModel[];
-    listeElements: FournisseurModel[];
-    listeElementsAAfficher: FournisseurModel[];
-    listeTriee: FournisseurModel[];
+    selection: PrestationModel[];
+    listeElements: PrestationModel[];
+    listeElementsAAfficher: PrestationModel[];
+    listeTriee: PrestationModel[];
     elementForm: FormGroup;
     indexDebut: number;
     indexFin: number;
@@ -41,9 +37,9 @@ export class FournisseursListeComponent implements OnInit, OnDestroy {
 
 
 
-    constructor(private route: ActivatedRoute, private fournisseurService: FournisseursService,
+    constructor(private route: ActivatedRoute, private prestationsService: PrestationsService,
                 private router: Router, iconRegistry: MatIconRegistry, sanitizer: DomSanitizer, private fb: FormBuilder,
-                private snackBar: MatSnackBar, private genreService: GenreService, public dialog: MatDialog,
+                private snackBar: MatSnackBar, public dialog: MatDialog,
                 private storeUser: Store<UserState>, private  userService: UsersService,
                 private socket: SocketService) {
         iconRegistry.addSvgIcon(
@@ -71,27 +67,27 @@ export class FournisseursListeComponent implements OnInit, OnDestroy {
     }
 
     initSocket() {
-        this.socket.getAjoutFournisseur().subscribe(
-            data => {
-                if (data.idUser === this.userService.idUser) {
-                    this.fournisseurService.pushFournisseur(data.fournisseur);
-                }
-            }
-        );
-        this.socket.getModifFournisseur().subscribe(
-            data => {
-                if (data.idUser === this.userService.idUser) {
-                    this.fournisseurService.replaceFournisseur(data.fournisseur);
-                }
-            }
-        );
-        this.socket.getDeleteFournisseur().subscribe(
-            data => {
-                if (data.idUser === this.userService.idUser) {
-                    this.fournisseurService.removeFournisseur(data.id);
-                }
-            }
-        );
+        // this.socket.getAjoutFournisseur().subscribe(
+        //     data => {
+        //         if (data.idUser === this.userService.idUser) {
+        //             this.prestationsService.pushFournisseur(data.fournisseur);
+        //         }
+        //     }
+        // );
+        // this.socket.getModifFournisseur().subscribe(
+        //     data => {
+        //         if (data.idUser === this.userService.idUser) {
+        //             this.prestationsService.replaceFournisseur(data.fournisseur);
+        //         }
+        //     }
+        // );
+        // this.socket.getDeleteFournisseur().subscribe(
+        //     data => {
+        //         if (data.idUser === this.userService.idUser) {
+        //             this.prestationsService.removeFournisseur(data.id);
+        //         }
+        //     }
+        // );
     }
 
     /**
@@ -102,9 +98,9 @@ export class FournisseursListeComponent implements OnInit, OnDestroy {
         this.indexDebut = 0;
         this.indexFin = this.nbElements;
         this.pageCourante = 1;
-        this.subscriptions.push(this.fournisseurService.listeFournisseurs$.subscribe(
-            fournisseurs => {
-                this.listeElements = fournisseurs;
+        this.subscriptions.push(this.prestationsService.listePrestations$.subscribe(
+            prestation => {
+                this.listeElements = prestation;
                 this.elementForm = new FormGroup({
                     elements: this.fb.array([])
                 });
@@ -118,9 +114,6 @@ export class FournisseursListeComponent implements OnInit, OnDestroy {
                 this.initForm(this.listeElementsAAfficher);
             }
         ));
-        this.subscriptions.push(this.genreService.listeGenre$.subscribe(
-            genres => this.listeGenres = genres
-        ));
     }
 
     /**
@@ -128,14 +121,12 @@ export class FournisseursListeComponent implements OnInit, OnDestroy {
      */
     onAjouter() {
         this.elements.insert(0, this.fb.group({
-            idFournisseur: [''],
-            nom: [''],
-            adresse: [''],
-            codePostal: [''],
-            produits: [''],
-            telephone: [''],
-            email: [''],
-            ville: ['']
+            id: [''],
+            designation: [''],
+            prix: [0],
+            unitee: [''],
+            factures: this.fb.array([]),
+            tva: [0]
         }));
     }
 
@@ -146,15 +137,15 @@ export class FournisseursListeComponent implements OnInit, OnDestroy {
     onSupprimer() {
         if (this.selection) {
             this.selection.forEach(
-                f => {
-                    this.fournisseurService.deleteFournisseur(f.idFournisseur).subscribe(
+                p => {
+                    this.prestationsService.deletePrestation(p.id).subscribe(
                         () => {
-                            this.socket.deleteFournisseur(f.idFournisseur);
-                            this.fournisseurService.removeFournisseur(f.idFournisseur);
+                            // this.socket.deleteFournisseur(p.id);
+                            this.prestationsService.removePrestation(p.id);
                         }
                     );
                 }
-            )
+            );
         }
     }
 
@@ -162,22 +153,17 @@ export class FournisseursListeComponent implements OnInit, OnDestroy {
      * initialisation du formulaire
      * @param liste la liste a utiliser
      */
-    private initForm(liste: FournisseurModel[]) {
+    private initForm(liste: PrestationModel[]) {
         const elements = this.elementForm.get('elements') as FormArray;
         liste.forEach(
             element => {
-                let produitsNom = [];
-                element.categories.forEach(cat => produitsNom.push(cat.designation));
-                const produits = produitsNom.join();
                 elements.push(this.fb.group({
-                    idFournisseur: [element.idFournisseur],
-                    nom: [{value: element.nom, disabled: this.screenWidth < 1024 && this.role !== 'ROLE_ADMIN'}],
-                    adresse: [element.adresse],
-                    codePostal: [element.codePostal],
-                    produits: [{value: produits, disabled: this.screenWidth < 1024 && this.role !== 'ROLE_ADMIN'}],
-                    telephone: [{value: element.telephone, disabled: this.screenWidth < 1024 && this.role !== 'ROLE_ADMIN'}],
-                    email: [{value: element.email, disabled: this.screenWidth < 1024 && this.role !== 'ROLE_ADMIN'}],
-                    ville: [element.ville]
+                    id: [element.id],
+                    designation: [element.designation],
+                    prix: [element.prix],
+                    tva: [element.tva],
+                    unitee: [element.unitee],
+                    factures: this.fb.array(element.factures),
                 }));
             }
         );
@@ -194,11 +180,11 @@ export class FournisseursListeComponent implements OnInit, OnDestroy {
     @HostListener('document:keydown.enter', ['$event']) envoiForm(event?: KeyboardEvent) {
         for (let i = 0; i < this.elements.length; i++) {
             if (this.elements.controls[i].status === 'VALID') {
-                const fournisseur = this.elements.value[i];
-                if (fournisseur.idFournisseur === '') {
-                    this.envoi(fournisseur, 'creer');
-                } else if (this.elements.controls[i].dirty || fournisseur.produits !== this.listeElements[i].categories.join(',')) {
-                    this.envoi(fournisseur, 'modifier');
+                const prestation = this.elements.value[i];
+                if (prestation.id === '') {
+                    this.envoi(prestation, 'creer');
+                } else if (this.elements.controls[i].dirty) {
+                    this.envoi(prestation, 'modifier');
                 }
             } else {
                 this.snackBar.open('l\'envoi a échoué, merci de verifier les champs', 'ok', {duration: 1500, verticalPosition: 'top'});
@@ -210,14 +196,14 @@ export class FournisseursListeComponent implements OnInit, OnDestroy {
      * change l'element selectionné
      * @param client le client a selectionner
      */
-    changeSelection(fournisseur: FournisseurModel, e: MatCheckboxChange) {
-        const index = this.selection.findIndex(f => f === fournisseur);
-        if(e.checked && index === -1) {
-            this.selection.push(fournisseur);
+    changeSelection(prestation: PrestationModel, e: MatCheckboxChange) {
+        const index = this.selection.findIndex(f => f === prestation);
+        if (e.checked && index === -1) {
+            this.selection.push(prestation);
         } else {
             this.selection.splice(index, 1);
-            if(this.selection.length === 0) {
-                this.allSelected = false
+            if (this.selection.length === 0) {
+                this.allSelected = false;
             }
         }
     }
@@ -232,9 +218,9 @@ export class FournisseursListeComponent implements OnInit, OnDestroy {
         if (recherche === '') {
             this.initTableau();
         } else {
-            this.listeElements.forEach(fournisseur => {
-                for (let prop in fournisseur) {
-                    this.remplirListeTriee(fournisseur[prop], recherche, fournisseur);
+            this.listeElements.forEach(prestation => {
+                for (const prop in prestation) {
+                    this.remplirListeTriee(prestation[prop], recherche, prestation);
                 }
 
             });
@@ -250,9 +236,9 @@ export class FournisseursListeComponent implements OnInit, OnDestroy {
      * fonction qui rempli la liste a afficher avec les resultat de la recherche
      * @param entree les proprietes de l'element
      * @param recherche l'input
-     * @param sortie le fournisseur a inserer
+     * @param sortie le prestation a inserer
      */
-    remplirListeTriee(entree: any, recherche: string, sortie: FournisseurModel) {
+    remplirListeTriee(entree: any, recherche: string, sortie: PrestationModel) {
         if (entree.toString().toLowerCase().indexOf(recherche) !== -1) {
             if (!this.listeTriee.includes(sortie)) {
                 this.listeTriee.push(sortie);
@@ -265,7 +251,7 @@ export class FournisseursListeComponent implements OnInit, OnDestroy {
      * @param direction precedente ou suivante
      */
     pagination(direction: string) {
-        let liste: FournisseurModel[];
+        let liste: PrestationModel[];
         if (this.listeTriee && this.listeTriee.length !== 0) {
             liste = this.listeTriee;
         } else {
@@ -311,49 +297,34 @@ export class FournisseursListeComponent implements OnInit, OnDestroy {
 
     /**
      * methode d'envoi du formulaire
-     * @param client le fournisseur a envoyer
+     * @param client le prestation a envoyer
      * @param mode creation ou modification
      */
-    envoi(fournisseur: any, mode: string) {
-        let categories = [];
-        const produits = fournisseur.produits.split(',');
-        produits.forEach(
-            produit => {
-                this.listeGenres.forEach(
-                    genre => {
-                        if (genre.designation === produit) {
-                            categories.push(genre);
-                        }
-                    }
-                );
-            }
-        );
-        const fournisseurAEnvoyer: FournisseurModel = {
-            idFournisseur: fournisseur.idFournisseur,
-            nom: fournisseur.nom,
-            telephone: fournisseur.telephone,
-            email: fournisseur.email,
-            categories: categories,
-            ville: fournisseur.ville,
-            codePostal: fournisseur.codePostal,
-            adresse: fournisseur.adresse,
+    envoi(prestation: any, mode: string) {
+        const prestationAEnvoyer: PrestationModel = {
+            id: prestation.id,
+            designation: prestation.designation,
+            unitee: prestation.unitee,
+            tva: prestation.tva,
+            prix: prestation.prix,
+            factures: prestation.factures,
             idUser: this.userService.idUser
         };
 
         if (mode === 'creer') {
-            this.fournisseurService.saveFournisseur(fournisseurAEnvoyer).subscribe(
-                fournisseur => {
-                    this.socket.ajoutFournisseur(fournisseur);
-                    this.fournisseurService.pushFournisseur(fournisseur);
+            this.prestationsService.savePrestation(prestationAEnvoyer).subscribe(
+                prestation => {
+                    // this.socket.ajoutFournisseur(prestation);
+                    this.prestationsService.pushPrestation(prestation);
                     this.isDirty = false;
                 }
             );
-            this.snackBar.open('le fournisseur a bien été enregistré.', 'ok', {duration: 1500, verticalPosition: 'top'});
+            this.snackBar.open('le prestation a bien été enregistré.', 'ok', {duration: 1500, verticalPosition: 'top'});
         } else if (mode === 'modifier') {
-            this.fournisseurService.modifFournisseur(fournisseurAEnvoyer).subscribe(
-                fournisseur => {
-                    this.socket.modifFournisseur(fournisseur);
-                    this.fournisseurService.replaceFournisseur(fournisseur);
+            this.prestationsService.modifPrestation(prestationAEnvoyer).subscribe(
+                prestation => {
+                    // this.socket.modifFournisseur(prestation);
+                    this.prestationsService.replacePrestation(prestation);
                     this.isDirty = false;
                 }
             );
@@ -368,38 +339,11 @@ export class FournisseursListeComponent implements OnInit, OnDestroy {
     /**
      * ouverture de la lightbox, a la fermeture de la lightbox, on recupere les genres
      * selectionnés, on envoi le formulaire et on ajoute les noms des genres dans le champ
-     * @param fournisseur
+     * @param prestation
      * @param index
      */
-    openDialog(fournisseur: any, index: number): void {
-        if (this.role === 'ROLE_ADMIN') {
-            const categories = fournisseur.produits.split(',');
-            const dialogRef = this.dialog.open(DialogFournisseursComponent, {
-                width: '250px',
-                data: {listeGenres: this.listeGenres, cat: categories, index: index}
-            });
+    openDialog(prestation: any, index: number): void {
 
-            dialogRef.afterClosed().subscribe(result => {
-                let categories = [];
-                Object.values(result[0]).forEach(
-                    result => {
-                        this.listeGenres.forEach(
-                            genre => {
-                                if (genre.designation === result) {
-                                    categories.push(genre);
-                                }
-                            }
-                        );
-                    }
-                );
-                this.elements.value[Number(result[1])].produits = Object.values(result[0]).join(',');
-                this.envoiForm();
-                if (this.listeElements[Number(result[1])]) {
-                    this.listeElements[Number(result[1])].categories = categories;
-                }
-                this.initTableau(this.indexDebut, this.indexFin, this.pageCourante, this.listeElements);
-            });
-        }
     }
 
     @HostListener('window:resize', ['$event'])
@@ -411,7 +355,7 @@ export class FournisseursListeComponent implements OnInit, OnDestroy {
         this.subscriptions.forEach(subscription => subscription.unsubscribe());
     }
 
-    isSelected(value: FournisseurModel): boolean {
+    isSelected(value: PrestationModel): boolean {
         if (this.selection.findIndex(f => f === value) !== -1) {
             return true;
         } else {
@@ -420,11 +364,11 @@ export class FournisseursListeComponent implements OnInit, OnDestroy {
     }
 
     selectAll(e: MatCheckboxChange) {
-        console.log(e.checked)
-        if(e.checked) {
+        console.log(e.checked);
+        if (e.checked) {
             this.listeElements.forEach(
                 f => this.selection.push(f)
-            )
+            );
             this.allSelected = true;
         } else {
             this.selection = [];

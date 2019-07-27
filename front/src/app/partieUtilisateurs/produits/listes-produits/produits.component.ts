@@ -192,7 +192,7 @@ export class ProduitsComponent implements OnInit, OnDestroy {
                 tva: [0]
             }));
         } else {
-            this.snackBar.open('Merci de créer une catégorie avant de créer un produit', 'ok', {duration: 1500, verticalPosition: 'top'});
+            this.snackBar.open('Merci de créer une catégorie avant de créer un prestation', 'ok', {duration: 1500, verticalPosition: 'top'});
         }
     }
 
@@ -321,7 +321,7 @@ export class ProduitsComponent implements OnInit, OnDestroy {
      * fonction qui rempli la liste a afficher avec les resultat de la recherche
      * @param entree les proprietes de l'element
      * @param recherche l'input
-     * @param sortie le produit a inserer
+     * @param sortie le prestation a inserer
      */
     remplirListeTriee(entree: any, recherche: string, sortie: ProduitModel) {
         if (entree.toString().toLowerCase().indexOf(recherche) !== -1) {
@@ -382,7 +382,7 @@ export class ProduitsComponent implements OnInit, OnDestroy {
 
     /**
      * methode d'envoi du formulaire
-     * @param produit le produit a envoyer
+     * @param produit le prestation a envoyer
      * @param mode creation ou modification
      */
     envoi(produit: any, mode: string) {
@@ -423,7 +423,7 @@ export class ProduitsComponent implements OnInit, OnDestroy {
             this.achatService.saveAchat(achat).subscribe(
                 a => this.achatService.pushAchat(a)
             )
-            this.snackBar.open('le produit a bien été enregistré.', 'ok', {duration: 1500, verticalPosition: 'top'});
+            this.snackBar.open('le prestation a bien été enregistré.', 'ok', {duration: 1500, verticalPosition: 'top'});
         } else if (mode === 'modifier') {
             const index = this.listeElements.findIndex(p => p.idProduit === produitAEnvoyer.idProduit);
             if(produitAEnvoyer.quantite > this.listeElements[index].quantite){

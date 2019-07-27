@@ -22,13 +22,15 @@ import {HttpClientModule} from '@angular/common/http';
 import {ScrollingModule} from '@angular/cdk/scrolling';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CardNumberPipe} from './pipes/card-number.pipe';
-import {DateFrPipe} from "./pipes/date-fr.pipe";
+import {DateFrPipe} from './pipes/date-fr.pipe';
+import {MailingComponent} from "../partieUtilisateurs/mailing/mailing/mailing.component";
 
 @NgModule({
     declarations: [
         InputReadOnlyDirective,
         CardNumberPipe,
-        DateFrPipe
+        DateFrPipe,
+        MailingComponent
     ],
     imports: [
         CommonModule,
@@ -55,7 +57,8 @@ import {DateFrPipe} from "./pipes/date-fr.pipe";
     exports: [
         InputReadOnlyDirective,
         CardNumberPipe,
-        DateFrPipe
+        DateFrPipe,
+        MailingComponent
     ]
 })
 export class SharedModule {

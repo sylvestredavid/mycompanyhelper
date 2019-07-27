@@ -24,8 +24,7 @@ import {MailingComponent} from "../mailing/mailing/mailing.component";
     declarations: [
         ClientsComponent,
         ClientDetailComponent,
-        ClientFacturesComponent,
-        MailingComponent
+        ClientFacturesComponent
     ],
     imports: [
         CommonModule,
@@ -49,7 +48,7 @@ import {MailingComponent} from "../mailing/mailing/mailing.component";
     exports: [
         ClientsComponent,
         ClientDetailComponent,
-        ClientFacturesComponent,
+        ClientFacturesComponent
     ]
 })
 export class ClientsModule {

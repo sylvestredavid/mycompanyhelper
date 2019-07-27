@@ -12,9 +12,21 @@
         <ng-template matStepperIcon="edit">
             <mat-icon svgIcon="edit"></mat-icon>
         </ng-template>
+        <mat-step [stepControl]="devisForm">
+        <form [formGroup]="devisForm">
+            <ng-template matStepLabel>Type</ng-template>
+            <mat-radio-group aria-label="Voulez-vous créer une facture ou un devis?" formControlName="type">
+                <mat-radio-button color="primary" value="Facture">Facture</mat-radio-button>
+                <mat-radio-button color="primary" value="Devis">Devis</mat-radio-button>
+            </mat-radio-group>
+            <div>
+                <button mat-raised-button matStepperNext>Next</button>
+            </div>
+        </form>
+    </mat-step>
         <mat-step [stepControl]="clientForm">
             <form [formGroup]="clientForm">
-                <ng-template matStepLabel>Choisissez un client</ng-template>
+                <ng-template matStepLabel>Client</ng-template>
                 <mat-form-field>
                     <mat-select placeholder="Client" formControlName="client">
                         <mat-option *ngFor="let client of clients" [value]="client">
@@ -22,14 +34,15 @@
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
-                <div>
+                <div class="buttons">
+                    <button mat-raised-button matStepperPrevious>Back</button>
                     <button mat-raised-button matStepperNext>Next</button>
                 </div>
             </form>
         </mat-step>
         <mat-step [stepControl]="produitsForm">
+                <ng-template matStepLabel>Produits/prestations</ng-template>
             <form [formGroup]="produitsForm">
-                <ng-template matStepLabel>Ajouter des produits</ng-template>
                 <div formArrayName="produits"
                      *ngFor="let control of produits.controls; let i = index;">
                     <div [formGroupName]="i">
@@ -81,18 +94,64 @@
                         </ng-template>
                     </div>
                 </div>
+            </form>
+            <form [formGroup]="prestationsForm">
+                <div formArrayName="prestations"
+                     *ngFor="let control of prestations.controls; let i = index;">
+                    <div [formGroupName]="i">
+                        <ng-container *ngIf="screenWidth >= 1440 else mobile">
+                            <table class="profuitForm">
+                                <td>
+                                    <mat-form-field>
+                                        <input type="text" placeholder="prestation" matInput formControlName="prestation"
+                                               [matAutocomplete]="auto">
+                                        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                                            <mat-option *ngFor="let prestation of listePrestations" [value]="prestation">
+                                                {{prestation.designation}}
+                                            </mat-option>
+                                        </mat-autocomplete>
+                                    </mat-form-field>
+                                </td>
+                                <td>
+                                    <mat-form-field>
+                                        <input matInput type="number" placeholder="Quantitée" formControlName="quantite" min="0">
+                                    </mat-form-field>
+                                </td>
+                                <td>
+                                    <button mat-raised-button (click)="supprimerPrestation(i)">supprimer</button>
+                                </td>
+                            </table>
+                        </ng-container>
+                        <ng-template #mobile>
+                            <mat-form-field class="example-full-width">
+                                <input type="text" placeholder="prestation" matInput formControlName="prestation"
+                                       [matAutocomplete]="auto">
+                                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                                    <mat-option *ngFor="let prestation of listePrestations" [value]="prestation">
+                                        {{prestation.designation}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+                            <mat-form-field class="example-full-width">
+                                <input matInput type="number" placeholder="Quantitée" formControlName="quantite" min="0">
+                            </mat-form-field>
+                            <button mat-raised-button (click)="supprimerPrestation(i)">supprimer</button>
+                        </ng-template>
+                    </div>
+                </div>
+            </form>
                 <button mat-raised-button (click)="addProduit()">ajouter un produit</button>
+                <button mat-raised-button (click)="addPrestation()">ajouter une prestation</button>
                 <div class="buttons">
                     <button mat-raised-button matStepperPrevious>Back</button>
                     <button mat-raised-button matStepperNext>Next</button>
                 </div>
-            </form>
         </mat-step>
         <mat-step [stepControl]="remiseForm">
         <form [formGroup]="remiseForm">
-            <ng-template matStepLabel>remise (opt)</ng-template>
+            <ng-template matStepLabel>Remise</ng-template>
             <mat-form-field>
-                <input matInput type="number" placeholder="Remise en %" formControlName="remise">
+                <input matInput type="number" placeholder="Remise en % (optionnel)" formControlName="remise">
             </mat-form-field>
             <div class="buttons">
                 <button mat-raised-button matStepperPrevious>Back</button>
@@ -101,7 +160,7 @@
         </form>
     </mat-step>
         <mat-step>
-            <ng-template matStepLabel>Fin</ng-template>
+            <ng-template matStepLabel>Envoi</ng-template>
             Votre facture est prête.
             <div class="buttons">
                 <button mat-raised-button matStepperPrevious>Back</button>
@@ -139,7 +198,7 @@
         </ng-container>
         <div class="clear"></div>
         <div class="body">
-            <h3>Facture n° {{numero}}</h3>
+            <h3>{{devisForm.value.type}} n° {{numero}}</h3>
             <p>{{date | date: "dd-MM-yyyy"}}</p>
             <table>
                 <thead>
@@ -161,31 +220,41 @@
                         </tr>
                     </ng-container>
                 </ng-container>
+                <ng-container *ngFor="let control of prestations.controls">
+                    <ng-container *ngIf="control.value.prestation">
+                        <tr>
+                            <td>{{control.value.prestation.designation}}</td>
+                            <td>{{control.value.prestation.prix}}€/{{control.value.prestation.unitee}}</td>
+                            <td>{{control.value.quantite}} {{control.value.prestation.unitee}}</td>
+                            <td>{{control.value.prestation.prix * control.value.quantite}}€</td>
+                        </tr>
+                    </ng-container>
+                </ng-container>
                 </tbody>
             </table>
-            <ng-container *ngIf="produits.controls[0].value.produit">
+            <ng-container *ngIf="produits.controls[0] && produits.controls[0].value.produit || prestations.controls[0] && prestations.controls[0].value.prestation">
                 <p class="align-right">
-                    Total HT : {{getTotalHT(produits.controls)}} €
+                    Total HT : {{getTotalHT(produits.controls, prestations.controls)}} €
                 </p>
             </ng-container>
-            <ng-container *ngIf="tvaExist(produits.controls, 2.1)">
+            <ng-container *ngIf="tvaExist(produits.controls, prestations.controls, 2.1)">
                 <p class="align-right">
-                    TVA à 2.1% : {{getTotalTva(produits.controls, 2.1)}} €
+                    TVA à 2.1% : {{getTotalTva(produits.controls, prestations.controls, 2.1)}} €
                 </p>
             </ng-container>
-            <ng-container *ngIf="tvaExist(produits.controls, 5.5)">
+            <ng-container *ngIf="tvaExist(produits.controls, prestations.controls, 5.5)">
                 <p class="align-right">
-                    TVA à 5.5% : {{getTotalTva(produits.controls, 5.5)}} €
+                    TVA à 5.5% : {{getTotalTva(produits.controls, prestations.controls, 5.5)}} €
                 </p>
             </ng-container>
-            <ng-container *ngIf="tvaExist(produits.controls, 10)">
+            <ng-container *ngIf="tvaExist(produits.controls,prestations.controls,10)">
                 <p class="align-right">
-                    TVA à 10% : {{getTotalTva(produits.controls, 10)}}  €
+                    TVA à 10% : {{getTotalTva(produits.controls, prestations.controls, 10)}}  €
                 </p>
             </ng-container>
-            <ng-container *ngIf="tvaExist(produits.controls, 20)">
+            <ng-container *ngIf="tvaExist(produits.controls,prestations.controls,20)">
                 <p class="align-right">
-                    TVA à 20% : {{getTotalTva(produits.controls, 20)}} €
+                    TVA à 20% : {{getTotalTva(produits.controls, prestations.controls, 20)}} €
                 </p>
             </ng-container>
             <ng-container *ngIf="+remiseForm.value.remise > 0">
@@ -193,9 +262,9 @@
                     Remise : {{remiseForm.value.remise}} %
                 </p>
             </ng-container>
-            <ng-container *ngIf="produits.controls[0].value.produit">
+            <ng-container *ngIf="produits.controls[0] && produits.controls[0].value.produit || prestations.controls[0] && prestations.controls[0].value.prestation">
                 <p class="align-right">
-                    Total TTC : {{getTotalTTC(produits.controls)}} €
+                    Total TTC : {{getTotalTTC(produits.controls, prestations.controls)}} €
                 </p>
             </ng-container>
         </div>

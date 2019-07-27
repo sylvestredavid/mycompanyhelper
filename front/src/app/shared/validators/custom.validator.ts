@@ -19,7 +19,7 @@ export class CustomValidators {
     }
 
     /**
-     * Validator pour s'assurer que la quantitée selectionnée n'est pas superieur a la quantitée du produit
+     * Validator pour s'assurer que la quantitée selectionnée n'est pas superieur a la quantitée du prestation
      */
     static quantiteeValidator() {
         return (control: AbstractControl): { [key: string]: any } | null => {
@@ -52,7 +52,7 @@ export class CustomValidators {
     }
 
     /**
-     * verifie que le produit entré fait partie de la liste de produits
+     * verifie que le prestation entré fait partie de la liste de produits
      */
     static produitValidator() {
         return (control: AbstractControl): { [key: string]: any } | null => {
@@ -65,7 +65,7 @@ export class CustomValidators {
     }
 
     /**
-     * verifie que le produit entré fait partie de la liste de produits
+     * verifie que le prestation entré fait partie de la liste de produits
      */
     static existeValidator(liste: string[]) {
         return (control: AbstractControl): { [key: string]: any } | null => {

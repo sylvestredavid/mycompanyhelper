@@ -20,10 +20,11 @@ import {DatePipe} from '@angular/common';
 import html2canvas from 'html2canvas';
 import {Store} from '@ngrx/store';
 import {UserState} from '../../../shared/stores/user.reducer';
-import {OptionsService} from '../../options/options.service';
 import {EntrepriseService} from '../../entreprise/entreprise.service';
 import {EntrepriseModel} from '../../../models/entreprise.model';
-import {SocketService} from "../../../shared/socket.service";
+import {SocketService} from '../../../shared/socket.service';
+import {PrestationsService} from '../../prestations/prestations.service';
+import {PrestationModel} from '../../../models/prestation.model';
 
 
 @Component({
@@ -38,6 +39,8 @@ export class CreateFactureComponent implements OnInit, OnDestroy {
     clientForm: FormGroup;
     produitsForm: FormGroup;
     produitsFormArray: FormArray;
+    prestationsForm: FormGroup;
+    prestationsFormArray: FormArray;
     remiseForm: FormGroup;
     clients: ClientModel[];
     listeProduits: ProduitModel[];
@@ -48,13 +51,15 @@ export class CreateFactureComponent implements OnInit, OnDestroy {
     enCour: boolean;
     entreprise: EntrepriseModel;
     numero: number;
+    devisForm: FormGroup;
 
     @ViewChild('facture') facture: ElementRef;
     date: Date;
+    private listePrestations: PrestationModel[];
 
     constructor(private _formBuilder: FormBuilder, iconRegistry: MatIconRegistry, sanitizer: DomSanitizer,
                 private clientService: ClientsService, private produitService: ProduitService, private factureService: FactureService,
-                private router: Router, private snackBar: MatSnackBar, private userService: UsersService,
+                private router: Router, private snackBar: MatSnackBar, private userService: UsersService, private prestationsService: PrestationsService,
                 private notificationService: NotificationsService, private datePipe: DatePipe, private store: Store<UserState>,
                 private entrepriseService: EntrepriseService, private socket: SocketService) {
         iconRegistry.addSvgIcon(
@@ -68,10 +73,6 @@ export class CreateFactureComponent implements OnInit, OnDestroy {
                 }
             }
         );
-    }
-
-    get produits() {
-        return this.produitsFormArray = this.produitsForm.get('produits') as FormArray;
     }
 
     ngOnInit() {
@@ -93,9 +94,18 @@ export class CreateFactureComponent implements OnInit, OnDestroy {
         );
         this.initClients();
         this.initProduits();
+        this.initPrestations();
         this.initForms();
         this.getScreenSize();
         this.enCour = false;
+    }
+
+    get prestations() {
+        return this.prestationsFormArray = this.prestationsForm.get('prestations') as FormArray;
+    }
+
+    get produits() {
+        return this.produitsFormArray = this.produitsForm.get('produits') as FormArray;
     }
 
     /**
@@ -124,6 +134,14 @@ export class CreateFactureComponent implements OnInit, OnDestroy {
         ));
     }
 
+    initPrestations() {
+        this.subscriptions.push(this.prestationsService.listePrestations$.subscribe(
+            p => {
+                this.listePrestations = p;
+            }
+        ));
+    }
+
     /**
      * initialisation des formulaires
      */
@@ -132,15 +150,21 @@ export class CreateFactureComponent implements OnInit, OnDestroy {
             client: ['', Validators.required]
         });
         this.produitsForm = this._formBuilder.group({
-            produits: this._formBuilder.array([this.createProduits()])
+            produits: this._formBuilder.array([])
+        });
+        this.prestationsForm = this._formBuilder.group({
+            prestations: this._formBuilder.array([])
         });
         this.remiseForm = this._formBuilder.group({
             remise: [0]
         });
+        this.devisForm = this._formBuilder.group({
+            type: ['Facture']
+        });
     }
 
     /**
-     * crée un nouveau formulaire de produit vide
+     * crée un nouveau formulaire de prestation vide
      */
     private createProduits(): FormGroup {
         return this._formBuilder.group({
@@ -149,11 +173,22 @@ export class CreateFactureComponent implements OnInit, OnDestroy {
         });
     }
 
+    private createPrestations(): FormGroup {
+        return this._formBuilder.group({
+            prestation: [''],
+            quantite: ['']
+        });
+    }
+
     /**
-     * ajoute le formulaire de produit vide au formarray
+     * ajoute le formulaire de prestation vide au formarray
      */
     addProduit(): void {
         this.produits.push(this.createProduits());
+    }
+
+    addPrestation(): void {
+        this.prestations.push(this.createPrestations());
     }
 
     /**
@@ -163,18 +198,21 @@ export class CreateFactureComponent implements OnInit, OnDestroy {
         this.enCour = true;
         const clientFormValue = this.clientForm.value;
         const produitsFormValue = this.produitsForm.value;
+        const prestationsFormValue = this.prestationsForm.value;
         const remiseFormValue = this.remiseForm.value;
-        const totalHT = this.getTotalHT(this.produits.controls);
-        const totalTTC = this.getTotalTTC(this.produits.controls);
-        const tva21 = this.getTotalTva(this.produits.controls, 2.1);
-        const tva55 = this.getTotalTva(this.produits.controls, 5.5);
-        const tva10 = this.getTotalTva(this.produits.controls, 10);
-        const tva20 = this.getTotalTva(this.produits.controls, 20);
+        const devisFormValue = this.devisForm.value;
+        const totalHT = this.getTotalHT(this.produits.controls, this.prestations.controls);
+        const totalTTC = this.getTotalTTC(this.produits.controls, this.prestations.controls);
+        const tva21 = this.getTotalTva(this.produits.controls, this.prestations.controls, 2.1);
+        const tva55 = this.getTotalTva(this.produits.controls, this.prestations.controls, 5.5);
+        const tva10 = this.getTotalTva(this.produits.controls, this.prestations.controls, 10);
+        const tva20 = this.getTotalTva(this.produits.controls, this.prestations.controls, 20);
 
         const facture: FactureModel = {
             date : new Date(),
             client : clientFormValue['client'],
             produitsFacture : produitsFormValue['produits'],
+            prestationsFacture : prestationsFormValue['prestations'],
             totalHT : totalHT,
             totalTTC : totalTTC,
             tva21 : tva21,
@@ -183,25 +221,41 @@ export class CreateFactureComponent implements OnInit, OnDestroy {
             tva20 : tva20,
             remise: +remiseFormValue['remise'],
             idUser : this.userService.idUser,
-            numero: this.numero
+            numero: this.numero,
+            devis: devisFormValue['type'] === 'Devis' ? true : false
         };
+
+        console.log(facture);
 
         this.factureService.saveFacture(facture).pipe(
             finalize(() => this.enCour = false)
         ).subscribe(
-            facture => {
-                this.factureService.sendMail(facture.idFacture);
-                this.clientService.updatePanierMoyen(this.calculPanierMoyen(clientFormValue['client']), clientFormValue['client'].idClient).subscribe(
-                    client => {
-                    this.socket.modifClient(client);
-                    this.clientService.replaceClient(client);
-                })
-                this.messageQueue.push('La facture a été envoyée par mail.');
-                for (const control of this.produits.controls) {
-                    this.factureService.saveProduitsFacture(control.value.quantite, facture.idFacture, control.value.produit.idProduit);
-                    this.produitService.diminuerQte(control.value.quantite, control.value.produit.idProduit);
-                    this.produitService.ajoutFacture(control.value.quantite, facture.idFacture, control.value.produit.idProduit);
-                    this.checkStock(control.value.produit, control.value.quantite);
+            f => {
+                this.factureService.sendMail(f.idFacture);
+                if (!f.devis) {
+                    this.clientService.updatePanierMoyen(this.calculPanierMoyen(clientFormValue['client']), clientFormValue['client'].idClient).subscribe(
+                        client => {
+                            this.socket.modifClient(client);
+                            this.clientService.replaceClient(client);
+                        });
+                    this.messageQueue.push('La facture a été envoyée par mail.');
+                    for (const control of this.produits.controls) {
+                        this.factureService.saveProduitsFacture(control.value.quantite, f.idFacture, control.value.produit.idProduit);
+                        this.produitService.diminuerQte(control.value.quantite, control.value.produit.idProduit);
+                        this.produitService.ajoutFacture(control.value.quantite, f.idFacture, control.value.produit.idProduit);
+                        this.checkStock(control.value.produit, control.value.quantite);
+                    }
+                    for (const control of this.prestations.controls) {
+                        this.factureService.savePrestationsFacture(control.value.quantite, f.idFacture, control.value.prestation.id);
+                    }
+                } else {
+                    this.messageQueue.push('Le devis a été envoyée par mail.');
+                    for (const control of this.produits.controls) {
+                        this.factureService.saveProduitsFacture(control.value.quantite, f.idFacture, control.value.produit.idProduit);
+                    }
+                    for (const control of this.prestations.controls) {
+                        this.factureService.savePrestationsFacture(control.value.quantite, f.idFacture, control.value.prestation.id);
+                    }
                 }
                 this.showNext();
                 this.router.navigate(['users/produits']);
@@ -211,7 +265,7 @@ export class CreateFactureComponent implements OnInit, OnDestroy {
 
     /**
      * affiche la liste de produits pour l'auto completion
-     * @param produit le produit dans l'input
+     * @param produit le prestation dans l'input
      */
     displayFn(produit?: ProduitModel): string | undefined {
         return produit ? produit.designation : undefined;
@@ -219,12 +273,15 @@ export class CreateFactureComponent implements OnInit, OnDestroy {
 
     /**
      * calcul le total de la facture
-     * @param controls les inputs du formarray
+     * @param produits les inputs du formarray
      */
-    getTotalHT(controls: AbstractControl[]): number {
+    getTotalHT(produits: AbstractControl[], prestations: AbstractControl[]): number {
         let total = 0;
-        for (const control of controls) {
+        for (const control of produits) {
             total += (control.value.produit.prixVente * control.value.quantite);
+        }
+        for (const control of prestations) {
+            total += (control.value.prestation.prix * control.value.quantite);
         }
         return total;
     }
@@ -275,11 +332,15 @@ export class CreateFactureComponent implements OnInit, OnDestroy {
     }
 
     /**
-     * supprimer un formulaire de produit du formarray
+     * supprimer un formulaire de prestation du formarray
      * @param i l'indes du formarray a supprimer
      */
     supprimerProduit(i: number) {
         this.produits.removeAt(i);
+    }
+
+    supprimerPrestation(i: number) {
+        this.prestations.removeAt(i);
     }
 
     ngOnDestroy(): void {
@@ -298,7 +359,9 @@ export class CreateFactureComponent implements OnInit, OnDestroy {
      * fonction de téléchargement de la facture au format pdf
      */
     public generatePDF() {
-
+        const nom = this.devisForm.value.type === 'Facture' ?
+            `facture-${this.clientForm.value.client.nom}-${this.clientForm.value.client.prenom}-${this.datePipe.transform(new Date(), 'dd/MM/yy')}.pdf` :
+            `devis-${this.clientForm.value.client.nom}-${this.clientForm.value.client.prenom}-${this.datePipe.transform(new Date(), 'dd/MM/yy')}.pdf`;
         const data = document.getElementById('facture');
         html2canvas(data).then(canvas => {
             // Few necessary setting options
@@ -311,41 +374,54 @@ export class CreateFactureComponent implements OnInit, OnDestroy {
             const pdf = new jsPDF(); // A4 size page of PDF
             const position = 0;
             pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight);
-            pdf.save(`facture-${this.clientForm.value.client.nom}-${this.clientForm.value.client.prenom}-${this.datePipe.transform(new Date(), 'dd/MM/yy')}.pdf`); // Generated PDF
+            pdf.save(nom); // Generated PDF
         });
     }
 
-    tvaExist(controls: AbstractControl[], tva: number): boolean {
-        for (const control of controls) {
+    tvaExist(produits: AbstractControl[], prestations: AbstractControl[], tva: number): boolean {
+        for (const control of produits) {
             if (control.value.produit.tva === tva) {
+                return true;
+            }
+        }
+        for (const control of prestations) {
+            if (control.value.prestation.tva === tva) {
                 return true;
             }
         }
         return false;
     }
 
-    getTotalTva(controls: AbstractControl[], tva: number): number {
+    getTotalTva(produits: AbstractControl[], prestations: AbstractControl[], tva: number): number {
         let total = 0;
-        for (const control of controls) {
+        for (const control of produits) {
             if (control.value.produit.tva === tva) {
                 total += ((control.value.produit.prixVente * tva / 100) * control.value.quantite);
+            }
+        }
+        for (const control of prestations) {
+            if (control.value.prestation.tva === tva) {
+                total += ((control.value.prestation.prix * tva / 100) * control.value.quantite);
             }
         }
         return +total.toFixed(2);
     }
 
-    getTotalTTC(controls: AbstractControl[]): number {
+    getTotalTTC(produits: AbstractControl[], prestations: AbstractControl[]): number {
         let total = 0;
-        for (const control of controls) {
+        for (const control of produits) {
             total += ((control.value.produit.prixVente + (control.value.produit.prixVente * control.value.produit.tva / 100)) * control.value.quantite);
+        }
+        for (const control of prestations) {
+            total += ((control.value.prestation.prix + (control.value.prestation.prix * control.value.prestation.tva / 100)) * control.value.quantite);
         }
 
         total = total - (total * this.remiseForm.value.remise / 100);
         return +total.toFixed(2);
     }
 
-    calculPanierMoyen(client: ClientModel): number{
-        let total = this.getTotalTTC(this.produits.controls);
+    calculPanierMoyen(client: ClientModel): number {
+        let total = this.getTotalTTC(this.produits.controls, this.prestations.controls);
         client.factures.forEach(
             facture => total += facture.totalTTC
         );

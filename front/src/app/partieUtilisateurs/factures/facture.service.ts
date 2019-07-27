@@ -33,7 +33,12 @@ export class FactureService {
     }
 
     sendMailStockBas(email: string, produit: string) {
-        this.http.post(this.requeteUtils.url + 'produits/mailStockBas?email=' + email + '&produit=' + produit, '',
+        this.http.post(this.requeteUtils.url + 'produits/mailStockBas?email=' + email + '&prestation=' + produit, '',
             this.requeteUtils.getOptions()).subscribe();
+    }
+
+    savePrestationsFacture(quantite: any, idFacture: number, id: any) {
+        this.http.post(this.requeteUtils.url + 'factures/savePestations?quantite=' + quantite + '&idPrestation=' + id + '&idFacture='
+            + idFacture, '', this.requeteUtils.getOptions()).subscribe();
     }
 }

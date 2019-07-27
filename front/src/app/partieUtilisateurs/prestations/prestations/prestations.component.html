@@ -1,0 +1,87 @@
+<ul class="fil-ariane">
+    <li>
+        <a routerLink="/users">Menu</a>
+    </li>
+    <li>
+        <a class="actif">Fournisseurs</a>
+    </li>
+</ul>
+<h1>Fournisseurs</h1>
+<ng-container *ngIf="role === 'ROLE_ADMIN'">
+    <div class="boutons-container">
+        <ng-container *ngIf="isDirty"><button mat-raised-button (click)="envoiForm()">Valider</button> </ng-container>
+        <button mat-raised-button color="accent" (click)="onAjouter()" [disabled]="isDirty">Ajouter</button>
+        <button mat-raised-button color="warn" (click)="onSupprimer()" [disabled]="isDirty">Supprimer</button>
+    </div>
+</ng-container>
+<mat-form-field class="example-full-width">
+    <input matInput type="text" placeholder="Filter" (keyup)="rechercheTableau($event.target.value)">
+</mat-form-field>
+<ng-container *ngIf="screenWidth >= 1024 else mobile">
+<div class="mat-elevation-z2">
+    <table class="customTable">
+        <thead>
+        <tr class="customTable-tr">
+            <th><mat-checkbox class="checkbox" color="primary" (change)="selectAll($event)" [checked]="allSelected || selection.length === listeElements.length"></mat-checkbox></th>
+            <th>designation</th>
+            <th>prix</th>
+            <th>Unitée</th>
+            <th>tva</th>
+        </tr>
+        </thead>
+        <tbody [formGroup]="elementForm">
+        <ng-container formArrayName="elements" *ngFor="let control of elements.controls; let i = index;">
+            <tr class="customTable-tr" [formGroupName]="i">
+                <td><mat-checkbox class="checkbox" color="primary" (change)="changeSelection(control.value, $event)" [checked]="isSelected(control.value) || allSelected"></mat-checkbox></td>
+                <td><input id="input-des-{{i}}" class="readOnly" [inputReadOnly]="true"
+                           formControlName="designation" placeholder="Désignation" (keyup)="changeIsDirty()">
+                </td>
+                <td><input class="inputChiffre" [inputReadOnly]="true" formControlName="prix"
+                           (keyup)="changeIsDirty()">€
+                </td>
+                <td><input class="readOnly" [inputReadOnly]="true"
+                           formControlName="unitee" placeholder="Unitée" (keyup)="changeIsDirty()">
+                </td>
+                <td>
+                    <select [inputReadOnly]="true" formControlName="tva"
+                            (change)="envoiForm()">
+                        <option [value]="0">0</option>
+                        <option [value]="2.1">2,1%</option>
+                        <option [value]="5.5">5.5%</option>
+                        <option [value]="10">10%</option>
+                        <option [value]="20">20%</option>
+                    </select>
+                </td>
+            </tr>
+        </ng-container>
+        </tbody>
+    </table>
+    <div class="tableau-paginator">
+        <select [(ngModel)]="nbElements" (change)="initTableau()">
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+        </select>
+        <mat-icon svgIcon="left" (click)="pagination('left')"></mat-icon>
+        <p>page {{pageCourante}} / {{nbPage}}</p>
+        <mat-icon svgIcon="right" (click)="pagination('right')"></mat-icon>
+    </div>
+</div>
+</ng-container>
+<!-- version mobile / tablette -->
+<ng-template #mobile>
+<!--    <div [formGroup]="elementForm" class="flex">-->
+<!--        <div formArrayName="elements" *ngFor="let control of elements.controls; let i = index;">-->
+<!--            <div class="contenaire selectionable" [formGroupName]="i" (click)="changeSelection(control.value)"-->
+<!--                 [ngClass]="{'selected': isSelected(control.value)}">-->
+<!--                <input  (keyup)="changeIsDirty()" [inputReadOnly]="role === 'ROLE_ADMIN'" class="h2-like" formControlName="nom" placeholder="Nom">-->
+<!--                <input  (keyup)="changeIsDirty()" [inputReadOnly]="role === 'ROLE_ADMIN'" formControlName="telephone" placeholder="Téléphone">-->
+<!--                <input  (keyup)="changeIsDirty()" [inputReadOnly]="role === 'ROLE_ADMIN'" formControlName="email" placeholder="Email">-->
+<!--                <input (click)="openDialog(control.value, i)"  [inputReadOnly]="role === 'ROLE_ADMIN'"-->
+<!--                       formControlName="produits" placeholder="Produits">-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+</ng-template>

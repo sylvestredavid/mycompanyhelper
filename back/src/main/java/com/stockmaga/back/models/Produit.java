@@ -50,8 +50,8 @@ public class Produit implements Serializable {
 	@JoinColumn(name="idGenre")
 	@JsonIgnoreProperties("produits")
 	private Genre genre;
-	
-	@JsonIgnoreProperties("produit")
+
+	@JsonIgnoreProperties({"prestation", "produit"})
 	@OneToMany(mappedBy="produit")
 	private List<FactureProduit> factures;
 

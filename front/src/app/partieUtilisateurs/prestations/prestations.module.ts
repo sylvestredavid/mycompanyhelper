@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {FournisseursListeComponent} from './fournisseurs-liste/fournisseurs-liste.component';
+import {PrestationsComponent} from './prestations/prestations.component';
 import {
     MatButtonModule,
     MatCheckboxModule,
@@ -16,17 +16,13 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
 import {AuthGuard} from '../../shared/guards/auth-guard.service';
 import {SharedModule} from '../../shared/shared.module';
-import {DialogFournisseursComponent} from './fournisseurs-liste/dialog-fournisseurs/dialog-fournisseurs.component';
-import {FournisseursFormGuard} from '../../shared/guards/fournisseurs-form-guard.service';
-import {MailingComponent} from "../mailing/mailing/mailing.component";
 
 @NgModule({
-    entryComponents: [DialogFournisseursComponent],
+    entryComponents: [],
     declarations: [
-        FournisseursListeComponent,
-        DialogFournisseursComponent,
+        PrestationsComponent
     ],
-    exports: [FournisseursListeComponent],
+    exports: [PrestationsComponent],
     imports: [
         CommonModule,
         MatButtonModule,
@@ -45,11 +41,10 @@ import {MailingComponent} from "../mailing/mailing/mailing.component";
             {
                 path: '',
                 canActivate: [AuthGuard],
-                component: FournisseursListeComponent,
-                canDeactivate: [FournisseursFormGuard]
+                component: PrestationsComponent
             },
         ]),
     ]
 })
-export class FournisseursModule {
+export class PrestationsModule {
 }

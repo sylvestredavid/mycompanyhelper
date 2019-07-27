@@ -24,6 +24,7 @@ import {SuiviConsommationModel} from '../../models/suivi-consommation.model';
 import {EntrepriseService} from '../entreprise/entreprise.service';
 import {AchatService} from '../achat/achat.service';
 import {CaService} from "../ca/ca.service";
+import {PrestationsService} from "../prestations/prestations.service";
 
 @Component({
     selector: 'app-core',
@@ -44,7 +45,7 @@ export class CoreComponent implements OnInit, OnDestroy {
         , public dialog: MatDialog, iconRegistry: MatIconRegistry, sanitizer: DomSanitizer, private produitService: ProduitService,
                 private clientService: ClientsService, private optionService: OptionsService, private router: Router, private calendrierService: CalendrierService,
                 private notificationService: NotificationsService, private userService: UsersService, private entrepriseService: EntrepriseService,
-                private achatService: AchatService, private caService: CaService) {
+                private achatService: AchatService, private caService: CaService, private prestationService: PrestationsService) {
         iconRegistry.addSvgIcon(
             'quit',
             sanitizer.bypassSecurityTrustResourceUrl('/assets/sortie.svg'));
@@ -63,6 +64,7 @@ export class CoreComponent implements OnInit, OnDestroy {
         this.optionService.publishOptions();
         this.caService.publishCAPrevisionnel();
         this.produitService.publishProduits();
+        this.prestationService.publishPrestations();
         this.achatService.publishAchats();
         this.clientService.publishClients();
         this.entrepriseService.publishEntreprise();

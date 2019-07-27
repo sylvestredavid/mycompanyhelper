@@ -1,5 +1,6 @@
 import {ClientModel} from './client.model';
 import {ProduitsFactureModel} from './produitsFacture.model';
+import {PrestationsFactureModel} from './prestationsFacture.model';
 
 export class FactureModel {
 
@@ -25,7 +26,11 @@ export class FactureModel {
 
   produitsFacture: ProduitsFactureModel[];
 
+  prestationsFacture: PrestationsFactureModel[];
+
   idUser: number;
 
   numero: number;
+
+  devis: boolean;
 }

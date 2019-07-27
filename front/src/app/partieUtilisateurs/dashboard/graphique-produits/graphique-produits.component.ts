@@ -99,8 +99,8 @@ export class GraphiqueProduitsComponent implements OnInit {
     }
 
     /**
-     * calcul le nombre de vente par produit
-     * @param factures les factures associées au produit
+     * calcul le nombre de vente par prestation
+     * @param factures les factures associées au prestation
      */
     private nbVente(factures: ProduitsFactureModel[]): number {
         let total = 0;

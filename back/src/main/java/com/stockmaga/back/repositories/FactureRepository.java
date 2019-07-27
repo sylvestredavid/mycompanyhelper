@@ -54,4 +54,9 @@ public interface FactureRepository extends JpaRepository<Facture, Integer> {
 	@Transactional
 	@Query(value="ALTER TABLE factures AUTO_INCREMENT=1234", nativeQuery=true)
 	public void setAutoIncrement();
+
+	@Modifying
+	@Transactional
+	@Query(value="INSERT INTO facture_prestations(quantite, facture, prestations) VALUES (?1, ?2, ?3)", nativeQuery=true)
+    void savePrestation(int quantite, Integer idFacture, Integer idPrestation);
 }

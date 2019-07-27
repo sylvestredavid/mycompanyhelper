@@ -1,0 +1,39 @@
+<ul class="fil-ariane">
+  <li>
+    <a routerLink="/users">Menu</a>
+  </li>
+  <li>
+    <a class="actif">Devis</a>
+  </li>
+</ul>
+<ng-container *ngIf="listeDevis">
+  <div class="boutons-container">
+    <button mat-raised-button color="primary" (click)="onDetails()" [disabled]="selection.length > 1">Détails</button>
+    <button mat-raised-button color="warn" (click)="onSupprimer()">Supprimer</button>
+  </div>
+  <div class="clear"></div>
+  <div class="mat-elevation-z2">
+    <table class="customTable">
+      <thead>
+      <tr class="customTable-tr">
+        <th></th>
+        <th>Numéro</th>
+        <th>Date</th>
+        <th>Client</th>
+        <th>Total</th>
+      </tr>
+      </thead>
+      <tbody>
+      <ng-container *ngFor="let d of listeDevis; let i = index">
+        <tr class="customTable-tr">
+          <td><mat-checkbox class="checkbox" color="primary" (change)="changeSelection(d, $event)" [checked]="isSelected(d)"></mat-checkbox></td>
+          <td>{{d.idFacture}}</td>
+          <td>{{d.date | date: 'dd-MM-yy'}}</td>
+          <td>{{d.client.nom}} {{d.client.prenom}}</td>
+          <td>{{d.totalTTC}}</td>
+        </tr>
+      </ng-container>
+      </tbody>
+    </table>
+  </div>
+</ng-container>

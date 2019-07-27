@@ -4,6 +4,9 @@ import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Properties;
 
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
@@ -12,18 +15,13 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import com.stockmaga.back.models.*;
 import com.stockmaga.back.repositories.EntrepriseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import org.springframework.core.env.Environment;
-import com.stockmaga.back.models.Annonce;
-import com.stockmaga.back.models.Calendrier;
-import com.stockmaga.back.models.Email;
-import com.stockmaga.back.models.Facture;
-import com.stockmaga.back.models.FactureProduit;
-import com.stockmaga.back.models.User;
 import com.stockmaga.back.request.SignUpForm;
 import com.stockmaga.back.services.IEmailService;
 
@@ -101,9 +99,13 @@ public class EmailService implements IEmailService {
 	@Override
 	public void sendFacture(Facture facture, String entreprise) {
 
-		final String FACTURE_DEBUT = "<h1>Bonjour</h1>"
-				+ "<p style='margin-top: 10px;'>Vous venez d'effectuer l'achat suivant:</p>"
-				+ "<div style='width:80%;margin:auto'>"
+		String facture_Debut = "<h1>Bonjour</h1>";
+		if(facture.isDevis()) {
+			facture_Debut += "<p style='margin-top: 10px;'>Voici votre devis:</p>";
+		} else {
+			facture_Debut += "<p style='margin-top: 10px;'>Voici votre facture:</p>";
+		}
+		facture_Debut += "<div style='width:80%;margin:auto'>"
 				+ "<table style='border: 1px solid black; width:100%; border-collapse: collapse;'>"
 				+ "<thead style='border: 1px solid black'>" + "<tr style='border: 1px solid black'>"
 				+ "<th style='border: 1px solid black; border: 1px solid black; text-align:center; padding: 10px 20px'>Description</th>"
@@ -112,7 +114,6 @@ public class EmailService implements IEmailService {
 				+ "<th style='text-align:center; padding: 10px 20px; border: 1px solid black;'>total</th>" + "</tr>"
 				+ "</thead>" + "<tbody style='border: 1px solid black'>";
 		String facture_millieu = "";
-		int total = 0;
 		for (FactureProduit factureProduit : facture.getProduitsFacture()) {
 			facture_millieu += "<tr>" + "<td style='border: 1px solid black; text-align:center; padding: 10px 20px'>"
 					+ factureProduit.getProduit().getDesignation() + "</td>"
@@ -122,15 +123,40 @@ public class EmailService implements IEmailService {
 					+ factureProduit.getQuantite() + "</td>"
 					+ "<td style='border: 1px solid black; text-align:center; padding: 10px 20px'>"
 					+ (factureProduit.getProduit().getPrixVente() * factureProduit.getQuantite()) + " €</td>" + "</tr>";
-			total += (factureProduit.getProduit().getPrixVente() * factureProduit.getQuantite());
+		}
+		for (FacturePrestation facturePrestation : facture.getPrestationsFacture()) {
+			facture_millieu += "<tr>" + "<td style='border: 1px solid black; text-align:center; padding: 10px 20px'>"
+					+ facturePrestation.getPrestation().getDesignation() + "</td>"
+					+ "<td style='border: 1px solid black; text-align:center; padding: 10px 20px'>"
+					+ facturePrestation.getPrestation().getPrix() + " €/"+facturePrestation.getPrestation().getUnitee()+"</td>"
+					+ "<td style='border: 1px solid black; text-align:center; padding: 10px 20px'>"
+					+ facturePrestation.getQuantite() + "" +facturePrestation.getPrestation().getUnitee()+ "</td>"
+					+ "<td style='border: 1px solid black; text-align:center; padding: 10px 20px'>"
+					+ (facturePrestation.getPrestation().getPrix() * facturePrestation.getQuantite()) + " €</td>" + "</tr>";
 		}
 
-		final String FACTURE_FIN = "</tbody>" + "</table>" + "<p style='text-align:right'>Total: " + total + " €</p>"
-				+ "</div>" + "<p style='margin-top:10px;'>Nous vous remercions pour votre confiance.</p>"
+		String facture_Fin = "</tbody>"
+				+ "</table>"
+				+ "<p style='text-align:right'>Total HT: " + facture.getTotalHT() + " €</p>";
+		if(facture.getTva21() > 0) {
+		facture_Fin += "<p style='text-align:right'>TVA 2,1%: " + facture.getTva21() + " €</p>";
+		}
+		if(facture.getTva55() > 0) {
+			facture_Fin += "<p style='text-align:right'>TVA 5,5%: " + facture.getTva55() + " €</p>";
+		}
+		if(facture.getTva10() > 0) {
+			facture_Fin += "<p style='text-align:right'>TVA 10%: " + facture.getTva10() + " €</p>";
+		}
+		if(facture.getTva20() > 0) {
+			facture_Fin += "<p style='text-align:right'>TVA 20%: " + facture.getTva20() + " €</p>";
+		}
+		facture_Fin += "<p style='text-align:right'>Total TTC: " + facture.getTotalTTC() + " €</p>"
+				+ "</div>"
+				+ "<p style='margin-top:10px;'>Nous vous remercions pour votre confiance.</p>"
 				+ "<p>Coridlament</p>"
 				+ "<p>Ce message vous a été envoyé depuis <a href=\"https://www.mycompanyhelper.com\">mycompanyhelper.com</a></p>";
 
-		final String MAIL = FACTURE_DEBUT + facture_millieu + FACTURE_FIN;
+		final String MAIL = facture_Debut + facture_millieu + facture_Fin;
 
 		send(facture.getClient().getEmail(), MAIL_FROM, entreprise,  "Merci pour votre achat", MAIL);
 	}

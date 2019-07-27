@@ -45,6 +45,10 @@ const routes: Routes = [
                 loadChildren: './partieUtilisateurs/achat/achat.module#AchatModule'
             },
             {
+                path: 'devis',
+                loadChildren: './partieUtilisateurs/devis/devis.module#DevisModule'
+            },
+            {
                 path: 'dashboard',
                 loadChildren: './partieUtilisateurs/dashboard/dashboard.module#DashboardModule'
             },
@@ -55,6 +59,10 @@ const routes: Routes = [
             {
                 path: 'produits',
                 loadChildren: './partieUtilisateurs/produits/produits.module#ProduitsModule'
+            },
+            {
+                path: 'prestations',
+                loadChildren: './partieUtilisateurs/prestations/prestations.module#PrestationsModule'
             },
             {
                 path: 'clients',

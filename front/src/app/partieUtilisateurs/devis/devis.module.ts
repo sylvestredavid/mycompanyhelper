@@ -1,47 +1,44 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
+import {DevisComponent} from './devis/devis.component';
 import {RouterModule} from '@angular/router';
-import {CreateFactureComponent} from './create-facture/create-facture.component';
+import {AuthGuard} from '../../shared/guards/auth-guard.service';
 import {
-    MatAutocompleteModule,
     MatButtonModule,
+    MatCheckboxModule,
     MatFormFieldModule,
     MatIconModule,
-    MatInputModule, MatRadioModule,
-    MatSelectModule,
+    MatInputModule,
     MatSnackBarModule,
-    MatStepperModule
+    MatTableModule
 } from '@angular/material';
 import {HttpClientModule} from '@angular/common/http';
 import {ScrollingModule} from '@angular/cdk/scrolling';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {AuthGuard} from '../../shared/guards/auth-guard.service';
+import {SharedModule} from '../../shared/shared.module';
+import { VueDevisComponent } from './vue-devis/vue-devis.component';
 
 @NgModule({
-  declarations: [
-    CreateFactureComponent,
-  ],
+  declarations: [DevisComponent, VueDevisComponent],
     imports: [
         CommonModule,
         MatButtonModule,
+        MatCheckboxModule,
         HttpClientModule,
+        MatTableModule,
         MatFormFieldModule,
         MatInputModule,
-        MatSelectModule,
-        MatAutocompleteModule,
         MatIconModule,
-        MatStepperModule,
         ScrollingModule,
         MatSnackBarModule,
         ReactiveFormsModule,
         FormsModule,
+        SharedModule,
         RouterModule.forChild([
-            {path: '', canActivate: [AuthGuard], component: CreateFactureComponent}
+            {path: '', canActivate: [AuthGuard], component: DevisComponent},
+            {path: ':id', canActivate: [AuthGuard], component: VueDevisComponent}
         ]),
-        MatRadioModule
-    ],
-  exports: [
-    CreateFactureComponent,
-  ]
+        MatTableModule,
+    ]
 })
-export class FacturesModule { }
+export class DevisModule { }

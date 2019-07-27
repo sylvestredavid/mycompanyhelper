@@ -23,6 +23,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Type;
 
 @Entity
 @Getter
@@ -64,10 +65,19 @@ public class Facture implements Serializable {
 	
 	@OneToMany(mappedBy="facture")
 	@OnDelete(action=OnDeleteAction.CASCADE)
+	@JsonIgnoreProperties("facture")
 	private Set<FactureProduit> produitsFacture = new HashSet<FactureProduit>();
+
+	@OneToMany(mappedBy="facture")
+	@OnDelete(action=OnDeleteAction.CASCADE)
+	@JsonIgnoreProperties("facture")
+	private Set<FacturePrestation> prestationsFacture = new HashSet<FacturePrestation>();
 	
 	private Long idUser;
 
 	private int numero;
+
+	@Type(type = "org.hibernate.type.NumericBooleanType")
+	private boolean devis;
 
 }

@@ -1,0 +1,84 @@
+<ng-container *ngIf="devis">
+  <ul class="fil-ariane">
+    <li>
+      <a routerLink="/users">Menu</a>
+    </li>
+    <li>
+      <a routerLink="/users/devis">Devis</a>
+    </li>
+    <li>
+      <a class="actif">Vue devis n° {{devis.idFacture}}</a>
+    </li>
+  </ul>
+  <div class="boutons-container">
+    <button mat-raised-button color="warn" (click)="onEnvoyer()">Relancer</button>
+    <button mat-raised-button color="primary" (click)="generatePDF('facture')">PDF</button>
+    <button mat-raised-button color="accent" (click)="onAccepter()">Devis accepté</button>
+  </div>
+<div class="facture">
+  <div class="facturePdf" [id]="'facture'">
+    <div class="detailClient">
+      <p>{{devis.client.nom}} {{devis.client.prenom}}</p>
+      <p>{{devis.client.adresse}}</p>
+      <p>{{devis.client.codePostal}} {{devis.client.ville}}</p>
+    </div>
+    <div *ngIf="entreprise" class="entreprise">
+      <p>{{entreprise.nom}}</p>
+      <p>siret : {{entreprise.siret}}</p>
+      <p>{{entreprise.adresse}}</p>
+      <p>{{entreprise.codePostal}} {{entreprise.ville}}</p>
+      <p>{{entreprise.telephone}}</p>
+      <p>{{entreprise.email}}</p>
+    </div>
+    <div class="clear"></div>
+    <div class="body">
+      <h3>Devis n° {{devis.idFacture}}</h3>
+      <p>{{devis.date | date: "dd-MM-yyyy"}}</p>
+      <table>
+        <thead>
+        <tr>
+          <th>produit</th>
+          <th>prix unitaire</th>
+          <th>quantitée</th>
+          <th>Prix</th>
+        </tr>
+        </thead>
+        <tbody>
+        <ng-container *ngFor="let produit of devis.produitsFacture">
+          <tr>
+            <td>{{produit.produit.designation}}</td>
+            <td>{{produit.produit.prixVente}}€</td>
+            <td>{{produit.quantite}}</td>
+            <td>{{produit.produit.prixVente * produit.quantite}}€</td>
+          </tr>
+        </ng-container>
+        <ng-container *ngFor="let prestation of devis.prestationsFacture">
+          <tr>
+            <td>{{prestation.prestation.designation}}</td>
+            <td>{{prestation.prestation.prix}}€/{{prestation.prestation.unitee}}</td>
+            <td>{{prestation.quantite}} {{prestation.prestation.unitee}}</td>
+            <td>{{prestation.prestation.prix * prestation.quantite}}€</td>
+          </tr>
+        </ng-container>
+        </tbody>
+      </table>
+      <p class="align-right">Total HT : {{devis.totalHT}} €</p>
+      <ng-container *ngIf="devis.tva21 !== 0">
+        <p class="align-right">TVA à 2.1% : {{devis.tva21}} €</p>
+      </ng-container>
+      <ng-container *ngIf="devis.tva55 !== 0">
+        <p class="align-right">TVA à 5.5% : {{devis.tva55}} €</p>
+      </ng-container>
+      <ng-container *ngIf="devis.tva10 !== 0">
+        <p class="align-right">TVA à 10% : {{devis.tva10}} €</p>
+      </ng-container>
+      <ng-container *ngIf="devis.tva20 !== 0">
+        <p class="align-right">TVA à 20% : {{devis.tva20}} €</p>
+      </ng-container>
+      <p class="align-right">Total TTC : {{devis.totalTTC}} €</p>
+    </div>
+    <div class="conditions_generales">
+      <p>Payable à 30 jours date de facture</p>
+      <p>En cas de retard de paiement, indemnité forfaitaire légale pour frais de recouvrement : 40,00 €</p>
+    </div>
+

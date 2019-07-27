@@ -43,10 +43,9 @@ import localeFr from '@angular/common/locales/fr';
 import {MenuFournisseurComponent} from './partieFournisseurs/menuFournisseur/menu-fournisseur.component';
 import {CoreComponent} from './partieUtilisateurs/core/core.component';
 import {CoreFournisseursComponent} from './partieFournisseurs/core-fournisseurs/core-fournisseurs.component';
-import {UsersModule} from "./users/users.module";
+import {UsersModule} from './users/users.module';
 import {SupportComponent} from './shared/support/support.component';
 import {SuiviDialComponent} from './shared/dialogues/suivi-dial/suivi-dial.component';
-import {MailingComponent} from "./partieUtilisateurs/mailing/mailing/mailing.component";
 
 registerLocaleData(localeFr, 'fr-FR');
 
@@ -66,7 +65,7 @@ registerLocaleData(localeFr, 'fr-FR');
         CoreComponent,
         CoreFournisseursComponent,
         SupportComponent,
-        SuiviDialComponent,
+        SuiviDialComponent
     ],
     imports: [
         BrowserModule,

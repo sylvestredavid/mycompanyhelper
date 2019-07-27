@@ -65,6 +65,11 @@ public class FactureService implements IFactureService {
 		factureRepository.saveProduit(quantite, idFacture, idProduit);
 
 	}
+	@Override
+	public void savePrestationfactures(int quantite, Integer idPrestation, Integer idFacture) {
+		factureRepository.savePrestation(quantite, idFacture, idPrestation);
+
+	}
 
 	/**
 	 * supprimer une facture

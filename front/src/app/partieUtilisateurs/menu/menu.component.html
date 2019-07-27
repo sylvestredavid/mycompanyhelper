@@ -7,6 +7,10 @@
         <img src="assets/produits.svg" alt="produits">
         <p>Produits</p>
     </div>
+    <div class="menu_item" routerLink="prestations">
+        <img src="assets/prestations.svg" alt="prestations">
+        <p>Prestations</p>
+    </div>
     <div class="menu_item" routerLink="clients">
         <img src="assets/clients.svg" alt="clients">
         <p>Clients</p>
@@ -29,13 +33,13 @@
     </ng-template>
     <ng-template [ngIf]="role === 'ROLE_ADMIN'" [ngIfElse]="gestCA">
         <div class="menu_item" routerLink="caPrevisionnel">
-            <img src="assets/shop.svg" alt="CA prévisionnel">
+            <img src="assets/business.svg" alt="CA prévisionnel">
             <p>CA prévisionnel</p>
         </div>
     </ng-template>
     <ng-template #gestCA>
         <div class="menu_item disabled">
-            <img src="assets/shop.svg" alt="CA previsionnel">
+            <img src="assets/business.svg" alt="CA previsionnel">
             <p>CA prévisionnel</p>
         </div>
     </ng-template>
@@ -53,7 +57,11 @@
     </ng-template>
     <div class="menu_item" routerLink="creer-facture">
         <img src="assets/factures.svg" alt="créer facture">
-        <p>Créer facture</p>
+        <p>Créer facture/devis</p>
+    </div>
+    <div class="menu_item" routerLink="devis">
+        <img src="assets/factures.svg" alt="devis">
+        <p>Devis</p>
     </div>
     <div class="menu_item" routerLink="calendrier">
         <img src="assets/calendrier.svg" alt="calendrier">

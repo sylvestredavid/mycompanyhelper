@@ -6,7 +6,7 @@ import {DialogGuardComponent} from './dialog-guard/dialog-guard.component';
 import {FournisseursListeComponent} from '../../partieUtilisateurs/fournisseurs/fournisseurs-liste/fournisseurs-liste.component';
 
 /**
- * la methode canDeactivate est appelée quand on quitte la page FournisseursListeComponent
+ * la methode canDeactivate est appelée quand on quitte la page PrestationsComponent
  * elle verifie si des formulaires ont été modifié sans etre enregistré, dans ce cas, elle ouvre une boite de dialog demandant
  * si l'utilisateur veux les enregistré ou pas
  */
