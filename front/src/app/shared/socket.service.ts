@@ -16,6 +16,7 @@ export class SocketService {
   constructor(private userService: UsersService) {
     // connexion au serveur
     this.url = 'https://sockets.mycompanyhelper.com/';
+    // this.url = 'http://localhost:8081/';
     this.socket = io(this.url);
   }
 

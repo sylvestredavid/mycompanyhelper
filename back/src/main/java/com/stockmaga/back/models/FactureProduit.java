@@ -30,7 +30,7 @@ public class FactureProduit implements Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 7982703716244812236L;
+	private static final long serialVersionUID = 7982703716244812736L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)

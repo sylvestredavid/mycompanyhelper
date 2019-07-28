@@ -67,31 +67,6 @@ export class FournisseursListeComponent implements OnInit, OnDestroy {
         this.isDirty = false;
         this.getScreenSize();
         this.initValues();
-        this.initSocket();
-    }
-
-    initSocket() {
-        this.socket.getAjoutFournisseur().subscribe(
-            data => {
-                if (data.idUser === this.userService.idUser) {
-                    this.fournisseurService.pushFournisseur(data.fournisseur);
-                }
-            }
-        );
-        this.socket.getModifFournisseur().subscribe(
-            data => {
-                if (data.idUser === this.userService.idUser) {
-                    this.fournisseurService.replaceFournisseur(data.fournisseur);
-                }
-            }
-        );
-        this.socket.getDeleteFournisseur().subscribe(
-            data => {
-                if (data.idUser === this.userService.idUser) {
-                    this.fournisseurService.removeFournisseur(data.id);
-                }
-            }
-        );
     }
 
     /**

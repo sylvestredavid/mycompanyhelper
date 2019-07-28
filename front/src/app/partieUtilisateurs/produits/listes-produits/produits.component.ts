@@ -82,53 +82,9 @@ export class ProduitsComponent implements OnInit, OnDestroy {
         this.subscriptions.push(this.genreService.listeGenre$.subscribe(
             genres => this.listeGenres = genres
         ));
-        this.initSocket();
     }
 
-    initSocket() {
-        this.socket.getAjoutGenre().subscribe(
-            (data) => {
-                if (data.idUser === this.userService.idUser) {
-                    this.genreService.pushGenre(data.genre);
-                }
-            }
-        );
-        this.socket.getDeleteGenre().subscribe(
-            (data) => {
-                if (data.idUser === this.userService.idUser) {
-                    this.genreService.removeGenre(data.id);
-                }
-            }
-        );
-        this.socket.getAjoutProduit().subscribe(
-            (data) => {
-                if (data.idUser === this.userService.idUser) {
-                    this.produitService.pushProduit(data.produit);
-                }
-            }
-        );
-        this.socket.getModifProduit().subscribe(
-            (data) => {
-                if (data.idUser === this.userService.idUser) {
-                    this.produitService.replaceProduit(data.produit);
-                }
-            }
-        );
-        this.socket.getDeleteProduit().subscribe(
-            (data) => {
-                if (data.idUser === this.userService.idUser) {
-                    this.produitService.removeProduit(data.id);
-                }
-            }
-        );
-        this.socket.getRemisEnVenteProduit().subscribe(
-            (data) => {
-                if (data.idUser === this.userService.idUser) {
-                    this.produitService.remiseEnVente(data.id);
-                }
-            }
-        );
-    }
+
 
     /**
      * initiation des valeurs et de la liste d'elements a afficher

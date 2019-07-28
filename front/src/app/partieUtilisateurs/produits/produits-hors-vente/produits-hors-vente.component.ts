@@ -72,7 +72,6 @@ export class ProduitsHorsVenteComponent implements OnInit, OnDestroy {
         )
         this.initValues();
         this.getScreenSize();
-        this.initSocket();
     }
 
     /**
@@ -228,23 +227,6 @@ export class ProduitsHorsVenteComponent implements OnInit, OnDestroy {
     @HostListener('window:resize', ['$event'])
     getScreenSize(event?) {
         this.screenWidth = window.innerWidth;
-    }
-
-    initSocket() {
-        this.socket.getDeleteProduit().subscribe(
-            (data) => {
-                if (data.idUser === this.userService.idUser) {
-                    this.produitService.removeProduit(data.id);
-                }
-            }
-        );
-        this.socket.getRemisEnVenteProduit().subscribe(
-            (data) => {
-                if (data.idUser === this.userService.idUser) {
-                    this.produitService.remiseEnVente(data.id);
-                }
-            }
-        );
     }
 
     ajoutCat() {

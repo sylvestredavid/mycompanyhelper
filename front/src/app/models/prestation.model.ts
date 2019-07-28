@@ -10,7 +10,7 @@ export class PrestationModel {
 
   prix: number;
 
-  factures: PrestationsFactureModel[];
+  factures?: PrestationsFactureModel[];
 
   idUser: number;
 

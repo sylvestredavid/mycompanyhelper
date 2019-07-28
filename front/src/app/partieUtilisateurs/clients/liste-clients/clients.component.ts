@@ -60,31 +60,6 @@ export class ClientsComponent implements OnInit, OnDestroy {
         this.isDirty = false;
         this.getScreenSize();
         this.initValues();
-        this.initSocket();
-    }
-
-    initSocket() {
-        this.socket.getAjoutClient().subscribe(
-            data => {
-                if (data.idUser === this.userService.idUser) {
-                    this.clientService.pushClient(data.client);
-                }
-            }
-        );
-        this.socket.getModifClient().subscribe(
-            data => {
-                if (data.idUser === this.userService.idUser) {
-                    this.clientService.replaceClient(data.client);
-                }
-            }
-        );
-        this.socket.getDeleteClient().subscribe(
-            data => {
-                if (data.idUser === this.userService.idUser) {
-                    this.clientService.removeClient(data.id);
-                }
-            }
-        );
     }
 
     /**

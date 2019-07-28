@@ -25,6 +25,7 @@ import {EntrepriseService} from '../entreprise/entreprise.service';
 import {AchatService} from '../achat/achat.service';
 import {CaService} from "../ca/ca.service";
 import {PrestationsService} from "../prestations/prestations.service";
+import {SocketService} from "../../shared/socket.service";
 
 @Component({
     selector: 'app-core',
@@ -45,7 +46,8 @@ export class CoreComponent implements OnInit, OnDestroy {
         , public dialog: MatDialog, iconRegistry: MatIconRegistry, sanitizer: DomSanitizer, private produitService: ProduitService,
                 private clientService: ClientsService, private optionService: OptionsService, private router: Router, private calendrierService: CalendrierService,
                 private notificationService: NotificationsService, private userService: UsersService, private entrepriseService: EntrepriseService,
-                private achatService: AchatService, private caService: CaService, private prestationService: PrestationsService) {
+                private achatService: AchatService, private caService: CaService, private prestationService: PrestationsService,
+                private socket: SocketService) {
         iconRegistry.addSvgIcon(
             'quit',
             sanitizer.bypassSecurityTrustResourceUrl('/assets/sortie.svg'));
@@ -86,6 +88,136 @@ export class CoreComponent implements OnInit, OnDestroy {
         );
         this.initGenres();
         this.getScreenSize();
+        this.initSocket()
+    }
+
+    initSocket() {
+        this.socket.getAjoutGenre().subscribe(
+            (data) => {
+                if (data.idUser === this.userService.idUser) {
+                    this.genreService.pushGenre(data.genre);
+                }
+            }
+        );
+        this.socket.getDeleteGenre().subscribe(
+            (data) => {
+                if (data.idUser === this.userService.idUser) {
+                    this.genreService.removeGenre(data.id);
+                }
+            }
+        );
+        this.socket.getAjoutProduit().subscribe(
+            (data) => {
+                if (data.idUser === this.userService.idUser) {
+                    this.produitService.pushProduit(data.produit);
+                }
+            }
+        );
+        this.socket.getModifProduit().subscribe(
+            (data) => {
+                if (data.idUser === this.userService.idUser) {
+                    this.produitService.replaceProduit(data.produit);
+                }
+            }
+        );
+        this.socket.getDeleteProduit().subscribe(
+            (data) => {
+                if (data.idUser === this.userService.idUser) {
+                    this.produitService.removeProduit(data.id);
+                }
+            }
+        );
+        this.socket.getRemisEnVenteProduit().subscribe(
+            (data) => {
+                if (data.idUser === this.userService.idUser) {
+                    this.produitService.remiseEnVente(data.id);
+                }
+            }
+        );
+        this.socket.getAjoutFournisseur().subscribe(
+            data => {
+                if (data.idUser === this.userService.idUser) {
+                    this.fournisseurService.pushFournisseur(data.fournisseur);
+                }
+            }
+        );
+        this.socket.getModifFournisseur().subscribe(
+            data => {
+                if (data.idUser === this.userService.idUser) {
+                    this.fournisseurService.replaceFournisseur(data.fournisseur);
+                }
+            }
+        );
+        this.socket.getDeleteFournisseur().subscribe(
+            data => {
+                if (data.idUser === this.userService.idUser) {
+                    this.fournisseurService.removeFournisseur(data.id);
+                }
+            }
+        );
+        this.socket.getAjoutCalendrier().subscribe(
+            data => {
+                if (data.idUser === this.userService.idUser) {
+                    this.calendrierService.pushCalendrier(data.calendrier);
+                }
+            }
+        );
+        this.socket.getModifCalendrier().subscribe(
+            data => {
+                if (data.idUser === this.userService.idUser) {
+                    this.calendrierService.updateCalendrier(data.calendrier);
+                }
+            }
+        );
+        this.socket.getDeleteCalendrier().subscribe(
+            data => {
+                if (data.idUser === this.userService.idUser) {
+                    this.calendrierService.removeCalendrier(data.id);
+                }
+            }
+        );
+        this.socket.getAjoutClient().subscribe(
+            data => {
+                if (data.idUser === this.userService.idUser) {
+                    this.clientService.pushClient(data.client);
+                }
+            }
+        );
+        this.socket.getModifClient().subscribe(
+            data => {
+                if (data.idUser === this.userService.idUser) {
+                    this.clientService.replaceClient(data.client);
+                }
+            }
+        );
+        this.socket.getDeleteClient().subscribe(
+            data => {
+                if (data.idUser === this.userService.idUser) {
+                    this.clientService.removeClient(data.id);
+                }
+            }
+        );
+        this.socket.getAjoutPrestation().subscribe(
+            data => {
+                if (data.idUser === this.userService.idUser) {
+                    this.prestationService.pushPrestation(data.prestation);
+                }
+            }
+        );
+        this.socket.getModifPrestation().subscribe(
+            data => {
+                if (data.idUser === this.userService.idUser) {
+                    this.prestationService.replacePrestation(data.prestation);
+                }
+            }
+        );
+        this.socket.getDeletePrestation().subscribe(
+            data => {
+                if (data.idUser === this.userService.idUser) {
+                    this.prestationService.removePrestation(data.prestation);
+                }
+            }
+        );
     }
 
     /**

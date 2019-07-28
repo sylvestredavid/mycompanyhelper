@@ -63,31 +63,6 @@ export class PrestationsComponent implements OnInit, OnDestroy {
         this.isDirty = false;
         this.getScreenSize();
         this.initValues();
-        this.initSocket();
-    }
-
-    initSocket() {
-        this.socket.getAjoutPrestation().subscribe(
-            data => {
-                if (data.idUser === this.userService.idUser) {
-                    this.prestationsService.pushPrestation(data.prestation);
-                }
-            }
-        );
-        this.socket.getModifPrestation().subscribe(
-            data => {
-                if (data.idUser === this.userService.idUser) {
-                    this.prestationsService.replacePrestation(data.prestation);
-                }
-            }
-        );
-        this.socket.getDeletePrestation().subscribe(
-            data => {
-                if (data.idUser === this.userService.idUser) {
-                    this.prestationsService.removePrestation(data.prestation);
-                }
-            }
-        );
     }
 
     /**
@@ -125,7 +100,6 @@ export class PrestationsComponent implements OnInit, OnDestroy {
             designation: [''],
             prix: [0],
             unitee: [''],
-            factures: this.fb.array([]),
             tva: [0]
         }));
     }
@@ -163,7 +137,6 @@ export class PrestationsComponent implements OnInit, OnDestroy {
                     prix: [element.prix],
                     tva: [element.tva],
                     unitee: [element.unitee],
-                    factures: this.fb.array(element.factures),
                 }));
             }
         );
@@ -307,7 +280,6 @@ export class PrestationsComponent implements OnInit, OnDestroy {
             unitee: prestation.unitee,
             tva: prestation.tva,
             prix: prestation.prix,
-            factures: prestation.factures,
             idUser: this.userService.idUser
         };
 
