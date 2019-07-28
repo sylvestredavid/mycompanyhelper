@@ -242,4 +242,30 @@ export class SocketService {
       });
     });
   }
+
+  ///////////////////////////// GENRE //////////////////////////////////
+
+  public ajoutGenre(genre) { // envoi au serveur l'ajout d'un prestation
+    this.socket.emit('ajout-genre', genre, this.userService.idUser);
+  }
+
+  public deleteGenre(id) { // envoi au serveur la suppression d'un prestation
+    this.socket.emit('delete-genre', id, this.userService.idUser);
+  }
+
+  public getAjoutGenre = () => { // reception de l'ajout d'un prestation (ce que le serveur node a renvoyé)
+    return Observable.create((observer) => {
+      this.socket.on('nouveau-genre', (data) => {
+        observer.next(data);
+      });
+    });
+  }
+
+  public getDeleteGenre = () => { // reception de la suppression d'un prestation (ce que le serveur node a renvoyé)
+    return Observable.create((observer) => {
+      this.socket.on('genre-supprimer', (data) => {
+        observer.next(data);
+      });
+    });
+  }
 }

@@ -18,6 +18,7 @@ import {UsersService} from '../../../users/users.service';
 import {NotificationsService} from '../../notification/notifications.service';
 import {Store} from '@ngrx/store';
 import {UserState} from '../../../shared/stores/user.reducer';
+import {SocketService} from "../../../shared/socket.service";
 
 @Component({
   selector: 'app-vue-devis',
@@ -35,7 +36,7 @@ export class VueDevisComponent implements OnInit {
   constructor(private devisService: DevisService, private datePipe: DatePipe, private route: ActivatedRoute,
               private entrepriseService: EntrepriseService, private factureService: FactureService, private snackBar: MatSnackBar,
               private clientService: ClientsService, private produitService: ProduitService, private notificationService: NotificationsService,
-              private userService: UsersService, private router: Router, private store: Store<UserState>) {
+              private userService: UsersService, private router: Router, private store: Store<UserState>, private socket: SocketService) {
     this.store.select('user').subscribe(
         user => {
           if (user) {
@@ -86,7 +87,7 @@ export class VueDevisComponent implements OnInit {
         this.factureService.sendMail(f.idFacture);
           this.clientService.updatePanierMoyen(this.calculPanierMoyen(this.devis.client), this.devis.client.idClient).subscribe(
               client => {
-                // this.socket.modifClient(client);
+                this.socket.modifClient(client);
                 this.clientService.replaceClient(client);
               });
           this.messageQueue.push('La facture a été envoyée par mail.');

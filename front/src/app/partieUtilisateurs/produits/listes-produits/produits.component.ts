@@ -17,8 +17,8 @@ import {OptionsService} from '../../options/options.service';
 import {AjoutGenreComponent} from '../../genres/ajout-genre/ajout-genre.component';
 import {forEach} from '@angular/router/src/utils/collection';
 import {CustomValidators} from '../../../shared/validators/custom.validator';
-import {AchatModel} from "../../../models/achat.model";
-import {AchatService} from "../../achat/achat.service";
+import {AchatModel} from '../../../models/achat.model';
+import {AchatService} from '../../achat/achat.service';
 
 
 @Component({
@@ -86,6 +86,20 @@ export class ProduitsComponent implements OnInit, OnDestroy {
     }
 
     initSocket() {
+        this.socket.getAjoutGenre().subscribe(
+            (data) => {
+                if (data.idUser === this.userService.idUser) {
+                    this.genreService.pushGenre(data.genre);
+                }
+            }
+        );
+        this.socket.getDeleteGenre().subscribe(
+            (data) => {
+                if (data.idUser === this.userService.idUser) {
+                    this.genreService.removeGenre(data.id);
+                }
+            }
+        );
         this.socket.getAjoutProduit().subscribe(
             (data) => {
                 if (data.idUser === this.userService.idUser) {
@@ -230,7 +244,12 @@ export class ProduitsComponent implements OnInit, OnDestroy {
      * @param idGenre l'identifiant du genre
      */
     onDeleteGenre(idGenre: number) {
-        this.genreService.deleteGenre(idGenre);
+        this.genreService.deleteGenre(idGenre).subscribe(
+            g => {
+                this.socket.deleteGenre(idGenre);
+                this.genreService.removeGenre(idGenre);
+            }
+        );
         this.router.navigate(['users' +
         '/produits']);
     }
@@ -410,7 +429,7 @@ export class ProduitsComponent implements OnInit, OnDestroy {
             quantite: produitAEnvoyer.quantite,
             total: produitAEnvoyer.prixAchat * produitAEnvoyer.quantite,
             date: new Date()
-        }
+        };
 
         if (mode === 'creer') {
             this.produitService.saveProduit(produitAEnvoyer).subscribe(
@@ -422,16 +441,16 @@ export class ProduitsComponent implements OnInit, OnDestroy {
             );
             this.achatService.saveAchat(achat).subscribe(
                 a => this.achatService.pushAchat(a)
-            )
+            );
             this.snackBar.open('le prestation a bien été enregistré.', 'ok', {duration: 1500, verticalPosition: 'top'});
         } else if (mode === 'modifier') {
             const index = this.listeElements.findIndex(p => p.idProduit === produitAEnvoyer.idProduit);
-            if(produitAEnvoyer.quantite > this.listeElements[index].quantite){
+            if (produitAEnvoyer.quantite > this.listeElements[index].quantite) {
                 achat.quantite = produitAEnvoyer.quantite - this.listeElements[index].quantite;
                 achat.total = produitAEnvoyer.prixAchat * (produitAEnvoyer.quantite - this.listeElements[index].quantite);
                 this.achatService.saveAchat(achat).subscribe(
                     a => this.achatService.pushAchat(a)
-                )
+                );
             }
             this.produitService.modifProduit(produitAEnvoyer).subscribe(
                 produit => {

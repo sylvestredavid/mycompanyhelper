@@ -67,27 +67,27 @@ export class PrestationsComponent implements OnInit, OnDestroy {
     }
 
     initSocket() {
-        // this.socket.getAjoutFournisseur().subscribe(
-        //     data => {
-        //         if (data.idUser === this.userService.idUser) {
-        //             this.prestationsService.pushFournisseur(data.fournisseur);
-        //         }
-        //     }
-        // );
-        // this.socket.getModifFournisseur().subscribe(
-        //     data => {
-        //         if (data.idUser === this.userService.idUser) {
-        //             this.prestationsService.replaceFournisseur(data.fournisseur);
-        //         }
-        //     }
-        // );
-        // this.socket.getDeleteFournisseur().subscribe(
-        //     data => {
-        //         if (data.idUser === this.userService.idUser) {
-        //             this.prestationsService.removeFournisseur(data.id);
-        //         }
-        //     }
-        // );
+        this.socket.getAjoutPrestation().subscribe(
+            data => {
+                if (data.idUser === this.userService.idUser) {
+                    this.prestationsService.pushPrestation(data.prestation);
+                }
+            }
+        );
+        this.socket.getModifPrestation().subscribe(
+            data => {
+                if (data.idUser === this.userService.idUser) {
+                    this.prestationsService.replacePrestation(data.prestation);
+                }
+            }
+        );
+        this.socket.getDeletePrestation().subscribe(
+            data => {
+                if (data.idUser === this.userService.idUser) {
+                    this.prestationsService.removePrestation(data.prestation);
+                }
+            }
+        );
     }
 
     /**
@@ -140,7 +140,7 @@ export class PrestationsComponent implements OnInit, OnDestroy {
                 p => {
                     this.prestationsService.deletePrestation(p.id).subscribe(
                         () => {
-                            // this.socket.deleteFournisseur(p.id);
+                            this.socket.deletePrestation(p.id);
                             this.prestationsService.removePrestation(p.id);
                         }
                     );
@@ -314,7 +314,7 @@ export class PrestationsComponent implements OnInit, OnDestroy {
         if (mode === 'creer') {
             this.prestationsService.savePrestation(prestationAEnvoyer).subscribe(
                 prestation => {
-                    // this.socket.ajoutFournisseur(prestation);
+                    this.socket.ajoutPrestation(prestation);
                     this.prestationsService.pushPrestation(prestation);
                     this.isDirty = false;
                 }
@@ -323,7 +323,7 @@ export class PrestationsComponent implements OnInit, OnDestroy {
         } else if (mode === 'modifier') {
             this.prestationsService.modifPrestation(prestationAEnvoyer).subscribe(
                 prestation => {
-                    // this.socket.modifFournisseur(prestation);
+                    this.socket.modifPrestation(prestation);
                     this.prestationsService.replacePrestation(prestation);
                     this.isDirty = false;
                 }

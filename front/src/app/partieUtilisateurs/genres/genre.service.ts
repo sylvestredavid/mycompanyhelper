@@ -36,26 +36,38 @@ export class GenreService {
     }
 
     saveGenre(genre: GenreModel) {
-        this.http.post<GenreModel>(this.requeteUtils.url + 'genres/save', genre, this.requeteUtils.getOptions()).subscribe(
-            genre => {
-                this.listeGenre.push(genre);
-                this.listeGenre$.next(this.listeGenre);
-            }
-        );
+        return this.http.post<GenreModel>(this.requeteUtils.url + 'genres/save', genre, this.requeteUtils.getOptions())
     }
 
     deleteGenre(id: number) {
         const url = this.requeteUtils.url + 'genres/delete?id=' + id;
-        this.http.delete(url, this.requeteUtils.getOptions()).subscribe(
-            () => {
-                const index = this.listeGenre.findIndex(genres => {
-                    if (genres.idGenre === id) {
-                        return true;
-                    }
-                });
-                this.listeGenre.splice(index, 1);
-                this.listeGenre$.next(this.listeGenre);
+        return this.http.delete(url, this.requeteUtils.getOptions())
+    }
+
+    pushGenre(newGenre: GenreModel) {
+        let dejaExistant = false;
+        this.listeGenre.forEach(
+            genre => {
+                if (genre.idGenre === newGenre.idGenre) {
+                    dejaExistant = true;
+                    return;
+                }
             }
         );
+        if (!dejaExistant) {
+            this.listeGenre.push(newGenre);
+            this.listeGenre$.next(this.listeGenre);
+        }
+    }
+
+    removeGenre(id: number) {
+        const index = this.listeGenre.findIndex(genres => {
+            if (genres.idGenre === id) {
+                return true;
+            }
+        });
+        this.listeGenre.splice(index, 1);
+        this.listeGenre$.next(this.listeGenre);
     }
 }
+

@@ -4,6 +4,7 @@ import {GenreService} from '../genre.service';
 import {MatDialogRef} from '@angular/material';
 import {GenreModel} from '../../../models/genre.model';
 import {UsersService} from '../../../users/users.service';
+import {SocketService} from "../../../shared/socket.service";
 
 @Component({
     selector: 'app-ajout-genre',
@@ -15,7 +16,7 @@ export class AjoutGenreComponent implements OnInit, OnDestroy {
     genreForm: FormGroup;
 
     constructor(public dialogRef: MatDialogRef<AjoutGenreComponent>, private genreService: GenreService,
-                private userService: UsersService) {
+                private userService: UsersService, private socket: SocketService) {
     }
 
     ngOnInit() {
@@ -41,7 +42,12 @@ export class AjoutGenreComponent implements OnInit, OnDestroy {
             produits: null,
             idUser: this.userService.idUser
         };
-        this.genreService.saveGenre(genre);
+        this.genreService.saveGenre(genre).subscribe(
+            g =>{
+                this.socket.ajoutGenre(g);
+                this.genreService.pushGenre(g);
+            }
+        );
         this.dialogRef.close();
     }
 
