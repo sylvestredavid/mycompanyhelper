@@ -165,8 +165,8 @@
             <div class="buttons">
                 <button mat-raised-button matStepperPrevious>Back</button>
                 <button mat-raised-button (click)="stepper.reset()">Reset</button>
-                <button mat-raised-button (click)="onSubmit()" [disabled]="enCour">Envoyer</button>
-                <button mat-raised-button (click)="generatePDF()">enregistrer</button>
+                <button mat-raised-button (click)="onSubmit()">Envoyer mail</button>
+                <button mat-raised-button (click)="generatePDF()">enregistrer PDF</button>
             </div>
         </mat-step>
     </mat-horizontal-stepper>
