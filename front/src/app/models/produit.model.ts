@@ -15,7 +15,7 @@ export class ProduitModel {
 
   genre?: GenreModel;
 
-  factures: ProduitsFactureModel[];
+  factures?: ProduitsFactureModel[];
 
   idUser: number;
 

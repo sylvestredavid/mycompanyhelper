@@ -52,8 +52,8 @@ export class CreateFactureComponent implements OnInit, OnDestroy {
     entreprise: EntrepriseModel;
     numero: number;
     devisForm: FormGroup;
-
-    @ViewChild('facture') facture: ElementRef;
+    enregistree: boolean;
+    facture: FactureModel;
     date: Date;
     private listePrestations: PrestationModel[];
 
@@ -76,6 +76,7 @@ export class CreateFactureComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        this.enregistree = false;
         this.factureService.findAllFactures().subscribe(
             factures => {
                 if (factures && factures.length > 0) {
@@ -195,72 +196,14 @@ export class CreateFactureComponent implements OnInit, OnDestroy {
      * envoi de la facture
      */
     onSubmit() {
-        this.enCour = true;
-        const clientFormValue = this.clientForm.value;
-        const produitsFormValue = this.produitsForm.value;
-        const prestationsFormValue = this.prestationsForm.value;
-        const remiseFormValue = this.remiseForm.value;
-        const devisFormValue = this.devisForm.value;
-        const totalHT = this.getTotalHT(this.produits.controls, this.prestations.controls);
-        const totalTTC = this.getTotalTTC(this.produits.controls, this.prestations.controls);
-        const tva21 = this.getTotalTva(this.produits.controls, this.prestations.controls, 2.1);
-        const tva55 = this.getTotalTva(this.produits.controls, this.prestations.controls, 5.5);
-        const tva10 = this.getTotalTva(this.produits.controls, this.prestations.controls, 10);
-        const tva20 = this.getTotalTva(this.produits.controls, this.prestations.controls, 20);
-
-        const facture: FactureModel = {
-            date : new Date(),
-            client : clientFormValue['client'],
-            produitsFacture : produitsFormValue['produits'],
-            prestationsFacture : prestationsFormValue['prestations'],
-            totalHT : totalHT,
-            totalTTC : totalTTC,
-            tva21 : tva21,
-            tva55 : tva55,
-            tva10 : tva10,
-            tva20 : tva20,
-            remise: +remiseFormValue['remise'],
-            idUser : this.userService.idUser,
-            numero: this.numero,
-            devis: devisFormValue['type'] === 'Devis' ? true : false
-        };
-
-        console.log(facture);
-
-        this.factureService.saveFacture(facture).pipe(
-            finalize(() => this.enCour = false)
-        ).subscribe(
-            f => {
-                this.factureService.sendMail(f.idFacture);
-                if (!f.devis) {
-                    this.clientService.updatePanierMoyen(this.calculPanierMoyen(clientFormValue['client']), clientFormValue['client'].idClient).subscribe(
-                        client => {
-                            this.socket.modifClient(client);
-                            this.clientService.replaceClient(client);
-                        });
-                    this.messageQueue.push('La facture a été envoyée par mail.');
-                    for (const control of this.produits.controls) {
-                        this.factureService.saveProduitsFacture(control.value.quantite, f.idFacture, control.value.produit.idProduit);
-                        this.produitService.diminuerQte(control.value.quantite, control.value.produit.idProduit);
-                        this.produitService.ajoutFacture(control.value.quantite, f.idFacture, control.value.produit.idProduit);
-                        this.checkStock(control.value.produit, control.value.quantite);
-                    }
-                    for (const control of this.prestations.controls) {
-                        this.factureService.savePrestationsFacture(control.value.quantite, f.idFacture, control.value.prestation.id);
-                    }
-                } else {
-                    this.messageQueue.push('Le devis a été envoyée par mail.');
-                    for (const control of this.produits.controls) {
-                        this.factureService.saveProduitsFacture(control.value.quantite, f.idFacture, control.value.produit.idProduit);
-                    }
-                    for (const control of this.prestations.controls) {
-                        this.factureService.savePrestationsFacture(control.value.quantite, f.idFacture, control.value.prestation.id);
-                    }
-                }
-                this.showNext();
-                this.router.navigate(['users/produits']);
-            }
-        );
+        this.messageQueue = [];
+        this.messageQueue.push('email envoyé.')
+        if (!this.enregistree) {
+            this.enregisterFacture(true);
+        } else {
+            this.factureService.sendMail(this.facture.idFacture);
+            this.showNext()
+        }
     }
 
     /**
@@ -359,6 +302,9 @@ export class CreateFactureComponent implements OnInit, OnDestroy {
      * fonction de téléchargement de la facture au format pdf
      */
     public generatePDF() {
+        if (!this.enregistree) {
+            this.enregisterFacture(false);
+        }
         const nom = this.devisForm.value.type === 'Facture' ?
             `facture-${this.clientForm.value.client.nom}-${this.clientForm.value.client.prenom}-${this.datePipe.transform(new Date(), 'dd/MM/yy')}.pdf` :
             `devis-${this.clientForm.value.client.nom}-${this.clientForm.value.client.prenom}-${this.datePipe.transform(new Date(), 'dd/MM/yy')}.pdf`;
@@ -426,5 +372,70 @@ export class CreateFactureComponent implements OnInit, OnDestroy {
             facture => total += facture.totalTTC
         );
         return +(total / (client.factures.length + 1)).toFixed(2);
+    }
+
+    private enregisterFacture(mail: boolean) {
+        const clientFormValue = this.clientForm.value;
+        const produitsFormValue = this.produitsForm.value;
+        const prestationsFormValue = this.prestationsForm.value;
+        const remiseFormValue = this.remiseForm.value;
+        const devisFormValue = this.devisForm.value;
+        const totalHT = this.getTotalHT(this.produits.controls, this.prestations.controls);
+        const totalTTC = this.getTotalTTC(this.produits.controls, this.prestations.controls);
+        const tva21 = this.getTotalTva(this.produits.controls, this.prestations.controls, 2.1);
+        const tva55 = this.getTotalTva(this.produits.controls, this.prestations.controls, 5.5);
+        const tva10 = this.getTotalTva(this.produits.controls, this.prestations.controls, 10);
+        const tva20 = this.getTotalTva(this.produits.controls, this.prestations.controls, 20);
+
+        const facture: FactureModel = {
+            date : new Date(),
+            client : clientFormValue['client'],
+            produitsFacture : produitsFormValue['produits'],
+            prestationsFacture : prestationsFormValue['prestations'],
+            totalHT : totalHT,
+            totalTTC : totalTTC,
+            tva21 : tva21,
+            tva55 : tva55,
+            tva10 : tva10,
+            tva20 : tva20,
+            remise: +remiseFormValue['remise'],
+            idUser : this.userService.idUser,
+            numero: this.numero,
+            devis: devisFormValue['type'] === 'Devis' ? true : false
+        };
+
+        this.factureService.saveFacture(facture).subscribe(
+            f => {
+                this.facture = f;
+                if (mail) {
+                    this.factureService.sendMail(f.idFacture);
+                }
+                if (!f.devis) {
+                    this.clientService.updatePanierMoyen(this.calculPanierMoyen(clientFormValue['client']), clientFormValue['client'].idClient).subscribe(
+                        client => {
+                            this.socket.modifClient(client);
+                            this.clientService.replaceClient(client);
+                        });
+                    for (const control of this.produits.controls) {
+                        this.factureService.saveProduitsFacture(control.value.quantite, f.idFacture, control.value.produit.idProduit);
+                        this.produitService.diminuerQte(control.value.quantite, control.value.produit.idProduit);
+                        this.produitService.ajoutFacture(control.value.quantite, f.idFacture, control.value.produit.idProduit);
+                        this.checkStock(control.value.produit, control.value.quantite);
+                    }
+                    for (const control of this.prestations.controls) {
+                        this.factureService.savePrestationsFacture(control.value.quantite, f.idFacture, control.value.prestation.id);
+                    }
+                } else {
+                    for (const control of this.produits.controls) {
+                        this.factureService.saveProduitsFacture(control.value.quantite, f.idFacture, control.value.produit.idProduit);
+                    }
+                    for (const control of this.prestations.controls) {
+                        this.factureService.savePrestationsFacture(control.value.quantite, f.idFacture, control.value.prestation.id);
+                    }
+                }
+                this.enregistree = true;
+                this.showNext();
+            }
+        );
     }
 }

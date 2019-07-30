@@ -33,7 +33,7 @@ export class FactureService {
     }
 
     sendMailStockBas(email: string, produit: string) {
-        this.http.post(this.requeteUtils.url + 'produits/mailStockBas?email=' + email + '&prestation=' + produit, '',
+        this.http.post(this.requeteUtils.url + 'produits/mailStockBas?email=' + email + '&produit=' + produit, '',
             this.requeteUtils.getOptions()).subscribe();
     }
 

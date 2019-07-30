@@ -1,6 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Store} from "@ngrx/store";
 import {UserState} from "../../shared/stores/user.reducer";
+import {ProduitService} from "../produits/produit.service";
 
 @Component({
     selector: 'app-ajout-genre',
@@ -10,10 +11,11 @@ import {UserState} from "../../shared/stores/user.reducer";
 export class MenuComponent implements OnInit, OnDestroy {
     private role: string;
 
-    constructor(private store: Store<UserState>) {
+    constructor(private store: Store<UserState>, private produitService: ProduitService) {
     }
 
     ngOnInit() {
+        this.produitService.publishProduits();
         this.store.select('user').subscribe(
             user => {
                 if (user) {

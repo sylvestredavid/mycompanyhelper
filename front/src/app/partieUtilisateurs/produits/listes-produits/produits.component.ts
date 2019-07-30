@@ -157,7 +157,6 @@ export class ProduitsComponent implements OnInit, OnDestroy {
                 prixVente: [0],
                 seuilStockBas: [0],
                 quantite: [0, Validators.compose([Validators.required, Validators.min(0)])],
-                factures: this.fb.array([]),
                 genre: [this.genre ? this.genre.idGenre : '', Validators.required],
                 tva: [0]
             }));
@@ -224,7 +223,6 @@ export class ProduitsComponent implements OnInit, OnDestroy {
                     prixAchat: [element.prixAchat],
                     prixVente: [element.prixVente],
                     quantite: [element.quantite, Validators.compose([Validators.required, Validators.min(0)])],
-                    factures: this.fb.array(element.factures),
                     genre: [element.genre ? element.genre.idGenre : '', Validators.required],
                     tva: [element.tva],
                     seuilStockBas: [element.seuilStockBas]
@@ -367,7 +365,6 @@ export class ProduitsComponent implements OnInit, OnDestroy {
             prixVente: produit.prixVente,
             prixAchat: produit.prixAchat,
             quantite: produit.quantite,
-            factures: produit.factures,
             idUser: this.userService.idUser,
             enVente: true,
             tva: +produit.tva,
