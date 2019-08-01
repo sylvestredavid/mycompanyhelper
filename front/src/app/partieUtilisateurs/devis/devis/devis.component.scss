@@ -1,73 +1,49 @@
-.ajouterButton {
-  background: transparent;
-  border: none;
-  margin-left: 10px;
-}
+table {
+  width: 100%;
+  text-align: center;
+  font-size: 0.7rem;
+  margin-top: 10px;
 
-.ajouterButton:hover {
-  cursor: pointer;
-}
-
-.supprimerButton {
-  margin: 30px;
-  float: right;
+  td{
+    font-size: 0.7rem;
+  }
 }
 
 .boutons-container {
-  text-align: right;
-  margin: 20px 0;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .boutons-container button {
   margin-left: 10px;
 }
 
-.selected {
-  background-color: rgba(103, 58, 183, 0.2);
-}
-
-.contenaire {
-  text-align: center;
-  padding: 20px;
-  margin-top: 20px;
-  border: 1px solid black;
-
-  p{
-    margin: 10px 0;
+@media screen and (min-width: 1024px) {
+  form{
+    float: left;
+    width: 30%;
   }
-}
 
-.adresse{
-  width: 70%;
-  margin: auto;
-  input{
-    width: 50%;
+  button{
+    width: 25%;
   }
-}
 
-@media screen and (min-width: 768px) {
-  .flex{
+  .boutons-container {
     display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
+    justify-content: flex-end;
 
-    .contenaire{
-      width: 40%;
+    button {
+      width: 10%;
     }
   }
-}
 
-@media screen and (min-width: 1024px) {
   table {
     width: 100%;
     text-align: center;
-  }
+    font-size: inherit;
 
-  th {
-    text-align: center !important;
+    td{
+      font-size: inherit;
+    }
   }
 }
-
-
-
-

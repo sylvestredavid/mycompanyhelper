@@ -173,9 +173,9 @@ export class ClientsComponent implements OnInit, OnDestroy {
      * change l'element selectionné
      * @param client le client a selectionner
      */
-    changeSelection(client: ClientModel, e: MatCheckboxChange) {
+    changeSelection(client: ClientModel, e: boolean) {
         const index = this.selection.findIndex(c => c === client);
-        if (e.checked && index === -1) {
+        if (e && index === -1) {
             this.selection.push(client);
         } else {
             this.selection.splice(index, 1);
@@ -183,6 +183,7 @@ export class ClientsComponent implements OnInit, OnDestroy {
                 this.allSelected = false;
             }
         }
+        console.log(this.selection)
     }
 
     /**

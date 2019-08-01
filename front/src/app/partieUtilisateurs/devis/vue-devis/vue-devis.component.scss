@@ -29,7 +29,7 @@ table {
 .facturePdf{
   padding: 40px 20px;
   height: 29.7cm;
-
+  font-size: 0.6rem;
 }
 
 .body table, .body tr, .body thead, .body th, .body tbody, .body td{
@@ -54,9 +54,18 @@ table {
 
 .boutons-container {
   text-align: right;
-  margin: 20px 0;
 }
 
 .boutons-container button {
   margin-left: 10px;
+}
+
+@media screen and (min-width: 1024px) {
+  .facturePdf{
+    font-size: inherit;
+  }
+
+  .boutons-container {
+    margin: 20px 0;
+  }
 }

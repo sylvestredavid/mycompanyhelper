@@ -169,9 +169,9 @@ export class PrestationsComponent implements OnInit, OnDestroy {
      * change l'element selectionné
      * @param client le client a selectionner
      */
-    changeSelection(prestation: PrestationModel, e: MatCheckboxChange) {
+    changeSelection(prestation: PrestationModel, e: boolean) {
         const index = this.selection.findIndex(f => f === prestation);
-        if (e.checked && index === -1) {
+        if (e && index === -1) {
             this.selection.push(prestation);
         } else {
             this.selection.splice(index, 1);
@@ -179,6 +179,7 @@ export class PrestationsComponent implements OnInit, OnDestroy {
                 this.allSelected = false;
             }
         }
+        console.log(this.selection)
     }
 
     /**

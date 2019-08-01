@@ -258,12 +258,13 @@ export class ProduitsComponent implements OnInit, OnDestroy {
      * change l'element selectionné
      * @param client le client a selectionner
      */
-    changeElementSelectionne(produit: ProduitModel, e: MatCheckboxChange) {
-        if (e.checked) {
+    changeElementSelectionne(produit: ProduitModel, e: boolean) {
+        if (e) {
             this.elementSelectionne = produit;
         } else {
             this.elementSelectionne = null;
         }
+        console.log(this.elementSelectionne)
     }
 
     /**

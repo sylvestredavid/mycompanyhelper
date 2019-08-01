@@ -62,7 +62,7 @@
                 <tbody [formGroup]="elementForm">
                 <ng-container formArrayName="elements" *ngFor="let control of elements.controls; let i = index;">
                     <tr class="customTable-tr" [formGroupName]="i" [ngClass]="{'selected': elementSelectionne && elementSelectionne === control.value}">
-                        <td><mat-checkbox class="checkbox" color="primary" (change)="changeElementSelectionne(control.value, $event)" [checked]="elementSelectionne === control.value"></mat-checkbox></td>
+                        <td><mat-checkbox class="checkbox" color="primary" (change)="changeElementSelectionne(control.value, $event.checked)" [checked]="elementSelectionne === control.value"></mat-checkbox></td>
                         <td><input id="input-des-{{i}}" class="readOnly" [inputReadOnly]="true"
                                    formControlName="designation" placeholder="Désignation" (keyup)="changeIsDirty()">
                             <mat-error *ngIf="control.controls.designation.invalid">Un produit avec ce nom existe déjà.
@@ -128,7 +128,7 @@
         <div [formGroup]="elementForm" class="flex">
             <ng-container formArrayName="elements" *ngFor="let control of elements.controls; let i = index;">
                 <div class="contenaire selectionable" [formGroupName]="i"
-                     (click)="changeElementSelectionne(control.value)"
+                     (click)="changeElementSelectionne(control.value, true)"
                      [ngClass]="{'selected': elementSelectionne && elementSelectionne === control.value}">
                     <input [inputReadOnly]="true" class="h2-like" formControlName="designation"
                            placeholder="Désignation" (keyup)="changeIsDirty()">
@@ -143,8 +143,8 @@
                     en stock : <input [inputReadOnly]="true" class="inputChiffre" formControlName="quantite"
                                       [ngClass]="{'rupture': control.value.quantite <= control.value.seuilStockBas}">
                     <mat-error *ngIf="control.controls.quantite.invalid">la quantitée doit etre supérieure a 0
-                    </mat-error>
-                    seuil alerte stock : <input [inputReadOnly]="true" formControlName="seuilStockBas" (keyup)="changeIsDirty()">
+                    </mat-error><br>
+                    seuil stock : <input [inputReadOnly]="true" class="inputChiffre" formControlName="seuilStockBas" (keyup)="changeIsDirty()">
                     <br>
                     tva: <select [inputReadOnly]="true" formControlName="tva"
                                  (change)="envoiForm()">
@@ -153,7 +153,7 @@
                     <option [value]="5.5">5.5%</option>
                     <option [value]="10">10%</option>
                     <option [value]="20">20%</option>
-                </select>
+                </select> <br>
                     <ng-container *ngIf="!genre">
                         <ng-template [ngIf]="role === 'ROLE_ADMIN'" [ngIfElse]="gest">
                             <select [inputReadOnly]="true" formControlName="genre"

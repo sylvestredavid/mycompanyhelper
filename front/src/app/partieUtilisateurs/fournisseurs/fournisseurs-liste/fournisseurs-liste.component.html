@@ -32,7 +32,7 @@
         <tbody [formGroup]="elementForm">
         <ng-container formArrayName="elements" *ngFor="let control of elements.controls; let i = index;">
             <tr class="customTable-tr" [formGroupName]="i">
-                <td><mat-checkbox class="checkbox" color="primary" (change)="changeSelection(control.value, $event)" [checked]="isSelected(control.value) || allSelected"></mat-checkbox></td>
+                <td><mat-checkbox class="checkbox" color="primary" (change)="changeSelection(control.value, $event.checked)" [checked]="isSelected(control.value) || allSelected"></mat-checkbox></td>
                 <td><input  (keyup)="changeIsDirty()" id="input-des-{{i}}" [inputReadOnly]="role === 'ROLE_ADMIN'" formControlName="nom" placeholder="Nom"></td>
                 <td style="width: 30%;"><input  (keyup)="changeIsDirty()" [inputReadOnly]="role === 'ROLE_ADMIN'" formControlName="email" placeholder="Email"></td>
                 <td><input  (keyup)="changeIsDirty()" [inputReadOnly]="role === 'ROLE_ADMIN'" formControlName="telephone" placeholder="Téléphone"></td>
@@ -58,14 +58,12 @@
         <mat-icon svgIcon="right" (click)="pagination('right')"></mat-icon>
     </div>
 </div>
-
-    <app-mailing [selection]="selection"></app-mailing>
 </ng-container>
 <!-- version mobile / tablette -->
 <ng-template #mobile>
     <div [formGroup]="elementForm" class="flex">
         <div formArrayName="elements" *ngFor="let control of elements.controls; let i = index;">
-            <div class="contenaire selectionable" [formGroupName]="i" (click)="changeSelection(control.value)"
+            <div class="contenaire selectionable" [formGroupName]="i" (click)="changeSelection(control.value, true)"
                  [ngClass]="{'selected': isSelected(control.value)}">
                 <input  (keyup)="changeIsDirty()" [inputReadOnly]="role === 'ROLE_ADMIN'" class="h2-like" formControlName="nom" placeholder="Nom">
                 <input  (keyup)="changeIsDirty()" [inputReadOnly]="role === 'ROLE_ADMIN'" formControlName="telephone" placeholder="Téléphone">
@@ -76,3 +74,4 @@
         </div>
     </div>
 </ng-template>
+<app-mailing [selection]="selection"></app-mailing>

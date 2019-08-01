@@ -1,13 +1,7 @@
 form{
-  float: left;
-  width: 30%;
   display: flex;
   justify-content: space-between;
   margin-bottom: 20px;
-}
-
-button{
-  width: 25%;
 }
 
 select {
@@ -21,16 +15,48 @@ select {
 table {
   width: 100%;
   text-align: center;
+  font-size: 0.7rem;
+
+  td{
+    font-size: 0.7rem;
+  }
 }
 
 .boutons-container {
-  float: left;
-  width: 70%;
   display: flex;
   justify-content: flex-end;
 }
 
 .boutons-container button {
   margin-left: 10px;
-  width: 15%;
+}
+
+@media screen and (min-width: 1024px) {
+  form{
+    float: left;
+    width: 30%;
+  }
+
+  button{
+    width: 25%;
+  }
+
+  .boutons-container {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .boutons-container button {
+    width: 15%;
+  }
+
+  table {
+    width: 100%;
+    text-align: center;
+    font-size: inherit;
+
+    td{
+      font-size: inherit;
+    }
+  }
 }

@@ -37,7 +37,7 @@
         <tbody [formGroup]="elementForm">
         <ng-container formArrayName="elements" *ngFor="let control of elements.controls; let i = index;">
             <tr class="customTable-tr" [formGroupName]="i">
-                <td><mat-checkbox class="checkbox" color="primary" (change)="changeSelection(control.value, $event)" [checked]="isSelected(control.value) || allSelected"></mat-checkbox></td>
+                <td><mat-checkbox class="checkbox" color="primary" (change)="changeSelection(control.value, $event.checked)" [checked]="isSelected(control.value) || allSelected"></mat-checkbox></td>
                 <td><input  (keyup)="changeIsDirty()" id="input-des-{{i}}" [inputReadOnly]="role === 'ROLE_ADMIN'" formControlName="nom" placeholder="Nom"></td>
                 <td><input  (keyup)="changeIsDirty()" [inputReadOnly]="role === 'ROLE_ADMIN'" formControlName="prenom" placeholder="Prenom"></td>
                 <td><input  (keyup)="changeIsDirty()" [inputReadOnly]="role === 'ROLE_ADMIN'" formControlName="email" placeholder="Email"></td>
@@ -63,14 +63,13 @@
         <mat-icon svgIcon="right" (click)="pagination('right')"></mat-icon>
     </div>
 </div>
-    <app-mailing [selection]="selection"></app-mailing>
 </ng-container>
 <!-- version mobile / tablette -->
 <ng-template #mobile>
     <form [formGroup]="elementForm" class="flex">
         <ng-container formArrayName="elements" *ngFor="let control of elements.controls; let i = index;">
-            <div class="contenaire selectionable" [formGroupName]="i" (click)="changeElementSelectionne(control.value)"
-                 [ngClass]="{'selected': selection && selection === control.value}">
+            <div class="contenaire selectionable" [formGroupName]="i" (click)="changeSelection(control.value, true)"
+                 [ngClass]="{'selected': isSelected(control.value)}">
                 <input  (keyup)="changeIsDirty()" [inputReadOnly]="role === 'ROLE_ADMIN'" class="readOnly h2-like" formControlName="nom" placeholder="Nom">
                 <input  (keyup)="changeIsDirty()" [inputReadOnly]="role === 'ROLE_ADMIN'" class="readOnly h2-like" formControlName="prenom" placeholder="Prenom">
                 <input  (keyup)="changeIsDirty()" [inputReadOnly]="role === 'ROLE_ADMIN'" formControlName="email" placeholder="Email">
@@ -85,3 +84,4 @@
         </ng-container>
     </form>
 </ng-template>
+<app-mailing [selection]="selection"></app-mailing>

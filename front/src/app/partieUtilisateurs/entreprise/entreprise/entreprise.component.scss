@@ -1,21 +1,36 @@
-form{
+img {
   width: 50%;
+  max-width: 300px;
   margin: 20px auto;
 }
 
-.img_input{
-  display: none;
-}
-
-img{
-  width: 300px;
+form{
+  width: 90%;
   margin: 20px auto;
 }
 
-.img_btn{
+.img_btn {
   background-color: rebeccapurple;
   padding: 10px;
   color: #fff;
   border-radius: 5px;
   font-size: 10px;
+}
+
+.img_input {
+  display: none;
+}
+
+@media screen and (min-width: 1024px) {
+  form {
+    width: 50%;
+  }
+
+  .img_btn {
+    background-color: rebeccapurple;
+    padding: 10px;
+    color: #fff;
+    border-radius: 5px;
+    font-size: 10px;
+  }
 }

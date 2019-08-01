@@ -42,7 +42,7 @@
                 <tbody>
                 <ng-container *ngFor="let produit of listeElementsAAfficher">
                     <tr [ngClass]="{'selected': elementSelectionne && elementSelectionne === produit}">
-                        <td><mat-checkbox class="checkbox" color="primary" (change)="changeElementSelectionne(produit, $event)" [checked]="elementSelectionne === produit"></mat-checkbox></td>
+                        <td><mat-checkbox class="checkbox" color="primary" (change)="changeElementSelectionne(produit, $event.checked)" [checked]="elementSelectionne === produit"></mat-checkbox></td>
                         <td><p>{{produit.designation}}</p></td>
                         <td><p>{{produit.prixAchat}}</p></td>
                         <td><p>{{produit.prixVente}}</p></td>
@@ -76,8 +76,8 @@
     <ng-template #mobile>
         <div class="flex">
             <ng-container *ngFor="let produit of listeElementsAAfficher">
-                <div class="contenaire selectionable" (click)="changeElementSelectionne(produit)"
-                     [ngClass]="{'selected': elementASupprimer && elementASupprimer === control.value}">
+                <div class="contenaire selectionable" (click)="changeElementSelectionne(produit, true)"
+                     [ngClass]="{'selected': elementSelectionne && elementSelectionne === produit}">
                     <h2>{{produit.designation}}</h2>
                     <p>Prix d'achat : {{produit.prixAchat}}€</p>
                     <p>Prix de vente : {{produit.prixVente}}€</p>

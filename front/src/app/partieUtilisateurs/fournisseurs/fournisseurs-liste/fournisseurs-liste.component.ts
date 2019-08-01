@@ -185,9 +185,9 @@ export class FournisseursListeComponent implements OnInit, OnDestroy {
      * change l'element selectionné
      * @param client le client a selectionner
      */
-    changeSelection(fournisseur: FournisseurModel, e: MatCheckboxChange) {
+    changeSelection(fournisseur: FournisseurModel, e: boolean) {
         const index = this.selection.findIndex(f => f === fournisseur);
-        if(e.checked && index === -1) {
+        if(e && index === -1) {
             this.selection.push(fournisseur);
         } else {
             this.selection.splice(index, 1);
