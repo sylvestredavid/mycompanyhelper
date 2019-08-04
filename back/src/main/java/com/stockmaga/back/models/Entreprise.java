@@ -45,4 +45,7 @@ public class Entreprise implements Serializable {
 
 	private String logo;
 
+	@Type(type = "org.hibernate.type.NumericBooleanType")
+	private boolean microEntreprise;
+
 }

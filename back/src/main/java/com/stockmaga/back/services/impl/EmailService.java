@@ -306,7 +306,13 @@ public class EmailService implements IEmailService {
 
 		document.add(new Paragraph(" "));
 
-		PdfPTable tableau = new PdfPTable(4);
+		PdfPTable tableau;
+
+		if(!sansTva(facture)) {
+			tableau = new PdfPTable(5);
+		} else {
+			tableau = new PdfPTable(4);
+		}
 
 		PdfPCell c = new PdfPCell(new Phrase("Produit"));
 		c.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -329,6 +335,14 @@ public class EmailService implements IEmailService {
 		tableau.addCell(c);
 		tableau.setHeaderRows(1);
 
+		if(!sansTva(facture)) {
+			c = new PdfPCell(new Phrase("TVA"));
+			c.setHorizontalAlignment(Element.ALIGN_CENTER);
+			c.setPadding(10);
+			tableau.addCell(c);
+			tableau.setHeaderRows(1);
+		}
+
 		facture.getProduitsFacture().forEach(
 				p -> {
 					PdfPCell pCell = new PdfPCell(new Phrase(p.getProduit().getDesignation()));
@@ -350,6 +364,13 @@ public class EmailService implements IEmailService {
 					pCell.setHorizontalAlignment(Element.ALIGN_CENTER);
 					pCell.setPadding(10);
 					tableau.addCell(pCell);
+
+					if(!sansTva(facture)) {
+						pCell = new PdfPCell(new Phrase(p.getProduit().getTva() + "%"));
+						pCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+						pCell.setPadding(10);
+						tableau.addCell(pCell);
+					}
 				}
 		);
 
@@ -374,6 +395,13 @@ public class EmailService implements IEmailService {
 					pCell.setHorizontalAlignment(Element.ALIGN_CENTER);
 					pCell.setPadding(10);
 					tableau.addCell(pCell);
+
+					if(!sansTva(facture)) {
+						pCell = new PdfPCell(new Phrase(p.getPrestation().getTva() + "%"));
+						pCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+						pCell.setPadding(10);
+						tableau.addCell(pCell);
+					}
 				}
 		);
 		tableau.setWidthPercentage(100);
@@ -424,9 +452,9 @@ public class EmailService implements IEmailService {
 		totalTTC.setAlignment(Element.ALIGN_RIGHT);
 		document.add(totalTTC);
 
-		if(facture.getTva20() == 0 && facture.getTva10() == 0 && facture.getTva55() == 0 && facture.getTva21() == 0) {
+		if(sansTva(facture)) {
 			Paragraph sansTva = new Paragraph();
-			sansTva.add(new Paragraph("auto entrepreneur, pas de TVA"));
+			sansTva.add(new Paragraph("TVA non applicable, art. 293B du CGI"));
 			document.add(sansTva);
 		}
 
@@ -438,6 +466,14 @@ public class EmailService implements IEmailService {
 		}
 
 		document.close();
+	}
+
+	private boolean sansTva(Facture facture) {
+		if(facture.getTva20() == 0 && facture.getTva10() == 0 && facture.getTva55() == 0 && facture.getTva21() == 0) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	private PdfPCell getCell(String text, int align) {

@@ -4,7 +4,7 @@ import {EntrepriseComponent} from './entreprise/entreprise.component';
 import {RouterModule} from "@angular/router";
 import {AuthGuard} from "../../shared/guards/auth-guard.service";
 import {ReactiveFormsModule} from "@angular/forms";
-import {MatButtonModule, MatInputModule} from "@angular/material";
+import {MatButtonModule, MatCheckboxModule, MatInputModule} from "@angular/material";
 import {AdminGuard} from "../../shared/guards/admin-guard.service";
 
 @NgModule({
@@ -16,7 +16,8 @@ import {AdminGuard} from "../../shared/guards/admin-guard.service";
         RouterModule.forChild([
             {path: '', canActivate: [AdminGuard], component: EntrepriseComponent},
         ]),
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        MatCheckboxModule
     ]
 })
 export class EntrepriseModule { }

@@ -207,6 +207,9 @@
                     <th>prix unitaire</th>
                     <th>quantitée</th>
                     <th>Prix</th>
+                    <ng-container *ngIf="!sansTva(produits.controls, prestations.controls)">
+                        <th>TVA</th>
+                    </ng-container>
                 </tr>
                 </thead>
                 <tbody>
@@ -217,6 +220,9 @@
                             <td>{{control.value.produit.prixVente}}€</td>
                             <td>{{control.value.quantite}}</td>
                             <td>{{control.value.produit.prixVente * control.value.quantite}}€</td>
+                            <ng-container *ngIf="!sansTva(produits.controls, prestations.controls)">
+                                <td>{{control.value.produit.tva}}%</td>
+                            </ng-container>
                         </tr>
                     </ng-container>
                 </ng-container>
@@ -227,6 +233,9 @@
                             <td>{{control.value.prestation.prix}}€/{{control.value.prestation.unitee}}</td>
                             <td>{{control.value.quantite}} {{control.value.prestation.unitee}}</td>
                             <td>{{control.value.prestation.prix * control.value.quantite}}€</td>
+                            <ng-container *ngIf="!sansTva(produits.controls, prestations.controls)">
+                                <td>{{control.value.prestation.tva}}%</td>
+                            </ng-container>
                         </tr>
                     </ng-container>
                 </ng-container>
@@ -239,22 +248,22 @@
             </ng-container>
             <ng-container *ngIf="tvaExist(produits.controls, prestations.controls, 2.1)">
                 <p class="align-right">
-                    TVA à 2.1% : {{getTotalTva(produits.controls, prestations.controls, 2.1)}} €
+                    Total TVA à 2.1% : {{getTotalTva(produits.controls, prestations.controls, 2.1)}} €
                 </p>
             </ng-container>
             <ng-container *ngIf="tvaExist(produits.controls, prestations.controls, 5.5)">
                 <p class="align-right">
-                    TVA à 5.5% : {{getTotalTva(produits.controls, prestations.controls, 5.5)}} €
+                    Total TVA à 5.5% : {{getTotalTva(produits.controls, prestations.controls, 5.5)}} €
                 </p>
             </ng-container>
             <ng-container *ngIf="tvaExist(produits.controls,prestations.controls,10)">
                 <p class="align-right">
-                    TVA à 10% : {{getTotalTva(produits.controls, prestations.controls, 10)}}  €
+                    Total TVA à 10% : {{getTotalTva(produits.controls, prestations.controls, 10)}}  €
                 </p>
             </ng-container>
             <ng-container *ngIf="tvaExist(produits.controls,prestations.controls,20)">
                 <p class="align-right">
-                    TVA à 20% : {{getTotalTva(produits.controls, prestations.controls, 20)}} €
+                    Total TVA à 20% : {{getTotalTva(produits.controls, prestations.controls, 20)}} €
                 </p>
             </ng-container>
             <ng-container *ngIf="+remiseForm.value.remise > 0">
@@ -268,7 +277,7 @@
                 </p>
             </ng-container>
             <ng-container *ngIf="sansTva(produits.controls, prestations.controls)">
-                <p>Auto entrepreneur, pas de tva</p>
+                <p>TVA non applicable, art. 293B du CGI</p>
             </ng-container>
         </div>
         <div class="conditions_generales">

@@ -63,4 +63,12 @@ export class ClientFacturesComponent implements OnInit {
         pdf.save(`facture-${this.client.nom}-${this.client.prenom}-${this.datePipe.transform(new Date(), 'dd/MM/yy')}.pdf`); // Generated PDF
     });
   }
+
+    sansTva(element: FactureModel) {
+        if (element.tva20 === 0 && element.tva10 === 0 && element.tva55 === 0 && element.tva21 === 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

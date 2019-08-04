@@ -53,7 +53,9 @@
                     <th>Quantitée</th>
                     <th>Seuil alerte stock</th>
                     <th>Marge</th>
-<!--                    <th>tva</th>-->
+                    <ng-container *ngIf="!entreprise.microEntreprise">
+                        <th>tva</th>
+                    </ng-container>
                     <ng-container *ngIf="!genre">
                         <th>Categorie</th>
                     </ng-container>
@@ -84,16 +86,18 @@
                         <td class="marge" [ngStyle]="{'color': getColor(control.value)}">{{produitService.marge(control.value.prixVente, control.value.prixAchat)}}
                             %
                         </td>
-<!--                        <td>-->
-<!--                            <select [inputReadOnly]="true" formControlName="tva"-->
-<!--                                    (change)="envoiForm()">-->
-<!--                                <option [value]="0">0</option>-->
-<!--                                <option [value]="2.1">2,1%</option>-->
-<!--                                <option [value]="5.5">5.5%</option>-->
-<!--                                <option [value]="10">10%</option>-->
-<!--                                <option [value]="20">20%</option>-->
-<!--                            </select>-->
-<!--                        </td>-->
+                        <ng-container *ngIf="!entreprise.microEntreprise">
+                            <td>
+                                <select [inputReadOnly]="true" formControlName="tva"
+                                        (change)="envoiForm()">
+                                    <option [value]="0">0</option>
+                                    <option [value]="2.1">2,1%</option>
+                                    <option [value]="5.5">5.5%</option>
+                                    <option [value]="10">10%</option>
+                                    <option [value]="20">20%</option>
+                                </select>
+                            </td>
+                        </ng-container>
                         <ng-container *ngIf="!genre">
                             <td>
                                 <select [inputReadOnly]="true" formControlName="genre"
@@ -146,14 +150,16 @@
                     </mat-error><br>
                     seuil stock : <input [inputReadOnly]="true" class="inputChiffre" formControlName="seuilStockBas" (keyup)="changeIsDirty()">
                     <br>
-<!--                    tva: <select [inputReadOnly]="true" formControlName="tva"-->
-<!--                                 (change)="envoiForm()">-->
-<!--                    <option [value]="0">0</option>-->
-<!--                    <option [value]="2.1">2,1%</option>-->
-<!--                    <option [value]="5.5">5.5%</option>-->
-<!--                    <option [value]="10">10%</option>-->
-<!--                    <option [value]="20">20%</option>-->
-<!--                </select> <br>-->
+                    <ng-container *ngIf="!entreprise.microEntreprise">
+                        tva: <select [inputReadOnly]="true" formControlName="tva"
+                                     (change)="envoiForm()">
+                        <option [value]="0">0</option>
+                        <option [value]="2.1">2,1%</option>
+                        <option [value]="5.5">5.5%</option>
+                        <option [value]="10">10%</option>
+                        <option [value]="20">20%</option>
+                    </select> <br>
+                    </ng-container>
                     <ng-container *ngIf="!genre">
                         <ng-template [ngIf]="role === 'ROLE_ADMIN'" [ngIfElse]="gest">
                             <select [inputReadOnly]="true" formControlName="genre"

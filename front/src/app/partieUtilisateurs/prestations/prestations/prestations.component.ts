@@ -10,6 +10,8 @@ import {UserState} from '../../../shared/stores/user.reducer';
 import {UsersService} from '../../../users/users.service';
 import {SocketService} from '../../../shared/socket.service';
 import {PrestationModel} from '../../../models/prestation.model';
+import {EntrepriseModel} from "../../../models/entreprise.model";
+import {EntrepriseService} from "../../entreprise/entreprise.service";
 
 
 @Component({
@@ -34,13 +36,14 @@ export class PrestationsComponent implements OnInit, OnDestroy {
     screenWidth: number;
     isDirty: boolean;
     allSelected: boolean;
+    entreprise: EntrepriseModel;
 
 
 
     constructor(private route: ActivatedRoute, private prestationsService: PrestationsService,
                 private router: Router, iconRegistry: MatIconRegistry, sanitizer: DomSanitizer, private fb: FormBuilder,
                 private snackBar: MatSnackBar, public dialog: MatDialog,
-                private storeUser: Store<UserState>, private  userService: UsersService,
+                private storeUser: Store<UserState>, private  userService: UsersService, private entrepriseService: EntrepriseService,
                 private socket: SocketService) {
         iconRegistry.addSvgIcon(
             'right',
@@ -58,6 +61,9 @@ export class PrestationsComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        this.entrepriseService.entreprise$.subscribe(
+            e => this.entreprise = e
+        )
         this.allSelected = false;
         this.selection = [];
         this.isDirty = false;

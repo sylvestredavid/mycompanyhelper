@@ -19,6 +19,8 @@ import {forEach} from '@angular/router/src/utils/collection';
 import {CustomValidators} from '../../../shared/validators/custom.validator';
 import {AchatModel} from '../../../models/achat.model';
 import {AchatService} from '../../achat/achat.service';
+import {EntrepriseModel} from "../../../models/entreprise.model";
+import {EntrepriseService} from "../../entreprise/entreprise.service";
 
 
 @Component({
@@ -46,13 +48,14 @@ export class ProduitsComponent implements OnInit, OnDestroy {
     screenWidth: number;
     isDirty: boolean;
     genres: any;
+    entreprise: EntrepriseModel;
 
 
     constructor(private route: ActivatedRoute, private genreService: GenreService, private produitService: ProduitService,
                 private router: Router, iconRegistry: MatIconRegistry, sanitizer: DomSanitizer, private fb: FormBuilder,
                 private snackBar: MatSnackBar, private storeUser: Store<UserState>,
                 private userService: UsersService, private notificationService: NotificationsService, private socket: SocketService,
-                private dialog: MatDialog, private achatService: AchatService) {
+                private dialog: MatDialog, private achatService: AchatService, private entrepriseService: EntrepriseService) {
         iconRegistry.addSvgIcon(
             'right',
             sanitizer.bypassSecurityTrustResourceUrl('/assets/right.svg'));
@@ -72,6 +75,9 @@ export class ProduitsComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        this.entrepriseService.entreprise$.subscribe(
+            e => this.entreprise = e
+        )
         this.listeNomProduits = [];
         this.genreService.listeGenre$.subscribe(
             g => this.genres = g

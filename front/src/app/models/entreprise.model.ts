@@ -19,4 +19,6 @@ export class EntrepriseModel {
     idUser?: number;
 
     logo?: string;
+
+    microEntreprise?: boolean;
 }

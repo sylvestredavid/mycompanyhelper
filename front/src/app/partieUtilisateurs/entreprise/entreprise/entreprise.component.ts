@@ -40,6 +40,7 @@ export class EntrepriseComponent implements OnInit {
       telephone: [this.entreprise ? this.entreprise.telephone : '', Validators.required],
       email: [this.entreprise ? this.entreprise.email : '', Validators.required],
       logo: [this.entreprise ? this.entreprise.logo : ''],
+      microEntreprise: [this.entreprise ? this.entreprise.microEntreprise : false]
     })
   }
   handleFileInput(files: FileList) {
@@ -66,7 +67,8 @@ export class EntrepriseComponent implements OnInit {
       telephone: value.telephone,
       email: value.email,
       idUser: this.userService.idUser,
-      logo: value.logo
+      logo: value.logo,
+      microEntreprise : value.microEntreprise
     }
 
     this.entrepriseService.saveEntreprise(entreprise).subscribe(

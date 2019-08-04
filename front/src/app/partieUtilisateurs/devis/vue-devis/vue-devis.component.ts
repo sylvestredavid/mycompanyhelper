@@ -148,4 +148,12 @@ export class VueDevisComponent implements OnInit {
       this.showNext();
     });
   }
+
+  sansTva() {
+    if (this.devis.tva20 === 0 && this.devis.tva10 === 0 && this.devis.tva55 === 0 && this.devis.tva21 === 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

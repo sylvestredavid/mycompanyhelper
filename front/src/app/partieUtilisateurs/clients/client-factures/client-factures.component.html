@@ -7,7 +7,7 @@
   <!-- Symbol Column -->
   <ng-container matColumnDef="numero">
     <th mat-header-cell *matHeaderCellDef >n°</th>
-    <td mat-cell *matCellDef="let element">{{element.idFacture}}</td>
+    <td mat-cell *matCellDef="let element">{{element.numero}}</td>
   </ng-container>
 
   <!-- Symbol Column -->
@@ -44,7 +44,7 @@
           </div>
           <div class="clear"></div>
         <div class="body">
-          <h3>Facture n° {{element.idFacture}}</h3>
+          <h3>Facture n° {{element.numero}}</h3>
           <p>{{element.date | date: "dd-MM-yyyy"}}</p>
           <table>
             <thead>
@@ -53,6 +53,9 @@
               <th>prix unitaire</th>
               <th>quantitée</th>
               <th>Prix</th>
+              <ng-container *ngIf="!sansTva(element)">
+                <th>TVA</th>
+              </ng-container>
             </tr>
             </thead>
             <tbody>
@@ -62,6 +65,9 @@
                 <td>{{produit.produit.prixVente}}€</td>
                 <td>{{produit.quantite}}</td>
                 <td>{{produit.produit.prixVente * produit.quantite}}€</td>
+                <ng-container *ngIf="!sansTva(element)">
+                  <td>{{produit.produit.tva}}%</td>
+                </ng-container>
               </tr>
             </ng-container>
             <ng-container *ngFor="let prestation of element.prestationsFacture">
@@ -70,6 +76,9 @@
                 <td>{{prestation.prestation.prix}}€/{{prestation.prestation.unitee}}</td>
                 <td>{{prestation.quantite}} {{prestation.prestation.unitee}}</td>
                 <td>{{prestation.prestation.prix * prestation.quantite}}€</td>
+                <ng-container *ngIf="!sansTva(element)">
+                  <td>{{prestation.prestation.tva}}%</td>
+                </ng-container>
               </tr>
             </ng-container>
             </tbody>
@@ -88,8 +97,8 @@
             <p class="align-right">TVA à 20% : {{element.tva20}} €</p>
           </ng-container>
             <p class="align-right">Total TTC : {{element.totalTTC}} €</p>
-          <ng-container *ngIf="element.tva20 === 0 && element.tva10 === 0 && element.tva55 === 0 && element.tva21 === 0">
-            <p>Auto entrepreneur, pas de tva.</p>
+          <ng-container *ngIf="sansTva(element)">
+            <p>TVA non applicable, art. 293B du CGI</p>
           </ng-container>
         </div>
           <div class="conditions_generales">
