@@ -1,29 +1,33 @@
 package com.stockmaga.back.services.impl;
 
-import java.io.UnsupportedEncodingException;
-import java.util.List;
-import java.util.Properties;
-
-import javax.activation.DataHandler;
-import javax.activation.DataSource;
-import javax.activation.FileDataSource;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import com.stockmaga.back.models.*;
 import com.stockmaga.back.repositories.EntrepriseRepository;
+import com.stockmaga.back.request.SignUpForm;
+import com.stockmaga.back.services.IEmailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import org.springframework.core.env.Environment;
-import com.stockmaga.back.request.SignUpForm;
-import com.stockmaga.back.services.IEmailService;
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
+import javax.mail.util.ByteArrayDataSource;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.Properties;
 
 @Service
 public class EmailService implements IEmailService {
@@ -35,15 +39,16 @@ public class EmailService implements IEmailService {
 
 	@Autowired
 	private Environment env;
+
 	/**
 	 * Methode d'envoi d'un email
-	 * 
-	 * @param  to l'adresse mail du destinataire
-	 * @param  from l'adresse mail de l'expediteur
-	 * @param  title le sujet du mail
-	 * @param  mail Le corps du mail
+	 *
+	 * @param to    l'adresse mail du destinataire
+	 * @param from  l'adresse mail de l'expediteur
+	 * @param title le sujet du mail
+	 * @param mail  Le corps du mail
 	 */
-	public void send(String to, String from, String name, String title, String mail) {
+	public void send(String to, String from, String name, String title, String mail, Facture facture) {
 
 		final String username = env.getProperty("email.username");// change accordingly
 		final String password = env.getProperty("email.mdp");// change accordingly
@@ -70,7 +75,7 @@ public class EmailService implements IEmailService {
 			// Set From: header field of the header.
 			message.setFrom(new InternetAddress(from, name));
 
-			message.setReplyTo(new javax.mail.Address[] { new javax.mail.internet.InternetAddress(from) });
+			message.setReplyTo(new javax.mail.Address[]{new javax.mail.internet.InternetAddress(from)});
 
 			// Set To: header field of the header.
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
@@ -78,8 +83,30 @@ public class EmailService implements IEmailService {
 			// Set Subject: header field
 			message.setSubject(title);
 
+			Multipart multipart = new MimeMultipart();
+
+			MimeBodyPart messageBodyPart = new MimeBodyPart();
+			messageBodyPart.setContent(mail, "text/html; charset=UTF-8");
+
+			if (facture != null) {
+
+				String fileName = facture.isDevis() ? "Devis_" + facture.getNumero() : "Facture_" + facture.getNumero();
+
+				ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+				writePdf(outputStream, facture);
+				byte[] bytes = outputStream.toByteArray();
+
+				//construct the pdf body part
+				DataSource dataSource = new ByteArrayDataSource(bytes, "application/pdf");
+				MimeBodyPart pdfBodyPart = new MimeBodyPart();
+				pdfBodyPart.setDataHandler(new DataHandler(dataSource));
+				pdfBodyPart.setFileName(fileName + ".pdf");
+				multipart.addBodyPart(pdfBodyPart);
+			}
+
+			multipart.addBodyPart(messageBodyPart);
 			// Send the actual HTML message, as big as you like
-			message.setContent(mail, "text/html; charset=UTF-8");
+			message.setContent(multipart);
 
 			// Send message
 			Transport.send(message);
@@ -90,6 +117,10 @@ public class EmailService implements IEmailService {
 			throw new RuntimeException(e);
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -99,66 +130,11 @@ public class EmailService implements IEmailService {
 	@Override
 	public void sendFacture(Facture facture, String entreprise) {
 
-		String facture_Debut = "<h1>Bonjour</h1>";
-		if(facture.isDevis()) {
-			facture_Debut += "<p style='margin-top: 10px;'>Voici votre devis:</p>";
-		} else {
-			facture_Debut += "<p style='margin-top: 10px;'>Voici votre facture:</p>";
-		}
-		facture_Debut += "<div style='width:80%;margin:auto'>"
-				+ "<table style='border: 1px solid black; width:100%; border-collapse: collapse;'>"
-				+ "<thead style='border: 1px solid black'>" + "<tr style='border: 1px solid black'>"
-				+ "<th style='border: 1px solid black; border: 1px solid black; text-align:center; padding: 10px 20px'>Description</th>"
-				+ "<th style='text-align:center; padding: 10px 20px; border: 1px solid black;'>Prix</th>"
-				+ "<th style='text-align:center; padding: 10px 20px; border: 1px solid black;'>quantitée</th>"
-				+ "<th style='text-align:center; padding: 10px 20px; border: 1px solid black;'>total</th>" + "</tr>"
-				+ "</thead>" + "<tbody style='border: 1px solid black'>";
-		String facture_millieu = "";
-		for (FactureProduit factureProduit : facture.getProduitsFacture()) {
-			facture_millieu += "<tr>" + "<td style='border: 1px solid black; text-align:center; padding: 10px 20px'>"
-					+ factureProduit.getProduit().getDesignation() + "</td>"
-					+ "<td style='border: 1px solid black; text-align:center; padding: 10px 20px'>"
-					+ factureProduit.getProduit().getPrixVente() + " €</td>"
-					+ "<td style='border: 1px solid black; text-align:center; padding: 10px 20px'>"
-					+ factureProduit.getQuantite() + "</td>"
-					+ "<td style='border: 1px solid black; text-align:center; padding: 10px 20px'>"
-					+ (factureProduit.getProduit().getPrixVente() * factureProduit.getQuantite()) + " €</td>" + "</tr>";
-		}
-		for (FacturePrestation facturePrestation : facture.getPrestationsFacture()) {
-			facture_millieu += "<tr>" + "<td style='border: 1px solid black; text-align:center; padding: 10px 20px'>"
-					+ facturePrestation.getPrestation().getDesignation() + "</td>"
-					+ "<td style='border: 1px solid black; text-align:center; padding: 10px 20px'>"
-					+ facturePrestation.getPrestation().getPrix() + " €/"+facturePrestation.getPrestation().getUnitee()+"</td>"
-					+ "<td style='border: 1px solid black; text-align:center; padding: 10px 20px'>"
-					+ facturePrestation.getQuantite() + "" +facturePrestation.getPrestation().getUnitee()+ "</td>"
-					+ "<td style='border: 1px solid black; text-align:center; padding: 10px 20px'>"
-					+ (facturePrestation.getPrestation().getPrix() * facturePrestation.getQuantite()) + " €</td>" + "</tr>";
-		}
+		final String MAIL = facture.isDevis() ? "Bonjour voici votre devis" : "Merci pour votre achat, voici votre facture.";
 
-		String facture_Fin = "</tbody>"
-				+ "</table>"
-				+ "<p style='text-align:right'>Total HT: " + facture.getTotalHT() + " €</p>";
-		if(facture.getTva21() > 0) {
-		facture_Fin += "<p style='text-align:right'>TVA 2,1%: " + facture.getTva21() + " €</p>";
-		}
-		if(facture.getTva55() > 0) {
-			facture_Fin += "<p style='text-align:right'>TVA 5,5%: " + facture.getTva55() + " €</p>";
-		}
-		if(facture.getTva10() > 0) {
-			facture_Fin += "<p style='text-align:right'>TVA 10%: " + facture.getTva10() + " €</p>";
-		}
-		if(facture.getTva20() > 0) {
-			facture_Fin += "<p style='text-align:right'>TVA 20%: " + facture.getTva20() + " €</p>";
-		}
-		facture_Fin += "<p style='text-align:right'>Total TTC: " + facture.getTotalTTC() + " €</p>"
-				+ "</div>"
-				+ "<p style='margin-top:10px;'>Nous vous remercions pour votre confiance.</p>"
-				+ "<p>Coridlament</p>"
-				+ "<p>Ce message vous a été envoyé depuis <a href=\"https://www.mycompanyhelper.com\">mycompanyhelper.com</a></p>";
+		final String TITLE = facture.isDevis() ? "Voici votre devis" : "Merci pour votre achat";
 
-		final String MAIL = facture_Debut + facture_millieu + facture_Fin;
-
-		send(facture.getClient().getEmail(), MAIL_FROM, entreprise,  "Merci pour votre achat", MAIL);
+		send(facture.getClient().getEmail(), MAIL_FROM, entreprise, TITLE, MAIL, facture);
 	}
 
 	/**
@@ -175,7 +151,7 @@ public class EmailService implements IEmailService {
 				+ "<p>Cordialement.</p>" + "<p>L'équipe de mycompanyhelper</p>"
 				+ "<p>Ce message vous a été envoyé depuis <a href=\"https://www.mycompanyhelper.com\">mycompanyhelper.com</a></p>";
 
-		send(user.getUsername(), MAIL_FROM, "mycompanyhelper", "Vous avez été ajouté en tant que gestionnaire.", Gest_Mail);
+		send(user.getUsername(), MAIL_FROM, "mycompanyhelper", "Vous avez été ajouté en tant que gestionnaire.", Gest_Mail, null);
 	}
 
 	/**
@@ -190,7 +166,7 @@ public class EmailService implements IEmailService {
 				+ "<p>Si vous n'etes pas à l'origine de cette demande, merci de nous en informer"
 				+ "<p>Ce message vous a été envoyé depuis <a href=\"https://www.mycompanyhelper.com\">mycompanyhelper.com</a></p>";
 
-		send(mail, MAIL_FROM, "mycompanyhelper", "Votre demande de changement de mot de passe.", MAIL);
+		send(mail, MAIL_FROM, "mycompanyhelper", "Votre demande de changement de mot de passe.", MAIL, null);
 
 	}
 
@@ -204,7 +180,7 @@ public class EmailService implements IEmailService {
 		final String MAIL = "<div style='white-space: pre;'>" + email.getCorps() + "</div>"
 				+ "<p>Ce message vous a été envoyé depuis <a href=\"https://www.mycompanyhelper.com\">mycompanyhelper.com</a></p>";
 
-		send(email.getTo(), email.getFrom(), "mycompanyhelper", email.getTitre(), MAIL);
+		send(email.getTo(), email.getFrom(), "mycompanyhelper", email.getTitre(), MAIL, null);
 
 	}
 
@@ -219,7 +195,7 @@ public class EmailService implements IEmailService {
 				+ "<p>Cordialement.</p>" + "<p>L'équipe de mycompanyhelper</p>"
 				+ "<p>Ce message vous a été envoyé depuis <a href=\"https://www.mycompanyhelper.com\">mycompanyhelper.com</a></p>";
 
-		send(email, MAIL_FROM, "mycompanyhelper", "mycompanyhelper alerte stock bas", MAIL);
+		send(email, MAIL_FROM, "mycompanyhelper", "mycompanyhelper alerte stock bas", MAIL, null);
 
 	}
 
@@ -236,7 +212,7 @@ public class EmailService implements IEmailService {
 				+ "<p>Cordialement.</p>" + "<p>L'équipe de mycompanyhelper</p>"
 				+ "<p>Ce message vous a été envoyé depuis <a href=\"https://www.mycompanyhelper.com\">mycompanyhelper.com</a></p>";
 
-		send(signUpRequest.getUsername(), MAIL_FROM, "mycompanyhelper", "Merci pour votre inscription", MAIL);
+		send(signUpRequest.getUsername(), MAIL_FROM, "mycompanyhelper", "Merci pour votre inscription", MAIL, null);
 
 	}
 
@@ -248,33 +224,33 @@ public class EmailService implements IEmailService {
 				+ "<p>L'équipe de mycompanyhelper</p>"
 				+ "<p>Ce message vous a été envoyé depuis <a href=\"https://www.mycompanyhelper.com\">mycompanyhelper.com</a></p>";
 
-		send(annonce.getEmail(), MAIL_FROM, "mycompanyhelper", "Merci pour votre achat", MAIL);
+		send(annonce.getEmail(), MAIL_FROM, "mycompanyhelper", "Merci pour votre achat", MAIL, null);
 	}
 
 	@Override
 	public void sendMailCalendrier(String email, List<Calendrier> calendrier) {
 		final String MAIL_DEBUT = "<p>Bonjour</p>"
-				+"<p>voici vos rendez-vous de la journée</p>";
-		
+				+ "<p>voici vos rendez-vous de la journée</p>";
+
 		StringBuilder sb = new StringBuilder();
-		
+
 		for (Calendrier c : calendrier) {
 			sb.append("<p>").append(c.getTitle()).append(" à ").append(c.getStart().substring(11, 16)).append(".</p>");
 		}
 		String mailMillieu = sb.toString();
 		final String MAIL_FIN = "<p>Cordialement.</p>"
 				+ "<p>L'équipe de mycompanyhelper</p>"
-				+"<p>Ce message vous a été envoyé depuis <a href=\"https://www.mycompanyhelper.com\">mycompanyhelper.com</a></p>";
+				+ "<p>Ce message vous a été envoyé depuis <a href=\"https://www.mycompanyhelper.com\">mycompanyhelper.com</a></p>";
 
-		send(email, MAIL_FROM, "mycompanyhelper", "Votre planning de la journée", MAIL_DEBUT+mailMillieu+MAIL_FIN);
-		
+		send(email, MAIL_FROM, "mycompanyhelper", "Votre planning de la journée", MAIL_DEBUT + mailMillieu + MAIL_FIN, null);
+
 	}
 
 	@Override
 	@Async
 	public void sendMailSupport(Email email) {
 
-		send(email.getTo(), email.getFrom(), "demande support", email.getTitre(), email.getCorps());
+		send(email.getTo(), email.getFrom(), "demande support", email.getTitre(), email.getCorps(), null);
 	}
 
 	@Override
@@ -285,6 +261,190 @@ public class EmailService implements IEmailService {
 				+ "<p>L'équipe de mycompanyhelper</p>"
 				+ "<p>Ce message vous a été envoyé depuis <a href=\"https://www.mycompanyhelper.com\">mycompanyhelper.com</a></p>";
 
-		send(email, MAIL_FROM, "mycompanyhelper", "suppression de votre compte", MAIL);
+		send(email, MAIL_FROM, "mycompanyhelper", "suppression de votre compte", MAIL, null);
+	}
+
+	public void writePdf(OutputStream outputStream, Facture facture) throws Exception {
+
+		Entreprise entreprise = entrepriseRepository.findByIdUser(facture.getIdUser());
+		Client client = facture.getClient();
+
+		Document document = new Document();
+		PdfWriter.getInstance(document, outputStream);
+
+		document.open();
+
+		Font big = new Font(Font.FontFamily.TIMES_ROMAN, 18, Font.BOLD);
+		Font small = new Font(Font.FontFamily.TIMES_ROMAN, 10);
+
+		PdfPTable details = new PdfPTable(2);
+		details.addCell(getCell(client.getNom() + " " + client.getPrenom(), Element.ALIGN_LEFT));
+		details.addCell(getCell(entreprise.getNom(), Element.ALIGN_RIGHT));
+		details.addCell(getCell(client.getAdresse(), Element.ALIGN_LEFT));
+		details.addCell(getCell("Siret : " + entreprise.getSiret(), Element.ALIGN_RIGHT));
+		details.addCell(getCell(client.getCodePostal() + " " + client.getVille(), Element.ALIGN_LEFT));
+		details.addCell(getCell(entreprise.getAdresse(), Element.ALIGN_RIGHT));
+		details.addCell(getCell(" ", Element.ALIGN_LEFT));
+		details.addCell(getCell(entreprise.getCodePostal() + " " + entreprise.getVille(), Element.ALIGN_RIGHT));
+		details.addCell(getCell(" ", Element.ALIGN_LEFT));
+		details.addCell(getCell(entreprise.getTelephone(), Element.ALIGN_RIGHT));
+		details.addCell(getCell(" ", Element.ALIGN_LEFT));
+		details.addCell(getCell(entreprise.getEmail(), Element.ALIGN_RIGHT));
+		details.setWidthPercentage(100);
+		document.add(details);
+
+		document.add(new Paragraph(" "));
+
+		Paragraph factureParagraph = new Paragraph();
+		Paragraph numero = new Paragraph(facture.isDevis() ? "Devis n° " + facture.getNumero() : "Facture n° " + facture.getNumero(), big);
+		numero.setAlignment(Element.ALIGN_CENTER);
+		factureParagraph.add(numero);
+		document.add(factureParagraph);
+
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		document.add(new Paragraph(dateFormat.format(facture.getDate())));
+
+		document.add(new Paragraph(" "));
+
+		PdfPTable tableau = new PdfPTable(4);
+
+		PdfPCell c = new PdfPCell(new Phrase("Produit"));
+		c.setHorizontalAlignment(Element.ALIGN_CENTER);
+		c.setPadding(10);
+		tableau.addCell(c);
+
+		c = new PdfPCell(new Phrase("prix unitaire"));
+		c.setHorizontalAlignment(Element.ALIGN_CENTER);
+		c.setPadding(10);
+		tableau.addCell(c);
+
+		c = new PdfPCell(new Phrase("quantitée"));
+		c.setHorizontalAlignment(Element.ALIGN_CENTER);
+		c.setPadding(10);
+		tableau.addCell(c);
+
+		c = new PdfPCell(new Phrase("Prix"));
+		c.setHorizontalAlignment(Element.ALIGN_CENTER);
+		c.setPadding(10);
+		tableau.addCell(c);
+		tableau.setHeaderRows(1);
+
+		facture.getProduitsFacture().forEach(
+				p -> {
+					PdfPCell pCell = new PdfPCell(new Phrase(p.getProduit().getDesignation()));
+					pCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+					pCell.setPadding(10);
+					tableau.addCell(pCell);
+
+					pCell = new PdfPCell(new Phrase(p.getProduit().getPrixVente() + "€"));
+					pCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+					pCell.setPadding(10);
+					tableau.addCell(pCell);
+
+					pCell = new PdfPCell(new Phrase(Integer.toString(p.getQuantite())));
+					pCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+					pCell.setPadding(10);
+					tableau.addCell(pCell);
+
+					pCell = new PdfPCell(new Phrase(p.getQuantite() * p.getProduit().getPrixVente() + "€"));
+					pCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+					pCell.setPadding(10);
+					tableau.addCell(pCell);
+				}
+		);
+
+		facture.getPrestationsFacture().forEach(
+				p -> {
+					PdfPCell pCell = new PdfPCell(new Phrase(p.getPrestation().getDesignation()));
+					pCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+					pCell.setPadding(10);
+					tableau.addCell(pCell);
+
+					pCell = new PdfPCell(new Phrase(p.getPrestation().getPrix() + "€/" + p.getPrestation().getUnitee()));
+					pCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+					pCell.setPadding(10);
+					tableau.addCell(pCell);
+
+					pCell = new PdfPCell(new Phrase(p.getQuantite() + " " + p.getPrestation().getUnitee()));
+					pCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+					pCell.setPadding(10);
+					tableau.addCell(pCell);
+
+					pCell = new PdfPCell(new Phrase(p.getQuantite() * p.getPrestation().getPrix() + "€"));
+					pCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+					pCell.setPadding(10);
+					tableau.addCell(pCell);
+				}
+		);
+		tableau.setWidthPercentage(100);
+		document.add(tableau);
+
+		Paragraph totalHT = new Paragraph();
+		totalHT.add("Total HT : " + facture.getTotalHT() + "€");
+		totalHT.setAlignment(Element.ALIGN_RIGHT);
+		document.add(totalHT);
+
+		if(facture.getTva21() != 0) {
+			Paragraph tva21 = new Paragraph();
+			tva21.add("TVA à 2,1% : " + facture.getTva21() + "€");
+			tva21.setAlignment(Element.ALIGN_RIGHT);
+			document.add(tva21);
+		}
+
+		if(facture.getTva55() != 0) {
+			Paragraph tva55 = new Paragraph();
+			tva55.add("TVA à 5,5% : " + facture.getTva55() + "€");
+			tva55.setAlignment(Element.ALIGN_RIGHT);
+			document.add(tva55);
+		}
+
+		if(facture.getTva10() != 0) {
+			Paragraph tva10 = new Paragraph();
+			tva10.add("TVA à 10% : " + facture.getTva10() + "€");
+			tva10.setAlignment(Element.ALIGN_RIGHT);
+			document.add(tva10);
+		}
+
+		if(facture.getTva20() != 0) {
+			Paragraph tva20 = new Paragraph();
+			tva20.add("TVA à 20% : " + facture.getTva20() + "€");
+			tva20.setAlignment(Element.ALIGN_RIGHT);
+			document.add(tva20);
+		}
+
+		if(facture.getRemise() != 0) {
+			Paragraph remise = new Paragraph();
+			remise.add("Remise : " + facture.getRemise() + "%");
+			remise.setAlignment(Element.ALIGN_RIGHT);
+			document.add(remise);
+		}
+
+		Paragraph totalTTC = new Paragraph();
+		totalTTC.add("Total TTC : " + facture.getTotalTTC() + "€");
+		totalTTC.setAlignment(Element.ALIGN_RIGHT);
+		document.add(totalTTC);
+
+		if(facture.getTva20() == 0 && facture.getTva10() == 0 && facture.getTva55() == 0 && facture.getTva21() == 0) {
+			Paragraph sansTva = new Paragraph();
+			sansTva.add(new Paragraph("auto entrepreneur, pas de TVA"));
+			document.add(sansTva);
+		}
+
+		if(!facture.isDevis()) {
+			Paragraph mentions = new Paragraph();
+			mentions.add(new Paragraph("Payable à 30 jours date de facture", small));
+			mentions.add(new Paragraph("En cas de retard de paiement, indemnité forfaitaire légale pour frais de recouvrement : 40,00 €", small));
+			document.add(mentions);
+		}
+
+		document.close();
+	}
+
+	private PdfPCell getCell(String text, int align) {
+		PdfPCell cell = new PdfPCell(new Phrase(new Paragraph(text)));
+		cell.setPadding(0);
+		cell.setHorizontalAlignment(align);
+		cell.setBorder(0);
+		return cell;
 	}
 }

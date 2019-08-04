@@ -37,12 +37,12 @@
     <p class="error" *ngIf="signUpForm.value.password2 && signUpForm.controls.password2.invalid">
         Les mots de passe ne sont pas identiques
     </p>
-    <ng-container *ngIf="signUpForm.value.typeInscription === 'user'">
-        <mat-radio-group aria-label="Choisissez votre type d'abonnement" formControlName="typeAbo">
-            <mat-radio-button color="primary" value="fixe">Fixe 10€/mois</mat-radio-button>
-            <mat-radio-button color="primary" value="requete">A la requete</mat-radio-button>
-        </mat-radio-group>
-    </ng-container>
+<!--    <ng-container *ngIf="signUpForm.value.typeInscription === 'user'">-->
+<!--        <mat-radio-group aria-label="Choisissez votre type d'abonnement" formControlName="typeAbo">-->
+<!--            <mat-radio-button color="primary" value="fixe">Fixe 10€/mois</mat-radio-button>-->
+<!--            <mat-radio-button color="primary" value="requete">A la requete</mat-radio-button>-->
+<!--        </mat-radio-group>-->
+<!--    </ng-container>-->
     <button mat-raised-button type="submit" color="primary" [disabled]="signUpForm.invalid">Inscription</button>
 </form>
 </ng-container>

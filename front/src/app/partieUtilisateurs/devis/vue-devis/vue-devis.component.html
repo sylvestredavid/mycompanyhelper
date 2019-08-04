@@ -76,6 +76,9 @@
         <p class="align-right">TVA à 20% : {{devis.tva20}} €</p>
       </ng-container>
       <p class="align-right">Total TTC : {{devis.totalTTC}} €</p>
+      <ng-container *ngIf="devis.tva20 === 0 && devis.tva10 === 0 && devis.tva55 === 0 && devis.tva21 === 0">
+        <p>Auto entrepreneur, pas de tva.</p>
+      </ng-container>
     </div>
     <div class="conditions_generales">
       <p>Payable à 30 jours date de facture</p>

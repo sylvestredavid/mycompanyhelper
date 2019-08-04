@@ -254,26 +254,26 @@ public class AbonnementService implements IAbonnementService {
     @Override
     @Async
     public void augmenterNbRequete(Long idUser) throws StripeException {
-        Optional<User> user = userRepository.findById(idUser);
-
-        Stripe.apiKey = env.getProperty("stripe.apikey");
-        if (user.get().getAbonnement() != null && user.get().getAbonnement() != "") {
-            Subscription sub = Subscription.retrieve(user.get().getAbonnement());
-
-            if ("plan_F95y8IznjvnUO1".equals(sub.getPlan().getId())) {
-                Map<String, Object> subscriptionitemParams = new HashMap<String, Object>();
-                subscriptionitemParams.put("subscription", sub.getId());
-                SubscriptionItem item = SubscriptionItem.list(subscriptionitemParams).getData().get(0);
-
-                Instant instant = Instant.now();
-                long timeStamp = instant.getEpochSecond();
-
-                Map<String, Object> usagerecordParams = new HashMap<String, Object>();
-                usagerecordParams.put("quantity", 1);
-                usagerecordParams.put("timestamp", timeStamp);
-                UsageRecord.createOnSubscriptionItem(item.getId(), usagerecordParams, null);
-            }
-        }
+//        Optional<User> user = userRepository.findById(idUser);
+//
+//        Stripe.apiKey = env.getProperty("stripe.apikey");
+//        if (user.get().getAbonnement() != null && user.get().getAbonnement() != "") {
+//            Subscription sub = Subscription.retrieve(user.get().getAbonnement());
+//
+//            if ("plan_F95y8IznjvnUO1".equals(sub.getPlan().getId())) {
+//                Map<String, Object> subscriptionitemParams = new HashMap<String, Object>();
+//                subscriptionitemParams.put("subscription", sub.getId());
+//                SubscriptionItem item = SubscriptionItem.list(subscriptionitemParams).getData().get(0);
+//
+//                Instant instant = Instant.now();
+//                long timeStamp = instant.getEpochSecond();
+//
+//                Map<String, Object> usagerecordParams = new HashMap<String, Object>();
+//                usagerecordParams.put("quantity", 1);
+//                usagerecordParams.put("timestamp", timeStamp);
+//                UsageRecord.createOnSubscriptionItem(item.getId(), usagerecordParams, null);
+//            }
+//        }
     }
 
     @Override

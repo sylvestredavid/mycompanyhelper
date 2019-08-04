@@ -26,7 +26,7 @@
             <th>designation</th>
             <th>prix</th>
             <th>Unitée</th>
-            <th>tva</th>
+<!--            <th>tva</th>-->
         </tr>
         </thead>
         <tbody [formGroup]="elementForm">
@@ -42,16 +42,16 @@
                 <td><input class="readOnly" [inputReadOnly]="true"
                            formControlName="unitee" placeholder="Unitée" (keyup)="changeIsDirty()">
                 </td>
-                <td>
-                    <select [inputReadOnly]="true" formControlName="tva"
-                            (change)="envoiForm()">
-                        <option [value]="0">0</option>
-                        <option [value]="2.1">2,1%</option>
-                        <option [value]="5.5">5.5%</option>
-                        <option [value]="10">10%</option>
-                        <option [value]="20">20%</option>
-                    </select>
-                </td>
+<!--                <td>-->
+<!--                    <select [inputReadOnly]="true" formControlName="tva"-->
+<!--                            (change)="envoiForm()">-->
+<!--                        <option [value]="0">0</option>-->
+<!--                        <option [value]="2.1">2,1%</option>-->
+<!--                        <option [value]="5.5">5.5%</option>-->
+<!--                        <option [value]="10">10%</option>-->
+<!--                        <option [value]="20">20%</option>-->
+<!--                    </select>-->
+<!--                </td>-->
             </tr>
         </ng-container>
         </tbody>
@@ -81,14 +81,14 @@
                 <p>prix : <input [inputReadOnly]="true" class="inputChiffre"
                                          formControlName="prix" (keyup)="changeIsDirty()">€</p>
                 <p>unitée : <input [inputReadOnly]="true" formControlName="unitee" (keyup)="changeIsDirty()"></p>
-                tva: <select [inputReadOnly]="true" formControlName="tva"
-                             (change)="envoiForm()">
-                <option [value]="0">0</option>
-                <option [value]="2.1">2,1%</option>
-                <option [value]="5.5">5.5%</option>
-                <option [value]="10">10%</option>
-                <option [value]="20">20%</option>
-            </select> <br>
+<!--                tva: <select [inputReadOnly]="true" formControlName="tva"-->
+<!--                             (change)="envoiForm()">-->
+<!--                <option [value]="0">0</option>-->
+<!--                <option [value]="2.1">2,1%</option>-->
+<!--                <option [value]="5.5">5.5%</option>-->
+<!--                <option [value]="10">10%</option>-->
+<!--                <option [value]="20">20%</option>-->
+<!--            </select> <br>-->
             </div>
         </div>
     </div>

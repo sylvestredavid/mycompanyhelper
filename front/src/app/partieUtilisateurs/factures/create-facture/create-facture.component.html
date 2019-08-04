@@ -184,9 +184,9 @@
             </ng-template>
         </div>
         <ng-container *ngIf="entreprise">
-            <figure class="logo">
-                <img src="https://back.mycompanyhelper.com/api/entreprise/files/{{entreprise.logo}}" alt="{{entreprise.logo}}">
-            </figure>
+<!--            <figure class="logo">-->
+<!--                <img src="https://back.mycompanyhelper.com/api/entreprise/files/{{entreprise.logo}}" alt="{{entreprise.logo}}">-->
+<!--            </figure>-->
             <div class="entreprise">
                 <p>{{entreprise.nom}}</p>
                 <p>siret : {{entreprise.siret}}</p>
@@ -266,6 +266,9 @@
                 <p class="align-right">
                     Total TTC : {{getTotalTTC(produits.controls, prestations.controls)}} €
                 </p>
+            </ng-container>
+            <ng-container *ngIf="sansTva(produits.controls, prestations.controls)">
+                <p>Auto entrepreneur, pas de tva</p>
             </ng-container>
         </div>
         <div class="conditions_generales">
