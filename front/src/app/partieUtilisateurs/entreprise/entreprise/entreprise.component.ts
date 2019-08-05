@@ -40,7 +40,7 @@ export class EntrepriseComponent implements OnInit {
       telephone: [this.entreprise ? this.entreprise.telephone : '', Validators.required],
       email: [this.entreprise ? this.entreprise.email : '', Validators.required],
       logo: [this.entreprise ? this.entreprise.logo : ''],
-      microEntreprise: [this.entreprise ? this.entreprise.microEntreprise : false]
+      microEntreprise: [this.entreprise ? this.entreprise.microEntreprise : true]
     })
   }
   handleFileInput(files: FileList) {

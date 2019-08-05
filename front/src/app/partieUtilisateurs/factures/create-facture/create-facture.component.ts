@@ -438,18 +438,4 @@ export class CreateFactureComponent implements OnInit, OnDestroy {
             }
         );
     }
-
-    sansTva(produits: AbstractControl[], prestations: AbstractControl[]) {
-        for (const control of produits) {
-            if (control.value.produit.tva !== 0) {
-                return false;
-            }
-        }
-        for (const control of prestations) {
-            if (control.value.prestation.tva !== 0) {
-                return false;
-            }
-        }
-        return true;
-    }
 }

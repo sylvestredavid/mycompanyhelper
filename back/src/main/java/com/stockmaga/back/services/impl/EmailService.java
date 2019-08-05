@@ -308,7 +308,7 @@ public class EmailService implements IEmailService {
 
 		PdfPTable tableau;
 
-		if(!sansTva(facture)) {
+		if(!entreprise.isMicroEntreprise()) {
 			tableau = new PdfPTable(5);
 		} else {
 			tableau = new PdfPTable(4);
@@ -335,7 +335,7 @@ public class EmailService implements IEmailService {
 		tableau.addCell(c);
 		tableau.setHeaderRows(1);
 
-		if(!sansTva(facture)) {
+		if(!entreprise.isMicroEntreprise()) {
 			c = new PdfPCell(new Phrase("TVA"));
 			c.setHorizontalAlignment(Element.ALIGN_CENTER);
 			c.setPadding(10);
@@ -365,7 +365,7 @@ public class EmailService implements IEmailService {
 					pCell.setPadding(10);
 					tableau.addCell(pCell);
 
-					if(!sansTva(facture)) {
+					if(!entreprise.isMicroEntreprise()) {
 						pCell = new PdfPCell(new Phrase(p.getProduit().getTva() + "%"));
 						pCell.setHorizontalAlignment(Element.ALIGN_CENTER);
 						pCell.setPadding(10);
@@ -396,7 +396,7 @@ public class EmailService implements IEmailService {
 					pCell.setPadding(10);
 					tableau.addCell(pCell);
 
-					if(!sansTva(facture)) {
+					if(!entreprise.isMicroEntreprise()) {
 						pCell = new PdfPCell(new Phrase(p.getPrestation().getTva() + "%"));
 						pCell.setHorizontalAlignment(Element.ALIGN_CENTER);
 						pCell.setPadding(10);
@@ -452,7 +452,7 @@ public class EmailService implements IEmailService {
 		totalTTC.setAlignment(Element.ALIGN_RIGHT);
 		document.add(totalTTC);
 
-		if(sansTva(facture)) {
+		if(entreprise.isMicroEntreprise()) {
 			Paragraph sansTva = new Paragraph();
 			sansTva.add(new Paragraph("TVA non applicable, art. 293B du CGI"));
 			document.add(sansTva);
@@ -466,14 +466,6 @@ public class EmailService implements IEmailService {
 		}
 
 		document.close();
-	}
-
-	private boolean sansTva(Facture facture) {
-		if(facture.getTva20() == 0 && facture.getTva10() == 0 && facture.getTva55() == 0 && facture.getTva21() == 0) {
-			return true;
-		} else {
-			return false;
-		}
 	}
 
 	private PdfPCell getCell(String text, int align) {

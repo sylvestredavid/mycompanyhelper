@@ -53,7 +53,7 @@
               <th>prix unitaire</th>
               <th>quantitée</th>
               <th>Prix</th>
-              <ng-container *ngIf="!sansTva(element)">
+              <ng-container *ngIf="!entreprise.microEntreprise">
                 <th>TVA</th>
               </ng-container>
             </tr>
@@ -65,7 +65,7 @@
                 <td>{{produit.produit.prixVente}}€</td>
                 <td>{{produit.quantite}}</td>
                 <td>{{produit.produit.prixVente * produit.quantite}}€</td>
-                <ng-container *ngIf="!sansTva(element)">
+                <ng-container *ngIf="!entreprise.microEntreprise">
                   <td>{{produit.produit.tva}}%</td>
                 </ng-container>
               </tr>
@@ -76,7 +76,7 @@
                 <td>{{prestation.prestation.prix}}€/{{prestation.prestation.unitee}}</td>
                 <td>{{prestation.quantite}} {{prestation.prestation.unitee}}</td>
                 <td>{{prestation.prestation.prix * prestation.quantite}}€</td>
-                <ng-container *ngIf="!sansTva(element)">
+                <ng-container *ngIf="!entreprise.microEntreprise">
                   <td>{{prestation.prestation.tva}}%</td>
                 </ng-container>
               </tr>
@@ -97,7 +97,7 @@
             <p class="align-right">TVA à 20% : {{element.tva20}} €</p>
           </ng-container>
             <p class="align-right">Total TTC : {{element.totalTTC}} €</p>
-          <ng-container *ngIf="sansTva(element)">
+          <ng-container *ngIf="entreprise.microEntreprise">
             <p>TVA non applicable, art. 293B du CGI</p>
           </ng-container>
         </div>

@@ -207,7 +207,7 @@
                     <th>prix unitaire</th>
                     <th>quantitée</th>
                     <th>Prix</th>
-                    <ng-container *ngIf="!sansTva(produits.controls, prestations.controls)">
+                    <ng-container *ngIf="!entreprise.microEntreprise">
                         <th>TVA</th>
                     </ng-container>
                 </tr>
@@ -220,7 +220,7 @@
                             <td>{{control.value.produit.prixVente}}€</td>
                             <td>{{control.value.quantite}}</td>
                             <td>{{control.value.produit.prixVente * control.value.quantite}}€</td>
-                            <ng-container *ngIf="!sansTva(produits.controls, prestations.controls)">
+                            <ng-container *ngIf="!entreprise.microEntreprise">
                                 <td>{{control.value.produit.tva}}%</td>
                             </ng-container>
                         </tr>
@@ -233,7 +233,7 @@
                             <td>{{control.value.prestation.prix}}€/{{control.value.prestation.unitee}}</td>
                             <td>{{control.value.quantite}} {{control.value.prestation.unitee}}</td>
                             <td>{{control.value.prestation.prix * control.value.quantite}}€</td>
-                            <ng-container *ngIf="!sansTva(produits.controls, prestations.controls)">
+                            <ng-container *ngIf="!entreprise.microEntreprise">
                                 <td>{{control.value.prestation.tva}}%</td>
                             </ng-container>
                         </tr>
@@ -276,7 +276,7 @@
                     Total TTC : {{getTotalTTC(produits.controls, prestations.controls)}} €
                 </p>
             </ng-container>
-            <ng-container *ngIf="sansTva(produits.controls, prestations.controls)">
+            <ng-container *ngIf="entreprise.microEntreprise">
                 <p>TVA non applicable, art. 293B du CGI</p>
             </ng-container>
         </div>
