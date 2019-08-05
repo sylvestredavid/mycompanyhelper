@@ -23,9 +23,9 @@ import {UsersService} from '../../users/users.service';
 import {SuiviConsommationModel} from '../../models/suivi-consommation.model';
 import {EntrepriseService} from '../entreprise/entreprise.service';
 import {AchatService} from '../achat/achat.service';
-import {CaService} from "../ca/ca.service";
-import {PrestationsService} from "../prestations/prestations.service";
-import {SocketService} from "../../shared/socket.service";
+import {CaService} from '../ca/ca.service';
+import {PrestationsService} from '../prestations/prestations.service';
+import {SocketService} from '../../shared/socket.service';
 
 @Component({
     selector: 'app-core',
@@ -81,14 +81,14 @@ export class CoreComponent implements OnInit, OnDestroy {
                 }
             }
         );
-        this.userService.suiviUtilisation().subscribe(
-            s => {
-                this.suivi = s;
-            }
-        );
+        // this.userService.suiviUtilisation().subscribe(
+        //     s => {
+        //         this.suivi = s;
+        //     }
+        // );
         this.initGenres();
         this.getScreenSize();
-        this.initSocket()
+        this.initSocket();
     }
 
     initSocket() {

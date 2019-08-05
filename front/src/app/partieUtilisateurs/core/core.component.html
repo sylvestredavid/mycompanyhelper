@@ -10,11 +10,11 @@
         <mat-icon svgIcon="notification" (click)="openNotifications()"></mat-icon>
         <span class="badge" *ngIf="nbNotifications && nbNotifications > 0">{{nbNotifications}}</span>
     </button>
-    <ng-container *ngIf="role === 'ROLE_ADMIN'">
-        <button mat-icon-button (click)="openSuivi()" title="suivi consommation">
-            <mat-icon svgIcon="suivi"></mat-icon>
-        </button>
-    </ng-container>
+<!--    <ng-container *ngIf="role === 'ROLE_ADMIN'">-->
+<!--        <button mat-icon-button (click)="openSuivi()" title="suivi consommation">-->
+<!--            <mat-icon svgIcon="suivi"></mat-icon>-->
+<!--        </button>-->
+<!--    </ng-container>-->
     <button mat-icon-button (click)="openChatBot()" title="chatBot">
         <mat-icon svgIcon="aide"></mat-icon>
     </button>
