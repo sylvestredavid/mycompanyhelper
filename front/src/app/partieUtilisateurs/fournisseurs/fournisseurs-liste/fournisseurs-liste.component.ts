@@ -395,7 +395,6 @@ export class FournisseursListeComponent implements OnInit, OnDestroy {
     }
 
     selectAll(e: MatCheckboxChange) {
-        console.log(e.checked)
         if(e.checked) {
             this.listeElements.forEach(
                 f => this.selection.push(f)

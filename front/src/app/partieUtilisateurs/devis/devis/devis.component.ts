@@ -41,7 +41,6 @@ export class DevisComponent implements OnInit {
     ).subscribe(
         devis => {
           this.listeDevis = devis;
-          console.log(devis);
         }
     );
   }

@@ -270,7 +270,6 @@ export class ProduitsComponent implements OnInit, OnDestroy {
         } else {
             this.elementSelectionne = null;
         }
-        console.log(this.elementSelectionne)
     }
 
     /**

@@ -47,7 +47,6 @@ export class ClientFacturesComponent implements OnInit {
   }
 
   generatePDF(id: string) {
-    console.log(id)
     const data = document.getElementById(id);
     html2canvas(data).then(canvas => {
         // Few necessary setting options

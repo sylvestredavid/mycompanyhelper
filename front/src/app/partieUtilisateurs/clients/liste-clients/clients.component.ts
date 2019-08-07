@@ -183,7 +183,6 @@ export class ClientsComponent implements OnInit, OnDestroy {
                 this.allSelected = false;
             }
         }
-        console.log(this.selection)
     }
 
     /**
@@ -336,7 +335,6 @@ export class ClientsComponent implements OnInit, OnDestroy {
     }
 
     selectAll(e: MatCheckboxChange) {
-        console.log(e.checked)
         if(e.checked) {
             this.listeElements.forEach(
                 c => this.selection.push(c)

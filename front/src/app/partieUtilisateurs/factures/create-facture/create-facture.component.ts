@@ -235,7 +235,6 @@ export class CreateFactureComponent implements OnInit, OnDestroy {
      */
     checkStock(produit: ProduitModel, quantite: number) {
         if ((produit.quantite - quantite) <= produit.seuilStockBas && produit.quantite > 0) {
-            console.log('coucou');
             const notif: NotificationModel = {
                 notification: `le produit "${produit.designation}" est bientot en rupture de stock.`,
                 vue: false,

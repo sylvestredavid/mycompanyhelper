@@ -53,7 +53,6 @@ export class VueDevisComponent implements OnInit {
     this.devisService.findFacture(this.route.snapshot.params.id).subscribe(
         devis => {
           this.devis = devis;
-          console.log(this.devis)
         }
     );
   }
@@ -114,7 +113,6 @@ export class VueDevisComponent implements OnInit {
 
   checkStock(produit: ProduitModel, quantite: number) {
     if ((produit.quantite - quantite) <= produit.seuilStockBas && produit.quantite > 0) {
-      console.log('coucou');
       const notif: NotificationModel = {
         notification: `le produit "${produit.designation}" est bientot en rupture de stock.`,
         vue: false,

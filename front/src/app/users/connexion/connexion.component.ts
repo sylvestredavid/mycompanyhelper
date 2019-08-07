@@ -67,7 +67,6 @@ export class ConnexionComponent implements OnInit, OnDestroy {
         login.password = values['password'];
         this.userService.signin(login).subscribe(
             user => {
-                console.log(user)
                 this.userService.idUser = user.managementId !== null ? user.managementId : user.id;
                 this.store.dispatch(new AjoutUser(user));
                 if (this.isRememberMe) { // si l'user a coché se souvenir de moi on stock le token dans le

@@ -25,9 +25,7 @@ export class AchatComponent implements OnInit {
 
   ngOnInit() {
     this.date = new Date();
-    console.log(this.date.getMonth());
     this.annee = this.date.getFullYear();
-    console.log(this.annee);
       for (let i = this.annee; i > this.annee - 20; i--) {
           this.anneeListe.push(i);
       }
