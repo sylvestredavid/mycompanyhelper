@@ -116,4 +116,12 @@ export class AchatComponent implements OnInit {
             }
         );
     }
+
+    getTotalMonth(): string {
+      let total = 0;
+        this.listeAchatAAfficher.forEach(
+            a => total += a.total
+        );
+        return total.toFixed(2);
+    }
 }

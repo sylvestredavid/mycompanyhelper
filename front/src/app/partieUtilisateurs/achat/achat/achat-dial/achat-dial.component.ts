@@ -37,6 +37,7 @@ export class AchatDialComponent implements OnInit {
       prixUnitaire: [this.data ? this.data.achat.prixUnitaire : '', Validators.required],
       quantite: [this.data ? this.data.achat.quantite : '', Validators.required],
       date: [this.data ? new Date(this.data.achat.date) : new Date(), Validators.required],
+      recurrent: [this.data ? this.data.achat.recurrent : false]
     });
   }
 
@@ -48,7 +49,8 @@ export class AchatDialComponent implements OnInit {
       quantite: +this.achatForm.value.quantite,
       total: this.achatForm.value.prixUnitaire * this.achatForm.value.quantite,
       date: this.achatForm.value.date,
-      idUser: this.userService.idUser
+      idUser: this.userService.idUser,
+      recurrent: this.achatForm.value.recurrent
     };
     this.dialogRef.close(achat);
 

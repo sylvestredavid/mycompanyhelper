@@ -1,20 +1,15 @@
 package com.stockmaga.back.scheduled;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
+import com.stockmaga.back.models.*;
+import com.stockmaga.back.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.stockmaga.back.models.CA;
-import com.stockmaga.back.models.CARecu;
-import com.stockmaga.back.models.Calendrier;
-import com.stockmaga.back.models.User;
-import com.stockmaga.back.repositories.CARepository;
-import com.stockmaga.back.repositories.CalendrierRepository;
-import com.stockmaga.back.repositories.FactureRepository;
-import com.stockmaga.back.repositories.UserRepository;
 import com.stockmaga.back.services.IEmailService;
 
 @Component
@@ -34,6 +29,9 @@ public class TachesPlanifiee {
 
 	@Autowired
 	CARepository caRepository;
+
+	@Autowired
+	AchatRepository achatRepository;
 
 	/**
 	 * tache planifiée lancée tout les 28 29 30 31 de chaques mois à 22h
@@ -55,7 +53,7 @@ public class TachesPlanifiee {
 				CA caAEnvoyer = new CA();
 				caAEnvoyer.setAnnee(year);
 				caAEnvoyer.setMois(month);
-				caAEnvoyer.setChiffreDAffaire(ca.getTotal());
+				caAEnvoyer.setChiffreDAffaire(ca.getTotal() != null ? ca.getTotal() : 0);
 				caAEnvoyer.setIdUser(ca.getUser());
 				CA newCA = caRepository.save(caAEnvoyer);
 			}
@@ -91,5 +89,47 @@ public class TachesPlanifiee {
 				emailService.sendMailCalendrier(user.getUsername(), calendriers);
 			}
 		});
+	}
+
+	@Scheduled(cron="0 0 1 1 * ?", zone="Europe/Paris")
+	public void achatRecurrent() {
+		System.out.println("coucou");
+		Calendar c = Calendar.getInstance();
+		c.add(Calendar.MONTH, -1);
+		int lastMonth = c.get(Calendar.MONTH);
+		List<Achat> achats = achatRepository.findAll();
+
+		achats.forEach(
+				achat ->{
+					Calendar date = Calendar.getInstance();
+					date.setTime(achat.getDate());
+
+					if (achat.isRecurrent()) {
+						if(lastMonth == 12) {
+							if(lastMonth == date.get(Calendar.MONTH) && date.get(Calendar.YEAR) == c.get(Calendar.YEAR) - 1) {
+								saveAchat(achat, date);
+							}
+						} else {
+							if(lastMonth == date.get(Calendar.MONTH) && date.get(Calendar.YEAR) == c.get(Calendar.YEAR)) {
+								saveAchat(achat, date);
+							}
+						}
+					}
+				}
+		);
+	}
+
+	private void saveAchat(Achat achat, Calendar date) {
+		Achat newAchat = new Achat();
+		newAchat.setDesignation(achat.getDesignation());
+		newAchat.setIdUser(achat.getIdUser());
+		newAchat.setPrixUnitaire(achat.getPrixUnitaire());
+		newAchat.setQuantite(achat.getQuantite());
+		newAchat.setRecurrent(true);
+		newAchat.setTotal(achat.getTotal());
+		date.add(Calendar.MONTH, 1);
+		newAchat.setDate(date.getTime());
+		achatRepository.save(newAchat);
+		System.out.println(achat.getDesignation());
 	}
 }

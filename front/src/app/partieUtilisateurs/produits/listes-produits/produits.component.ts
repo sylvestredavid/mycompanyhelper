@@ -388,7 +388,8 @@ export class ProduitsComponent implements OnInit, OnDestroy {
             prixUnitaire: produitAEnvoyer.prixAchat,
             quantite: produitAEnvoyer.quantite,
             total: produitAEnvoyer.prixAchat * produitAEnvoyer.quantite,
-            date: new Date()
+            date: new Date(),
+            recurrent: false
         };
 
         if (mode === 'creer') {

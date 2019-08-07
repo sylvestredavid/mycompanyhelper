@@ -85,7 +85,7 @@ export class GraphiqueCaComponent implements OnInit {
         if (this.role === 'ROLE_ADMIN') {
             this.caService.getCA().subscribe(
                 ca => {
-                    if (ca.length > 2) {
+                    if (ca.length > 0) {
                         this.ca = ca;
                     } else {
                         this.ca = CHIFFRE_AFFAIRE;

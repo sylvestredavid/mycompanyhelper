@@ -39,4 +39,7 @@ public class Achat implements Serializable {
 	
 	private Long idUser;
 
+	@Type(type = "org.hibernate.type.NumericBooleanType")
+	private boolean recurrent;
+
 }

@@ -13,4 +13,6 @@ export class AchatModel {
     total: number;
 
     idUser: number;
+
+    recurrent: boolean;
 }

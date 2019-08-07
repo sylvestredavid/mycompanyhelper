@@ -42,6 +42,7 @@
         <th></th>
         <th>date</th>
         <th>designation</th>
+        <th>Récurrent</th>
         <th>Prix</th>
         <th>Quantitée</th>
         <th>Total</th>
@@ -53,12 +54,19 @@
             <td><mat-checkbox class="checkbox" color="primary" (change)="changeElementSelectionne(a, $event)" [checked]="elementSelectionne === a"></mat-checkbox></td>
             <td>{{a.date | date: 'dd-MM-yy'}}</td>
             <td>{{a.designation}}</td>
+            <td>{{a.recurrent ? 'oui' : 'non'}}</td>
             <td>{{a.prixUnitaire}}€</td>
             <td>{{a.quantite}}</td>
             <td>{{a.total}}€</td>
           </tr>
         </ng-container>
       </tbody>
+      <tfoot>
+      <tr>
+        <td colspan="6"></td>
+        <td>Total : {{getTotalMonth()}}€</td>
+      </tr>
+      </tfoot>
     </table>
   </div>
 </ng-container>
